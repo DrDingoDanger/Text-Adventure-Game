@@ -6,9 +6,10 @@
  #include "PlaceboClass.hpp"
 
  TEST(TestPlaceboClass, defaultConstructorTest) {
-    PlaceboClass* pc = new PlaceboClass();
+   PlaceboClass* pc = new PlaceboClass();
 
-    EXPECT_NE(pc, nullptr);
+   EXPECT_NE(pc, nullptr);
 
-    delete pc;
+   delete pc;
  }
+ 
