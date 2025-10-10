@@ -1,4 +1,4 @@
-# Template for CPSC2720 Major Project: Text Based Adventure Game
+# CPSC2720 Major Project: Text Based Adventure Game
 Last Updated: 2025-10-10 by Nicole Wilson [n.wilson@uleth.ca]
 
 Notes:
