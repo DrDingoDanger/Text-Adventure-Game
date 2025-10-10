@@ -35,15 +35,15 @@ staticAnalysis:
 buildTests:
    stage: build
    script:
-      - make testGame
+      - make test_game
    artifacts:
       paths:
-         - testGame
+         - test_game
 
 unitTests:
    stage: unit_test
    script:
-      - testGame
+      - test_game
 
 memoryLeaks:
    stage: active_tests
