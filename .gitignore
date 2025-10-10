@@ -10,8 +10,8 @@
 
 # Executable files as they appear in different OSes 
 *.exe
-./test_project
-./project
+test_project
+project
 
 # Temporary files
 *~
