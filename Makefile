@@ -12,7 +12,7 @@
 ################################################################################
 
 # Executable names
-PROJECT = Game
+PROJECT = game
 COMPILE = play_${PROJECT}
 GTEST = test_${PROJECT}
 
