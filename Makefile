@@ -162,13 +162,16 @@ version:
 ################################################################################
 # Revision History
 ################################################################################
-# Updated: 2022-12-15 Nicole Wilson <n.wilson@uleth.ca>
+# Updated: 2025-10-10 Nicole Wilson [n.wilson@uleth.ca]
+#  Update targets and commands
+################################################################################
+# Updated: 2022-12-15 Nicole Wilson [n.wilson@uleth.ca]
 #  Removed all references to OS as the pipelines are now running on Ubuntu
 ################################################################################
-# Updated: 2022-10-19 Dr. J. Anvik <john.anvik@uleth.ca>
+# Updated: 2022-10-19 Dr. J. Anvik [john.anvik@uleth.ca]
 #  Changed the static command to make the pipeline fail on exit with errors.
 ################################################################################
-# Updated: 2022-09-11 Nicole Wilson <n.wilson@uleth.ca>
+# Updated: 2022-09-11 Nicole Wilson [n.wilson@uleth.ca]
 #  Added reference to OS in setting of STYLE_CHECK.
 #  This is a temporary measure until the pipelines are running on Ubuntu
 ################################################################################
