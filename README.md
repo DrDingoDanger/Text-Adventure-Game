@@ -1,12 +1,12 @@
 # Template for CPSC2720 Major Project: Text Based Adventure Game
-Last Updated: 2024-10-21 by Nicole Wilson &lt;n.wilson@uleth.ca&gt;
+Last Updated: 2025-10-10 by Nicole Wilson [n.wilson@uleth.ca]
 
 Notes:
 
 * The Makefile and .gitlab-ci.yml files are set up to run on Ubuntu.
 * The .gitlab-ci.yml file uses the targets in the Makefile.
 * These are the tools/commands/apps used:
-  * Compiler: g++
+  * Compiler: g++ (C++ 14)
   * Style Check: cpplint
   * Static Check: cppcheck
   * Coverage Check: gcov/lcov
