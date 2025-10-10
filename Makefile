@@ -13,8 +13,8 @@
 
 # Executable names
 PROJECT = Game
-COMPILE = play${PROJECT}
-GTEST = test${PROJECT}
+COMPILE = play_${PROJECT}
+GTEST = test_${PROJECT}
 
 # Compilation command and flags
 CXX=g++
@@ -155,12 +155,9 @@ version:
 	cppcheck --version
 	cpplint --version
 	gcc --version
-	${VERSION}
 	gcov --version
 	lcov --version
 	valgrind --version
-# Ask Trent where this script can be found
-#	gtest-config
 
 ################################################################################
 # Revision History
