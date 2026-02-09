@@ -3,14 +3,13 @@
  * @date 2025-10
  */
 
-#include "PlaceboClass.hpp"
+#include "Placebo.hpp"
 
 #include "gtest/gtest.h"
 
-TEST(TestPlaceboClass, defaultConstructorTest) {
-  PlaceboClass* pc = new PlaceboClass();
+TEST(TestPlacebo, defaultConstructorTest) {
+  Placebo* pc = new Placebo();
 
-  EXPECT_NE(pc, nullptr);
-
+  EXPECT_EQ(pc->returnPlacebo(), "Placebo-o-o!");
   delete pc;
 }

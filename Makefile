@@ -13,7 +13,7 @@
 
 # Executable names
 PROJECT = game
-COMPILE = play_${PROJECT}
+COMPILE= play_${PROJECT}
 GTEST = test_${PROJECT}
 
 # Compilation command and flags
@@ -45,7 +45,7 @@ DOXY_DIR = docs/code
 ################################################################################
 
 # Default goal
-.DEFAULT_GOAL := play_game
+.DEFAULT_GOAL := compileProject
 
 ################################################################################
 # Clean-up targets
@@ -57,7 +57,7 @@ clean-cov:
 
 .PHONY: clean-docs
 clean-docs:
-	rm -rf docs/code/html
+	rm -rf docs/code/src/ docs/code/*.bak
 
 .PHONY: clean-exec
 clean-exec:
@@ -75,7 +75,7 @@ clean-temp:
 	${SRC_INCLUDE}/*~ ${SRC_INCLUDE}/\#* ${SRC_INCLUDE}/.\#* \
 	${PROJECT_SRC_DIR}/*~ ${PROJECT_SRC_DIR}/\#* ${PROJECT_SRC_DIR}/.\#* \
 	${DESIGN_DIR}/*~ ${DESIGN_DIR}/\#* ${DESIGN_DIR}/.\#* \
-	*.gcov *.gcda *.gcno 
+	static.rpt *.gcov *.gcda *.gcno 
 
 .PHONY: clean
 clean: clean-cov clean-docs clean-exec clean-obj clean-temp
@@ -90,7 +90,7 @@ clean: clean-cov clean-docs clean-exec clean-obj clean-temp
 
 # Compilation targets
 
-# compilation for performing testing
+# compilation for performing testing - used by .gitlab-ci.yml
 # using the files in include, src, and test, but not src/project
 ${GTEST}: ${GTEST_DIR} ${SRC_DIR} clean-exec
 	${CXX} ${CXXFLAGS} -o ./${GTEST} ${INCLUDE} \
@@ -102,6 +102,8 @@ ${COMPILE}: ${SRC_DIR} ${PROJECT_SRC_DIR} clean-exec
 	${CXX} ${CXXVERSION} -o ${PROJECT} ${INCLUDE} \
 	${SRC_DIR}/*.cpp ${PROJECT_SRC_DIR}/*.cpp
 
+compileProject: ${COMPILE}
+
 ################################################################################
 # Test targets
 ################################################################################
@@ -109,18 +111,21 @@ ${COMPILE}: ${SRC_DIR} ${PROJECT_SRC_DIR} clean-exec
 # To perform all tests
 all: ${GTEST} memcheck coverage docs static style
 
-# To perform the memory checks
+# To perform the memory checks - used by .gitlab-ci.yml
 memcheck: ${GTEST}
 	valgrind --tool=memcheck --leak-check=yes --error-exitcode=1 ./${GTEST}
 
-# To perform the code coverage checks
+# To perform the memory checks, reports more details that memcheck
+fullmemcheck: ${GTEST}
+	valgrind --tool=memcheck --leak-check=full --error-exitcode=1 ./${GTEST}
+
+# To perform the code coverage checks - used by .gitlab-ci.yml
 coverage: clean-exec clean-cov
 	${CXX} ${CXXWITHCOVERAGEFLAGS} -o ./${GTEST} ${INCLUDE} \
 	${GTEST_DIR}/*.cpp ${SRC_DIR}/*.cpp ${LINKFLAGS}
 	./${GTEST}
 	# Determine code coverage
-	${LCOV} --capture --gcov-tool ${GCOV} --directory . --output-file \
-	${COVERAGE_RESULTS} --rc lcov_branch_coverage=1
+	${LCOV} --capture --ignore-errors mismatch --gcov-tool ${GCOV} --directory . --output-file ${COVERAGE_RESULTS} --rc branch_coverage=1
 	# Only show code coverage for the source code files (not library files)
 	${LCOV} --extract ${COVERAGE_RESULTS} */*/*/${SRC_DIR}/* -o \
 	${COVERAGE_RESULTS}
@@ -129,12 +134,17 @@ coverage: clean-exec clean-cov
 	#Remove all of the generated files from gcov
 	make clean-temp
 
-# To perform the static check 
+# To perform the static check - used by .gitlab-ci.yml
 static: ${SRC_DIR}
 	${STATIC_ANALYSIS} --verbose --enable=all ${SRC_DIR} \
-	${SRC_INCLUDE} --suppress=missingInclude --error-exitcode=1
+	${SRC_INCLUDE} --suppress=missingInclude --suppress=missingIncludeSystem --error-exitcode=1
 
-# To perform the style check
+# To perform the static check and creates detailed report called static.rpt
+staticRpt: ${SRC_DIR}
+	${STATIC_ANALYSIS} --verbose --enable=all ${SRC_DIR} --checkers-report=static.rpt \
+	${SRC_INCLUDE} --suppress=missingInclude --suppress=missingIncludeSystem --error-exitcode=1
+
+# To perform the style check - used by .gitlab-ci.yml
 style: ${SRC_DIR} ${GTEST_DIR} ${SRC_INCLUDE} ${PROJECT_SRC_DIR}
 	${STYLE_CHECK} ${SRC_DIR}/* ${GTEST_DIR}/* ${SRC_INCLUDE}/* \
 	${PROJECT_SRC_DIR}/*
@@ -143,18 +153,19 @@ style: ${SRC_DIR} ${GTEST_DIR} ${SRC_INCLUDE} ${PROJECT_SRC_DIR}
 # Documentation target
 ################################################################################
 
-# To produce the documentation
+# To produce the documentation - used by .gitlab-ci.yml
 .PHONY: docs
 docs: ${SRC_INCLUDE}
 	doxygen ${DOXY_DIR}/doxyfile
 
-# To produce version report
+# To produce version report - used by .gitlab-ci.yml
 .PHONY: version
 version:
 	doxygen --version
 	cppcheck --version
 	cpplint --version
 	gcc --version
+	${CXXVERSION}
 	gcov --version
 	lcov --version
 	valgrind --version
@@ -162,16 +173,22 @@ version:
 ################################################################################
 # Revision History
 ################################################################################
-# Updated: 2025-10-10 Nicole Wilson [n.wilson@uleth.ca]
-#  Update targets and commands
+# Updated: 2026-01-08 Nicole wilson <n.wilson@uleth.ca>
+#  Changed static checker to not check any files in test/
+#  Added notes indicating which targets are used by .gitlab-ci.yml
+#  Added fullmemcheck and staticRpt targets
 ################################################################################
-# Updated: 2022-12-15 Nicole Wilson [n.wilson@uleth.ca]
+# Updated: 2026-01-07 Nicole wilson <n.wilson@uleth.ca>
+#  Added --suppress=missingIncludeSystem to the static check command
+#  Updated the code coverage command
+################################################################################
+# Updated: 2022-12-15 Nicole Wilson <n.wilson@uleth.ca>
 #  Removed all references to OS as the pipelines are now running on Ubuntu
 ################################################################################
-# Updated: 2022-10-19 Dr. J. Anvik [john.anvik@uleth.ca]
+# Updated: 2022-10-19 Dr. J. Anvik <john.anvik@uleth.ca>
 #  Changed the static command to make the pipeline fail on exit with errors.
 ################################################################################
-# Updated: 2022-09-11 Nicole Wilson [n.wilson@uleth.ca]
+# Updated: 2022-09-11 Nicole Wilson <n.wilson@uleth.ca>
 #  Added reference to OS in setting of STYLE_CHECK.
 #  This is a temporary measure until the pipelines are running on Ubuntu
 ################################################################################

@@ -1,5 +1,7 @@
 // Minimal source file that allows the pipeline to pass.
+#include "Placebo.hpp"
 
 int main() {
-    return 0;
+  Placebo pc;
+  return 0;
 }
