@@ -10,8 +10,8 @@
 
 # Executable files as they appear in different OSes 
 *.exe
-test_project
-project
+/test_game
+/game
 
 # Temporary files
 *~
@@ -35,11 +35,20 @@ docs/.\#*~
 # make docs artifacts
 # -- we want to download and read these but we
 #    do not want to push a copy to the repo
-html/
+docs/code/src/html
+docs/code/src/doxyErrors.txt
+docs/code/src/doxyfile.bak
+
+# make staticRpt artifact
+static.rpt
 
 # make coverage artifacts
 results.coverage
 coverage/
+
+# run ./test_project artifacts
+*-Actual*.txt
+
 # These files are only left behind if something
 # goes wrong with the coverage target.
 *.gcda
@@ -56,4 +65,4 @@ obj/
 .settings
 
 # VS code files
-.vscode*
+.vscode
