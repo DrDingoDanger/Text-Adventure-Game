@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 
 #include <string>
+
 #include "Inventory.hpp"
 #include "Location.hpp"
 #include "Weapon.hpp"

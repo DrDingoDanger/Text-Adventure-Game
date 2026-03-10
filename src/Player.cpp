@@ -13,11 +13,10 @@ int Player::getHunger() const {
     return _hunger;
 }
 
-
 void Player::move(const std::string& direction) {
     if (_currentLocation.canExit(direction)) {
-        // Actual location switching is not in the UML.
-        // For now, this confirms movement is allowed.
+        // Actual location switching/entering should be handled
+        // wherever the map navigation logic is implemented.
     }
 }
 
@@ -29,7 +28,6 @@ void Player::takeDamage(int damage) {
     }
 }
 
-//No public way to get food so this is the minimal way i had to do it
 void Player::eat(Food& food) {
     (void)food;
 }
