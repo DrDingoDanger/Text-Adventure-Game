@@ -4,10 +4,9 @@
 #include <string>
 
 class UserInput {
-public:
+ public:
     std::string moveDirection();
     int playerAction();
     void pressEnter();
 };
-
 #endif

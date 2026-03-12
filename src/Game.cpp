@@ -33,7 +33,8 @@ void Game::update() {
 }
 
 bool Game::checkWin() const {
-    //Idk how to create this because the UML shows checkwin as an inventory iteam
+    //Idk how to create this because the
+    //UML shows checkwin as an inventory iteam
     //instead of just a conditoin
     return false;
 }

@@ -9,7 +9,7 @@
 #include "ScreenDisplay.hpp"
 
 class Game {
-private:
+ private:
     Player _player;
     WorldMap _map;
     std::string _winItem;
@@ -17,7 +17,7 @@ private:
     UserInput _ui;
     ScreenDisplay _display;
 
-public:
+ public:
     Game() = default;
 
     bool isOver() const;
@@ -28,5 +28,4 @@ public:
     bool checkLose() const;
     void endGame();
 };
-
 #endif

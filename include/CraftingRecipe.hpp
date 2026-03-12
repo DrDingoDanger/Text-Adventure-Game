@@ -6,12 +6,13 @@
 #include "Item.hpp"
 
 class CraftingRecipe {
-    private:
-        Inventory inputs;
-        Item* output;
-    public:
-        CraftingRecipe(vector<Item*> _inputs, Item* _output);
-        ~CraftingRecipe();
-        bool canCraft(Inventory _inventory);
-        void craft(Inventory _inventory);
+ private:
+    Inventory inputs;
+    Item* output;
+ public:
+    CraftingRecipe(vector<Item*> _inputs, Item* _output);
+    ~CraftingRecipe();
+    bool canCraft(Inventory _inventory);
+    void craft(Inventory _inventory);
 }
+#endif

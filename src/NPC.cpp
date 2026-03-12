@@ -8,7 +8,7 @@ NPC::NPC(std::string name, Location location) {
 NPC::~NPC() {}
 
 HelpNPC::HelpNPC(vector<std::string> dia) {
-    for(int i = 0; i < dia.size(); i++) {
+    for (int i = 0; i < dia.size(); i++) {
         diaOptions.push_back(dia[i]);
     }
 }
@@ -16,8 +16,8 @@ HelpNPC::HelpNPC(vector<std::string> dia) {
 HelpNPC::~HelpNPC() {}
 
 std::string HelpNPC::giveHint() {
-    std::random_device rd; 
-    std::mt19937 gen(rd()); 
+    std::random_device rd;
+    std::mt19937 gen(rd());
     std::uniform_int_distribution<std::size_t> distr(0, myVector.size() - 1);
     std::size_t randomIndex = distr(gen);
     ScreenDisplay screen;
@@ -25,7 +25,7 @@ std::string HelpNPC::giveHint() {
 }
 
 ShopNPC::ShopNPC(vector<Item*> items) {
-    for(int i = 0; i < item.size(); i++) {
+    for (int i = 0; i < item.size(); i++) {
         stock.add(items[i], 1);
     }
 }

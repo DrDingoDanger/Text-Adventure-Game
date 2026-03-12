@@ -9,29 +9,29 @@
 #include "Inventory.hpp"
 
 class NPC {
-    private:
+ private:
         std::string _name;
         Location _location;
-    public:
+ public:
         NPC(std::string name, Location location);
         ~NPC();
 };
 
 class HelpNPC : public NPC {
-    private:
-        vector<string> diaOptions;
-    public:
-        HelpNPC(vector<std::string> dia);
-        ~HelpNPC();
-        std::string giveHint();
+ private:
+    vector<string> diaOptions;
+ public:
+    HelpNPC(vector<std::string> dia);
+    ~HelpNPC();
+    std::string giveHint();
 };
 
 class ShopNPC : public NPC {
-    private:
-        Inventory stock;
-    public:
-        ShopNPC(vector<Item*> items);
-        ~ShopNPC();
-        void buyItem(Item* _item);
+ private:
+    Inventory stock;
+ public:
+    ShopNPC(vector<Item*> items);
+    ~ShopNPC();
+    void buyItem(Item* _item);
 };
 #endif

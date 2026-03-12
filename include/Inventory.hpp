@@ -14,5 +14,6 @@ class Inventory {
     void add(Item* _item, int _count);
     void remove(Item* _item, int count);
     int has(Item* _item, int count);
+    int size();
 };
 #endif

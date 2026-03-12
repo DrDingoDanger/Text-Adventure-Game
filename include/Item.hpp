@@ -16,9 +16,16 @@ class Food : public Item {
  private:
     int _hungerValue;
  public:
-    Food(int value);
+    Food(std::string name, int value);
     ~Food();
     int getHunger();
     void setHunger(int value);
 };
+
+class Weapon : public Item {
+ private:
+ public:
+  Weapon();
+  ~Weapon();
+}
 #endif

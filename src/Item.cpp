@@ -6,11 +6,12 @@ Item::Item(std::string name) {
 
 Item::~Item() {}
 
-std::string Item::getName(){
+std::string Item::getName() {
     return _name;
 }
 
-Food::Food(int value) {
+Food::Food(std::string name, int value) {
+    _name = name;
     _hungerValue = value;
 }
 

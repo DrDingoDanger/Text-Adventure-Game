@@ -13,7 +13,7 @@ int Player::getHunger() const {
     return _hunger;
 }
 
-void Player::move(const std::string& direction) {
+void Player::moveAction(const std::string& direction) {
     if (_currentLocation.canExit(direction)) {
         // Actual location switching/entering should be handled
         // wherever the map navigation logic is implemented.

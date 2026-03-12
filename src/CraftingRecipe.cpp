@@ -1,7 +1,7 @@
 #include "CraftingRecipe.hpp"
 
-CraftingRecipe::CraftingRecipe(vector<Item*> _inputs, Item* _output) {
-    for(int i = 0; i < _inputs.size(); i++) {
+CraftingRecipe::CraftingRecipe(vector<Item*> _inputs, Item _output) {
+    for (int i = 0; i < _inputs.size(); i++) {
         inputs.push_back(_inputs[i]);
     }
     output = _output;
@@ -24,7 +24,8 @@ CraftingRecipe::canCraft(Inventory playerInventory) {
 
 CraftingRecipe::craft(Inventory playerInventory) {
     for (Item* req : inputs) {
-        auto it = std::find(playerInventory.begin(), playerInventory.end(), req);
+        auto it = std::find(playerInventory.begin(),
+                            playerInventory.end(), req);
         if (it != playerInventory.end()) {
             playerInventory.erase(it);
         }
