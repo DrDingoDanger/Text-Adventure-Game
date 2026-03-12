@@ -32,7 +32,6 @@ class ShopNPC : public NPC {
     public:
         ShopNPC(vector<Item*> items);
         ~ShopNPC();
-        buyItem(Item* _item);
-        sellItem(Item* _item);
+        void buyItem(Item* _item);
 };
 #endif
