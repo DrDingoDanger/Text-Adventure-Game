@@ -11,7 +11,7 @@ class Item {
     std::string getName();
 };
 
-class Material : public Item {}
+class Material : public Item {};
 class Food : public Item {
  private:
     int _hungerValue;
@@ -20,5 +20,5 @@ class Food : public Item {
     ~Food();
     int getHunger();
     void setHunger(int value);
-}
+};
 #endif
