@@ -4,14 +4,18 @@
 #include <iostream>
 
 #include "WorldMap.hpp"
+#include "Location.hpp"
 
 
 class ScreenDisplay {
+    private:
+        std::string base[] = {"move", "viewInv", "viewMap", "interactNPC"}
+        
     public:
         ScreenDisplay();
         ~ScreenDisplay();
-        void drawMap(ostream out, WorldMap* map);
-        void displayChoices(ostream out); 
+        void drawMap(std::ostream& out, WorldMap* map, Location* current);
+        void displayChoices(std::ostream& out); 
 };
 
 #endif

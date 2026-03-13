@@ -23,6 +23,7 @@ class Location {
     virtual ~Location();
     void enter(Player* _player);
     void runEncounter(Player* _player, Mob* _mob);
+    void getName();
     bool canExit(std::string _direction, WorldMap* map);
 };
 

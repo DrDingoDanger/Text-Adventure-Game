@@ -13,7 +13,8 @@ class WorldMap {
     public:
         WorldMap();
         ~WorldMap();
-        int getLocationIndex(Location* _current);
+        int getCurentIndex(Location* _current);
+        Location* WorldMap::getLocation(int index) {
 };
 
 #endif
