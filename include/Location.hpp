@@ -1,0 +1,33 @@
+#ifndef LOCATION_HPP
+#define LOCATION_HPP
+
+#include <string>
+#include <vector>
+
+#include "NPC.hpp"
+#include "Mob.hpp"
+#include "CraftingRecipe.hpp"
+#include "Player.hpp"
+
+class Location {
+ private:
+    float encounterRate;
+    std::string name;
+    std::vector<NPC*> _npcCollection;
+    std::vector<CraftingRecipe*> _recipes;
+    std::vector<Mob*> _mobs;
+
+ public:
+    Location(std::string name, std::vector<NPC*> _npcCollection,
+         std::vector<CraftingRecipe*> _recipes, std::vector<Mob*> _mobs);
+    virtual ~Location();
+    void enter(Player* _player);
+    void runEncounter(Player* _player, Mob* _mob);
+    bool canExit(std::string _direction, WorldMap* map);
+};
+
+class Village : public Location {};
+class Field : public Location {};
+class Mountain : public Location {};
+
+#endif
