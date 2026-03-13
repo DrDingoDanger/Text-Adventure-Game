@@ -23,8 +23,11 @@ class Location {
     virtual ~Location();
     void enter(Player* _player);
     void runEncounter(Player* _player, Mob* _mob);
-    void getName();
     bool canExit(std::string _direction, WorldMap* map);
+    std::string getName();
+    NPC* getNPC(int index);
+    CraftingRecipe* getRecipe(int index);
+    Mob* getMob(int index);
 };
 
 class Village : public Location {};
