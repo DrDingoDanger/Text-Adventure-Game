@@ -1,27 +1,30 @@
-#ifndef ITEM_HPP
-#define ITEM_HPP
+#ifndef NPC_HPP
+#define NPC_HPP
 
 #include <vector>
 #include <string>
-#include <iostream>
-#include <random>
-#include "Location.hpp"
 #include "Inventory.hpp"
+#include "Item.hpp"
+
+class Location;
+class Player;
 
 class NPC {
  private:
-        std::string _name;
-        Location _location;
+    std::string _name;
+    Location* _location;
+
  public:
-        NPC(std::string name, Location location);
-        ~NPC();
+    NPC(std::string name, Location* location);
+    virtual ~NPC();
 };
 
 class HelpNPC : public NPC {
  private:
-    vector<string> diaOptions;
+    std::vector<std::string> diaOptions;
+
  public:
-    HelpNPC(vector<std::string> dia);
+    HelpNPC(std::string name, Location* location, std::vector<std::string> dia);
     ~HelpNPC();
     std::string giveHint();
 };
@@ -29,9 +32,11 @@ class HelpNPC : public NPC {
 class ShopNPC : public NPC {
  private:
     Inventory stock;
+
  public:
-    ShopNPC(vector<Item*> items);
+    ShopNPC(std::string name, Location* location, std::vector<Item*> items);
     ~ShopNPC();
-    void buyItem(Item* _item);
+    void sellItem(Player& player, Item& item);
 };
+
 #endif

@@ -1,9 +1,7 @@
 #include "Player.hpp"
 
-#include "Food.hpp"
-#include "CraftingRecipe.hpp"
-#include "Item.hpp"
-#include "ShopNPC.hpp"
+Player::Player()
+    : _currentLocation("Start", {}, {}, {}), _equippedWeapon() {}
 
 int Player::getHealth() const {
     return _health;
@@ -14,10 +12,7 @@ int Player::getHunger() const {
 }
 
 void Player::moveAction(const std::string& direction) {
-    if (_currentLocation.canExit(direction)) {
-        // Actual location switching/entering should be handled
-        // wherever the map navigation logic is implemented.
-    }
+    (void)direction;
 }
 
 void Player::takeDamage(int damage) {
@@ -41,3 +36,4 @@ void Player::craft(CraftingRecipe& recipe) {
 void Player::buy(Item& item, ShopNPC& shop) {
     shop.sellItem(*this, item);
 }
+

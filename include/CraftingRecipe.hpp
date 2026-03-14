@@ -1,5 +1,5 @@
-#ifndef USERINPUT_HPP
-#define USERINPUT_HPP
+#ifndef CRAFTINGRECIPE_HPP
+#define CRAFTINGRECIPE_HPP
 
 #include <vector>
 #include "Inventory.hpp"
@@ -9,10 +9,12 @@ class CraftingRecipe {
  private:
     Inventory inputs;
     Item* output;
+
  public:
-    CraftingRecipe(vector<Item*> _inputs, Item* _output);
+    CraftingRecipe(std::vector<Item*> _inputs, Item* _output);
     ~CraftingRecipe();
     bool canCraft(Inventory _inventory);
     void craft(Inventory _inventory);
-}
+};
+
 #endif

@@ -2,9 +2,11 @@
 #define ITEM_HPP
 
 #include <string>
+
 class Item {
  private:
     std::string _name;
+
  public:
     Item(std::string name);
     ~Item();
@@ -12,9 +14,11 @@ class Item {
 };
 
 class Material : public Item {};
+
 class Food : public Item {
  private:
     int _hungerValue;
+
  public:
     Food(std::string name, int value);
     ~Food();
@@ -25,7 +29,8 @@ class Food : public Item {
 class Weapon : public Item {
  private:
  public:
-  Weapon();
-  ~Weapon();
-}
+    Weapon();
+    ~Weapon();
+};
+
 #endif

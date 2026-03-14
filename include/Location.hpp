@@ -7,7 +7,9 @@
 #include "NPC.hpp"
 #include "Mob.hpp"
 #include "CraftingRecipe.hpp"
-#include "Player.hpp"
+
+class Player;
+class WorldMap;
 
 class Location {
  private:
@@ -23,7 +25,7 @@ class Location {
     virtual ~Location();
     void enter(Player* _player);
     void runEncounter(Player* _player, Mob* _mob);
-    bool canExit(std::string _direction, WorldMap* map);
+    bool canExit(const std::string& _direction, WorldMap* map);
     std::string getName();
     NPC* getNPC(int index);
     CraftingRecipe* getRecipe(int index);

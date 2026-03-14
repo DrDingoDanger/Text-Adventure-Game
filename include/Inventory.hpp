@@ -8,6 +8,7 @@
 class Inventory {
  private:
     std::vector<Item*> _items;
+
  public:
     Inventory();
     ~Inventory();
@@ -15,5 +16,7 @@ class Inventory {
     void remove(Item* _item, int count);
     int has(Item* _item, int count);
     int size();
+    Item* get(int index);
 };
+
 #endif

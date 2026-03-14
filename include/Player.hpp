@@ -6,11 +6,8 @@
 #include "Inventory.hpp"
 #include "Location.hpp"
 #include "Item.hpp"
-
-class Food;
-class CraftingRecipe;
-class Item;
-class ShopNPC;
+#include "NPC.hpp"
+#include "CraftingRecipe.hpp"
 
 class Player {
  private:
@@ -21,15 +18,16 @@ class Player {
     Weapon _equippedWeapon;
 
  public:
-    Player() = default;
+    Player();
 
     int getHealth() const;
     int getHunger() const;
 
     void moveAction(const std::string& direction);
     void takeDamage(int damage);
-    void eat(Food* food);
-    void craft(CraftingRecipe* recipe);
-    void buy(Item* item, ShopNPC* shop);
+    void eat(Food& food);
+    void craft(CraftingRecipe& recipe);
+    void buy(Item& item, ShopNPC& shop);
 };
+
 #endif

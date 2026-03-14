@@ -1,7 +1,7 @@
-// Minimal source file that allows the pipeline to pass.
-#include "Placebo.hpp"
+#include "Game.hpp"
 
 int main() {
-  Placebo pc;
-  return 0;
+    Game game;
+    game.start();
+    return 0;
 }

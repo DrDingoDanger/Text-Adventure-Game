@@ -1,16 +1,14 @@
-#include <iostream>
 #include <algorithm>
-#include <iterator>
 
 #include "WorldMap.hpp"
-#include "Location.hpp"
-#include "NPC.hpp"
-#include "Mob.hpp"
-#include "CraftingRecipe.hpp"
 
-WorldMap::WorldMap() {
-    for (auto i = 0; i < 8; i++) {
-            _locations.push_back(new Location("Temp", {}, {}, {}));
+WorldMap::WorldMap() : _current(nullptr) {
+    for (int i = 0; i < 9; i++) {
+        _locations.push_back(new Location("Temp", {}, {}, {}));
+    }
+
+    if (!_locations.empty()) {
+        _current = _locations[0];
     }
 }
 
@@ -21,6 +19,16 @@ WorldMap::~WorldMap() {
     }
 }
 
-int WorldMap::getCurrentIndex(Location* _current) {
-    return auto it = std::find(_locations.begin(), _locations.end(), _current) - _locations.begin();
+int WorldMap::getCurrentIndex(Location* current) {
+    auto it = std::find(_locations.begin(), _locations.end(), current);
+
+    if (it == _locations.end()) {
+        return 0;
+    }
+
+    return it - _locations.begin();
+}
+
+Location* WorldMap::getLocation(int index) {
+    return _locations[index];
 }

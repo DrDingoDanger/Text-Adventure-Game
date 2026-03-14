@@ -1,34 +1,32 @@
 #include "CraftingRecipe.hpp"
 
-CraftingRecipe::CraftingRecipe(vector<Item*> _inputs, Item _output) {
-    for (int i = 0; i < _inputs.size(); i++) {
-        inputs.push_back(_inputs[i]);
+CraftingRecipe::CraftingRecipe(std::vector<Item*> _inputs, Item* _output)
+    : output(_output) {
+    for (std::size_t i = 0; i < _inputs.size(); i++) {
+        inputs.add(_inputs[i], 1);
     }
-    output = _output;
 }
 
 CraftingRecipe::~CraftingRecipe() {}
 
-CraftingRecipe::canCraft(Inventory playerInventory) {
-    vector<Item*> temp = playerInventory;
-    for (Item* req : inputs) {
-        auto it = std::find(temp.begin(), temp.end(), req);
-        if (it != temp.end()) {
-            temp.erase(it);
-        } else {
+bool CraftingRecipe::canCraft(Inventory _inventory) {
+    for (int i = 0; i < inputs.size(); i++) {
+        Item* item = inputs.get(i);
+        if (_inventory.has(item, 1) < 1) {
             return false;
         }
     }
     return true;
 }
 
-CraftingRecipe::craft(Inventory playerInventory) {
-    for (Item* req : inputs) {
-        auto it = std::find(playerInventory.begin(),
-                            playerInventory.end(), req);
-        if (it != playerInventory.end()) {
-            playerInventory.erase(it);
-        }
+void CraftingRecipe::craft(Inventory _inventory) {
+    if (!canCraft(_inventory)) {
+        return;
     }
-    playerInventory.push_back(output);
+
+    for (int i = 0; i < inputs.size(); i++) {
+        _inventory.remove(inputs.get(i), 1);
+    }
+
+    _inventory.add(output, 1);
 }

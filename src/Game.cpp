@@ -15,14 +15,14 @@ void Game::start() {
 }
 
 void Game::update() {
-    _display.drawMap(std::cout, &_map);
-    _display.displayChoices(std::cout);
+    _display.drawMap(std::cout, &_map, nullptr);
+    _display.displayAlwaysChoices(std::cout);
 
     int action = _ui.playerAction();
 
     if (action == 1) {
         std::string direction = _ui.moveDirection();
-        _player.move(direction);
+        _player.moveAction(direction);
     }
 
     if (checkWin() || checkLose()) {
@@ -33,9 +33,6 @@ void Game::update() {
 }
 
 bool Game::checkWin() const {
-    //Idk how to create this because the
-    //UML shows checkwin as an inventory iteam
-    //instead of just a conditoin
     return false;
 }
 
