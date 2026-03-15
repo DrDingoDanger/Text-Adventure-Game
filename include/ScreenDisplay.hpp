@@ -8,7 +8,7 @@
 
 class ScreenDisplay {
  private:
-    std::string base[4] = {"move", "viewInv", "viewMap", "interactNPC"};
+    std::string base[5] = {"move", "viewInv", "viewMap", "interactNPC", "useItem"};
 
  public:
     ScreenDisplay();

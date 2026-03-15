@@ -36,13 +36,13 @@ void ScreenDisplay::drawMap(std::ostream& out, WorldMap* map, Location* current)
         out << str << '\n';
     }
 
-    out << map->getLocation(cIndex)->getName() << '\n';
+    //out << map->getLocation(cIndex)->getName() << '\n';
 }
 
 void ScreenDisplay::displayAlwaysChoices(std::ostream& out) {
     out << "What do you want to do?\n";
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
         out << i << "- " << base[i] << '\n';
     }
 }
