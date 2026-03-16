@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
-Player::Player()
-    : _currentLocation("Start", {}, {}, {}), _equippedWeapon("equipped") {}
+Player::Player(Location* start)
+    : _currentLocation(start), _equippedWeapon(nullptr){}
 
 int Player::getHealth() const {
     return _health;
@@ -11,8 +11,17 @@ int Player::getHunger() const {
     return _hunger;
 }
 
-void Player::moveAction(const std::string& direction) {
-    (void)direction;
+Inventory& Player::getInventory() {
+    return _inventory;
+}
+void Player::moveAction(const std::string& direction, WorldMap* map, bool& valid) {
+    //(void)direction;
+    if(_currentLocation->canExit(direction, map)) {
+        _currentLocation->updateLocation(direction, _currentLocation);
+        valid = true;
+    } else {
+        valid = false;
+    }
 }
 
 void Player::takeDamage(int damage) {
@@ -46,4 +55,12 @@ Item* Player::getItemAt(int ind) {
 
 int Player::inventorySize() {
     return _inventory.size();
+}
+
+Location* Player::getCurrent() {
+    return _currentLocation;
+}
+
+Inventory* Player::getInventory() {
+    return _inventory;
 }

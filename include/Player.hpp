@@ -14,22 +14,23 @@ class Player {
     int _health = 100;
     int _hunger = 100;
     Inventory _inventory;
-    Location _currentLocation;
-    Weapon _equippedWeapon;
+    Location* _currentLocation;
+    Weapon* _equippedWeapon;
 
  public:
-    Player();
+    Player(Location* start);
 
     int getHealth() const;
     int getHunger() const;
     int inventorySize();
-
+    Inventory& getInventory();
     void moveAction(const std::string& direction);
     void takeDamage(int damage);
     void eat(int restore);
     void craft(CraftingRecipe& recipe);
     void buy(Item& item, ShopNPC& shop);
     Item* getItemAt(int ind);
+    Location* getCurrent();
 };
 
 #endif

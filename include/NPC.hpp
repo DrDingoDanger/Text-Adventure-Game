@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <random>
 #include "Inventory.hpp"
 #include "Item.hpp"
 
@@ -12,11 +13,12 @@ class Player;
 class NPC {
  private:
     std::string _name;
-    Location* _location;
-
+    std::string _type;
  public:
-    NPC(std::string name, Location* location);
+    NPC(std::string name, std::string type);
     virtual ~NPC();
+    std::string getName();
+    std::string getType();
 };
 
 class HelpNPC : public NPC {
@@ -24,7 +26,7 @@ class HelpNPC : public NPC {
     std::vector<std::string> diaOptions;
 
  public:
-    HelpNPC(std::string name, Location* location, std::vector<std::string> dia);
+    HelpNPC(std::string name, std::vector<std::string> dia);
     ~HelpNPC();
     std::string giveHint();
 };
@@ -34,7 +36,7 @@ class ShopNPC : public NPC {
     Inventory stock;
 
  public:
-    ShopNPC(std::string name, Location* location, std::vector<Item*> items);
+    ShopNPC(std::string name, std::vector<Item*> items);
     ~ShopNPC();
     void sellItem(Player& player, Item& item);
 };

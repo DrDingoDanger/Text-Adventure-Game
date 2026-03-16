@@ -6,9 +6,24 @@
 
 std::string UserInput::moveDirection() {
     std::string direction;
-    std::cout << "Enter direction: ";
+    std::cout << "Enter direction (left, right, up, down): ";
     std::cin >> direction;
     return direction;
+}
+
+int UserInput::limitInput(int max) {
+    int choice;
+    bool goodInput = false;
+    std::cout << "Enter choice: ";
+    while (goodInput == false) {
+        std::cin >> choice;
+        if (choice < max && choice >= 0) {
+            goodInput = true;
+        } else {
+            std::cout << "Input is not a valid item";
+        }
+    }
+    return choice;
 }
 
 int UserInput::playerAction() {

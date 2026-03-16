@@ -5,18 +5,19 @@
 
 #include "WorldMap.hpp"
 #include "Location.hpp"
-#include "Inventory.hpp"
+#include "Player.hpp"
 
 class ScreenDisplay {
  private:
-    std::string base[5] = {"move", "viewInv", "viewMap", "interactNPC", "useItem"};
+    std::string base[6] = {"move", "viewInv", "viewMap", "interactNPC", "areaResources", "gameInstructions"};
 
  public:
     ScreenDisplay();
     ~ScreenDisplay();
+    void gameInstructions(std::ostream& out);
     void drawMap(std::ostream& out, WorldMap* map, Location* current);
     void displayAlwaysChoices(std::ostream& out);
-    void displayInventory(std::ostream& out, Inventory* inventory);
+    void displayInventory(std::ostream& out, Player _player);
 };
 
 #endif

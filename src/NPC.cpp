@@ -1,12 +1,20 @@
 #include "NPC.hpp"
 #include "Player.hpp"
 
-NPC::NPC(std::string name, Location* location) : _name(name), _location(location) {}
+NPC::NPC(std::string name, std::string type) : _name(name), _type(type) {}
 
 NPC::~NPC() {}
 
-HelpNPC::HelpNPC(std::string name, Location* location, std::vector<std::string> dia)
-    : NPC(name, location), diaOptions(dia) {}
+std::string NPC::getType() {
+    return _type;
+}
+
+std::string NPC::getName() {
+    return _name;
+}
+
+HelpNPC::HelpNPC(std::string name, std::vector<std::string> dia)
+    : NPC(name, "help"), diaOptions(dia) {}
 
 HelpNPC::~HelpNPC() {}
 
@@ -14,12 +22,15 @@ std::string HelpNPC::giveHint() {
     if (diaOptions.empty()) {
         return "";
     }
-
-    return diaOptions[0];
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<size_t> dist(0, diaOptions.size() - 1);
+    std::string random = diaOptions[dist(gen)];
+    return random;
 }
 
-ShopNPC::ShopNPC(std::string name, Location* location, std::vector<Item*> items)
-    : NPC(name, location) {
+ShopNPC::ShopNPC(std::string name, std::vector<Item*> items)
+    : NPC(name, "shop") {
     for (std::size_t i = 0; i < items.size(); i++) {
         stock.add(items[i], 1);
     }

@@ -6,6 +6,17 @@ ScreenDisplay::ScreenDisplay() {}
 
 ScreenDisplay::~ScreenDisplay() {}
 
+void ScreenDisplay::gameInstructions(std::ostream& out) {
+    out << "\n-- Text-Adventure-Game --\n"
+    << "Enter the requested information to navigate through the game.\n"
+    << "Move: change location by moving left, right, up, or down.\n"
+    << "viewInv: Look at the items in your inventory, you are given the option to use them.\n"
+    << "viewMap: View the world map, your location is in braces.\n"
+    << "interactNPC: get a list of NPCs in the current location and the ability to interact with them.\n"
+    << "areaResources: Look at all available resources in the location and the option to collect them.\n"
+    << "gameInstructions: View this help message.\n\n";
+}
+
 void ScreenDisplay::drawMap(std::ostream& out, WorldMap* map, Location* current) {
     int cIndex = 0;
 
@@ -42,26 +53,27 @@ void ScreenDisplay::drawMap(std::ostream& out, WorldMap* map, Location* current)
 void ScreenDisplay::displayAlwaysChoices(std::ostream& out) {
     out << "What do you want to do?\n";
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
         out << i << "- " << base[i] << '\n';
     }
 }
 
-void ScreenDisplay::displayInventory(std::ostream& out, Inventory* inventory){
+void ScreenDisplay::displayInventory(std::ostream& out, Player _player){
     //Commented stuff is for future implementaion.
-    int temp = inventory->size();
+    Inventory* inventory = _player.getInventory();
+    int num = inventory->size();
     std::string str;
 
     out << "Inventory:\n" << "------------------\n";
 
     //I is tracking current, skipping dups. J numbers each unique.
-    for (int i = 0, j = 1; i < temp; i++, j++) {
+    for (int i = 0, j = 1; i < num; i++, j++) {
         //int mult = 1;
         str += std::to_string(j);
         str += ". ";
-        str += inventory->get(i);
+        str += inventory->get(i)->getName();
 
-        /*while (i + 1 < temp && inventory->get(i) == inventory->get(i + 1)) {
+        /*while (i + 1 < num && inventory->get(i) == inventory->get(i + 1)) {
             mult++;
             i++;
         }
