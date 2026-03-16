@@ -6,7 +6,7 @@
 
 std::string UserInput::moveDirection() {
     std::string direction;
-    std::cout << "Enter direction: ";
+    std::cout << "Enter direction (left, right, up, down): ";
     std::cin >> direction;
     return direction;
 }

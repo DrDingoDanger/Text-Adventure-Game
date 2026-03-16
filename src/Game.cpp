@@ -83,7 +83,7 @@ void Game::update() {
             }
         }
     } else if (action == 5) {
-        //_display.displayGameInstructions();
+        _display.gameInstructions(std::cout);
     } else {
         std::cout << "Invalid input";
     }

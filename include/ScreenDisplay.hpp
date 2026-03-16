@@ -13,6 +13,7 @@ class ScreenDisplay {
  public:
     ScreenDisplay();
     ~ScreenDisplay();
+    void gameInstructions(std::ostream& out);
     void drawMap(std::ostream& out, WorldMap* map, Location* current);
     void displayAlwaysChoices(std::ostream& out);
 };

@@ -6,6 +6,17 @@ ScreenDisplay::ScreenDisplay() {}
 
 ScreenDisplay::~ScreenDisplay() {}
 
+void ScreenDisplay::gameInstructions(std::ostream& out) {
+    out << "\n-- Text-Adventure-Game --\n"
+    << "Enter the requested information to navigate through the game.\n"
+    << "Move: change location by moving left, right, up, or down.\n"
+    << "viewInv: Look at the items in your inventory, you are given the option to use them.\n"
+    << "viewMap: View the world map, your location is in braces.\n"
+    << "interactNPC: get a list of NPCs in the current location and the ability to interact with them.\n"
+    << "areaResources: Look at all available resources in the location and the option to collect them.\n"
+    << "gameInstructions: View this help message.\n\n";
+}
+
 void ScreenDisplay::drawMap(std::ostream& out, WorldMap* map, Location* current) {
     int cIndex = 0;
 
@@ -42,7 +53,7 @@ void ScreenDisplay::drawMap(std::ostream& out, WorldMap* map, Location* current)
 void ScreenDisplay::displayAlwaysChoices(std::ostream& out) {
     out << "What do you want to do?\n";
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
         out << i << "- " << base[i] << '\n';
     }
 }
