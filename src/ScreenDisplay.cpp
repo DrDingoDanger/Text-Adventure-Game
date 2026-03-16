@@ -60,8 +60,8 @@ void ScreenDisplay::displayAlwaysChoices(std::ostream& out) {
 
 void ScreenDisplay::displayInventory(std::ostream& out, Player _player){
     //Commented stuff is for future implementaion.
-    Inventory* inventory = _player.getInventory();
-    int num = inventory->size();
+    Inventory& inventory = _player.getInventory();
+    int num = inventory.size();
     std::string str;
 
     out << "Inventory:\n" << "------------------\n";
@@ -71,7 +71,7 @@ void ScreenDisplay::displayInventory(std::ostream& out, Player _player){
         //int mult = 1;
         str += std::to_string(j);
         str += ". ";
-        str += inventory->get(i)->getName();
+        str += inventory.get(i)->getName();
 
         /*while (i + 1 < num && inventory->get(i) == inventory->get(i + 1)) {
             mult++;
