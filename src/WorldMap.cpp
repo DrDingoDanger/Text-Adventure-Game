@@ -4,7 +4,7 @@
 
 WorldMap::WorldMap() : _current(nullptr) {
     for (int i = 0; i < 9; i++) {
-        _locations.push_back(new Location("Temp", {}, {}, {}));
+        _locations.push_back(new Location("Temp", {}, {}, {}, {}));
     }
 
     if (!_locations.empty()) {

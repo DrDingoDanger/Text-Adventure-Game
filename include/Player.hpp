@@ -15,7 +15,7 @@ class Player {
     int _hunger = 100;
     Inventory _inventory;
     Location* _currentLocation;
-    Weapon _equippedWeapon;
+    Weapon* _equippedWeapon;
 
  public:
     Player(Location* start);
@@ -23,7 +23,7 @@ class Player {
     int getHealth() const;
     int getHunger() const;
     int inventorySize();
-
+    Inventory& getInventory();
     void moveAction(const std::string& direction);
     void takeDamage(int damage);
     void eat(int restore);

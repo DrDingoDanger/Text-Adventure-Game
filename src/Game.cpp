@@ -70,6 +70,20 @@ void Game::update() {
         }
     } else if (action == 4) {
         std::cout << "View area resources.\n";
+        std::cout << "Would you like to collect these items?\n";
+        char ans = _ui.yesOrNo();
+        if(ans == 'y') {
+            Location* loc = _player.getCurrent();
+            Inventory temp = loc->getInventory();
+            Inventory tempP = _player.getInventory();
+            while(temp.size() != 0) {
+                Item* item = temp.get(0);
+                tempP.add(item, 1);
+                temp.remove(item, 1);
+            }
+        }
+    } else if (action == 5) {
+        //_display.displayGameInstructions();
     } else {
         std::cout << "Invalid input";
     }

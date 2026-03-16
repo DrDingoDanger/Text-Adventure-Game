@@ -3,9 +3,9 @@
 #include "Location.hpp"
 #include "WorldMap.hpp"
 
-Location::Location(std::string name, std::vector<NPC*> _npcCollection,
-    std::vector<CraftingRecipe*> _recipes, std::vector<Mob*> _mobs)
-    : name(name), _npcCollection(_npcCollection), _recipes(_recipes), _mobs(_mobs) {}
+Location::Location(std::string name, std::vector<NPC*> npcCollection,
+    std::vector<CraftingRecipe*> recipes, std::vector<Mob*> mobs, Inventory areaResources)
+    : name(name), _npcCollection(npcCollection), _recipes(recipes), _mobs(mobs), _areaResources(areaResources) {}
 
 Location::~Location() {}
 
@@ -41,6 +41,10 @@ CraftingRecipe* Location::getRecipe(int index) {
 
 Mob* Location::getMob(int index) {
     return _mobs[index];
+}
+
+Inventory& Location::getInventory() {
+    return _areaResources;
 }
 
 int Location::numOfNPC() {

@@ -11,6 +11,9 @@ int Player::getHunger() const {
     return _hunger;
 }
 
+Inventory& Player::getInventory() {
+    return _inventory;
+}
 void Player::moveAction(const std::string& direction) {
     (void)direction;
 }

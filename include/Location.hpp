@@ -17,11 +17,12 @@ class Location {
     std::string name;
     std::vector<NPC*> _npcCollection;
     std::vector<CraftingRecipe*> _recipes;
+    Inventory _areaResources;
     std::vector<Mob*> _mobs;
 
  public:
     Location(std::string name, std::vector<NPC*> _npcCollection,
-         std::vector<CraftingRecipe*> _recipes, std::vector<Mob*> _mobs);
+         std::vector<CraftingRecipe*> _recipes, std::vector<Mob*> _mobs, Inventory areaResources);
     ~Location();
     void enter(Player* _player);
     void runEncounter(Player* _player, Mob* _mob);
@@ -29,6 +30,7 @@ class Location {
     std::string getName();
     NPC* getNPC(int index);
     CraftingRecipe* getRecipe(int index);
+    Inventory& getInventory();
     Mob* getMob(int index);
     int numOfNPC();
 };
