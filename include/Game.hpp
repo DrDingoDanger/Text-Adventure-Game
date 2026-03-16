@@ -10,8 +10,8 @@
 
 class Game {
  private:
-    Player _player;
     WorldMap _map;
+    Player _player;
     std::string _winItem;
     bool _isOver = false;
     UserInput _ui;

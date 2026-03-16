@@ -74,8 +74,8 @@ void Game::update() {
         char ans = _ui.yesOrNo();
         if(ans == 'y') {
             Location* loc = _player.getCurrent();
-            Inventory temp = loc->getInventory();
-            Inventory tempP = _player.getInventory();
+            Inventory& temp = loc->getInventory();
+            Inventory& tempP = _player.getInventory();
             while(temp.size() != 0) {
                 Item* item = temp.get(0);
                 tempP.add(item, 1);

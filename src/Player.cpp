@@ -1,7 +1,9 @@
 #include "Player.hpp"
 
 Player::Player(Location* start)
-    : _currentLocation(start), _equippedWeapon(nullptr){}
+    : _currentLocation(start), _equippedWeapon(nullptr){
+        _inventory.add(new Material("Thing"), 1);
+    }
 
 int Player::getHealth() const {
     return _health;
@@ -14,6 +16,7 @@ int Player::getHunger() const {
 Inventory& Player::getInventory() {
     return _inventory;
 }
+
 void Player::moveAction(const std::string& direction) {
     (void)direction;
 }

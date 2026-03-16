@@ -3,8 +3,10 @@
 #include "WorldMap.hpp"
 
 WorldMap::WorldMap() : _current(nullptr) {
+    Inventory inv;
+    inv.add(new Food("Apple", 3), 1);
     for (int i = 0; i < 9; i++) {
-        _locations.push_back(new Location("Temp", {}, {}, {}, {}));
+        _locations.push_back(new Location("L"+std::to_string(i), {}, {}, {}, inv));
     }
 
     if (!_locations.empty()) {

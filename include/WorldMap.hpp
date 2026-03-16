@@ -2,6 +2,7 @@
 #define WORLDMAP_HPP
 
 #include <vector>
+#include <string>
 #include "Location.hpp"
 
 class WorldMap {
