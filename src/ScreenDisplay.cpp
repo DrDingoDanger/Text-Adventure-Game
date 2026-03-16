@@ -46,3 +46,34 @@ void ScreenDisplay::displayAlwaysChoices(std::ostream& out) {
         out << i << "- " << base[i] << '\n';
     }
 }
+
+void ScreenDisplay::displayInventory(std::ostream& out, Inventory* inventory){
+    //Commented stuff is for future implementaion.
+    int temp = inventory->size();
+    std::string str;
+
+    out << "Inventory:\n" << "------------------\n";
+
+    //I is tracking current, skipping dups. J numbers each unique.
+    for (int i = 0, j = 1; i < temp; i++, j++) {
+        //int mult = 1;
+        str += std::to_string(j);
+        str += ". ";
+        str += inventory->get(i);
+
+        /*while (i + 1 < temp && inventory->get(i) == inventory->get(i + 1)) {
+            mult++;
+            i++;
+        }
+        
+        if (mult > 1) {
+            str += ' ';
+            str += std::to_string(mult);
+            str += 'x';       
+        }*/
+
+        str += "\n";
+    }
+
+    out << str << "------------------\n";
+}
