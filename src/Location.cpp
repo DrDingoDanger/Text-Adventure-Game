@@ -42,3 +42,7 @@ CraftingRecipe* Location::getRecipe(int index) {
 Mob* Location::getMob(int index) {
     return _mobs[index];
 }
+
+int Location::numOfNPC() {
+    return _npcCollection.size();
+}

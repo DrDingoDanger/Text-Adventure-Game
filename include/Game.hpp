@@ -18,7 +18,7 @@ class Game {
     ScreenDisplay _display;
 
  public:
-    Game() = default;
+    Game();
 
     bool isOver() const;
 

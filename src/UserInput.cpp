@@ -11,6 +11,21 @@ std::string UserInput::moveDirection() {
     return direction;
 }
 
+int UserInput::limitInput(int max) {
+    int choice;
+    bool goodInput = false;
+    std::cout << "Enter choice: ";
+    while (goodInput == false) {
+        std::cin >> choice;
+        if (choice < max && choice >= 0) {
+            goodInput = true;
+        } else {
+            std::cout << "Input is not a valid item";
+        }
+    }
+    return choice;
+}
+
 int UserInput::playerAction() {
     int action;
     std::cout << "Enter action: ";

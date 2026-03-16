@@ -14,11 +14,11 @@ class Player {
     int _health = 100;
     int _hunger = 100;
     Inventory _inventory;
-    Location _currentLocation;
+    Location* _currentLocation;
     Weapon _equippedWeapon;
 
  public:
-    Player();
+    Player(Location* start);
 
     int getHealth() const;
     int getHunger() const;
@@ -30,6 +30,7 @@ class Player {
     void craft(CraftingRecipe& recipe);
     void buy(Item& item, ShopNPC& shop);
     Item* getItemAt(int ind);
+    Location* getCurrent();
 };
 
 #endif

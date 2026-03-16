@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
-Player::Player()
-    : _currentLocation("Start", {}, {}, {}), _equippedWeapon("equipped") {}
+Player::Player(Location* start)
+    : _currentLocation(start), _equippedWeapon(nullptr){}
 
 int Player::getHealth() const {
     return _health;
@@ -46,4 +46,8 @@ Item* Player::getItemAt(int ind) {
 
 int Player::inventorySize() {
     return _inventory.size();
+}
+
+Location* Player::getCurrent() {
+    return _currentLocation;
 }

@@ -22,7 +22,7 @@ class Location {
  public:
     Location(std::string name, std::vector<NPC*> _npcCollection,
          std::vector<CraftingRecipe*> _recipes, std::vector<Mob*> _mobs);
-    virtual ~Location();
+    ~Location();
     void enter(Player* _player);
     void runEncounter(Player* _player, Mob* _mob);
     bool canExit(const std::string& _direction, WorldMap* map);
@@ -30,10 +30,7 @@ class Location {
     NPC* getNPC(int index);
     CraftingRecipe* getRecipe(int index);
     Mob* getMob(int index);
+    int numOfNPC();
 };
-
-class Village : public Location {};
-class Field : public Location {};
-class Mountain : public Location {};
 
 #endif
