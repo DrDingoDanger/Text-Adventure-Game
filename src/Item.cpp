@@ -1,6 +1,6 @@
 #include "Item.hpp"
 
-Item::Item(std::string name) : _name(name) {}
+Item::Item(std::string name, std::string type) : _name(name), _type(type) {}
 
 Item::~Item() {}
 
@@ -8,7 +8,15 @@ std::string Item::getName() {
     return _name;
 }
 
-Food::Food(std::string name, int value) : Item(name), _hungerValue(value) {}
+std::string Item::getType() {
+    return _type;
+}
+
+Material::Material(std::string name) : Item(name, "material") {}
+
+Material::~Material() {}
+
+Food::Food(std::string name, int value) : Item(name, "food"), _hungerValue(value){}
 
 Food::~Food() {}
 
@@ -20,6 +28,6 @@ void Food::setHunger(int value) {
     _hungerValue = value;
 }
 
-Weapon::Weapon() : Item("") {}
+Weapon::Weapon(std::string name) : Item(name, "weapon") {}
 
 Weapon::~Weapon() {}

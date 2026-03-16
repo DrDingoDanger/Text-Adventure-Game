@@ -18,6 +18,13 @@ int UserInput::playerAction() {
     return action;
 }
 
+char UserInput::yesOrNo() {
+    char ans;
+    std::cout << "Enter y/n: ";
+    std::cin >> ans;
+    return ans;
+}
+
 void UserInput::pressEnter() {
     std::cout << "Press Enter to continue...";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

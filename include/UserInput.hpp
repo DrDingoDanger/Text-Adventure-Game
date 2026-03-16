@@ -7,6 +7,7 @@ class UserInput {
  public:
     std::string moveDirection();
     int playerAction();
+    char yesOrNo();
     void pressEnter();
 };
 #endif

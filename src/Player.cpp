@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
 Player::Player()
-    : _currentLocation("Start", {}, {}, {}), _equippedWeapon() {}
+    : _currentLocation("Start", {}, {}, {}), _equippedWeapon("equipped") {}
 
 int Player::getHealth() const {
     return _health;
@@ -23,8 +23,11 @@ void Player::takeDamage(int damage) {
     }
 }
 
-void Player::eat(Food& food) {
-    (void)food;
+void Player::eat(int restore) {
+    _hunger += restore;
+    if(_hunger > 100) {
+        _hunger = 100;
+    }
 }
 
 void Player::craft(CraftingRecipe& recipe) {
@@ -37,3 +40,10 @@ void Player::buy(Item& item, ShopNPC& shop) {
     shop.sellItem(*this, item);
 }
 
+Item* Player::getItemAt(int ind) {
+    return _inventory.get(ind);
+}
+
+int Player::inventorySize() {
+    return _inventory.size();
+}

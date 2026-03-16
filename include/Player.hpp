@@ -22,12 +22,14 @@ class Player {
 
     int getHealth() const;
     int getHunger() const;
+    int inventorySize();
 
     void moveAction(const std::string& direction);
     void takeDamage(int damage);
-    void eat(Food& food);
+    void eat(int restore);
     void craft(CraftingRecipe& recipe);
     void buy(Item& item, ShopNPC& shop);
+    Item* getItemAt(int ind);
 };
 
 #endif

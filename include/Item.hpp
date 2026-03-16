@@ -6,14 +6,19 @@
 class Item {
  private:
     std::string _name;
-
+    std::string _type;
  public:
-    Item(std::string name);
-    ~Item();
+    Item(std::string name, std::string type);
+    virtual ~Item();
     std::string getName();
+    std::string getType();
 };
 
-class Material : public Item {};
+class Material : public Item {
+   public:
+      Material(std::string name);
+      ~Material();
+};
 
 class Food : public Item {
  private:
@@ -29,7 +34,7 @@ class Food : public Item {
 class Weapon : public Item {
  private:
  public:
-    Weapon();
+    Weapon(std::string name);
     ~Weapon();
 };
 
