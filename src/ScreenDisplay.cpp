@@ -57,3 +57,35 @@ void ScreenDisplay::displayAlwaysChoices(std::ostream& out) {
         out << i << "- " << base[i] << '\n';
     }
 }
+
+void ScreenDisplay::displayInventory(std::ostream& out, Player _player){
+    //Commented stuff is for future implementaion.
+    Inventory& inventory = _player.getInventory();
+    int num = inventory.size();
+    std::string str;
+
+    out << "Inventory:\n" << "------------------\n";
+
+    //I is tracking current, skipping dups. J numbers each unique.
+    for (int i = 0, j = 1; i < num; i++, j++) {
+        //int mult = 1;
+        str += std::to_string(j);
+        str += ". ";
+        str += inventory.get(i)->getName();
+
+        /*while (i + 1 < num && inventory->get(i) == inventory->get(i + 1)) {
+            mult++;
+            i++;
+        }
+        
+        if (mult > 1) {
+            str += ' ';
+            str += std::to_string(mult);
+            str += 'x';       
+        }*/
+
+        str += "\n";
+    }
+
+    out << str << "------------------\n";
+}

@@ -5,6 +5,7 @@
 
 #include "WorldMap.hpp"
 #include "Location.hpp"
+#include "Player.hpp"
 
 class ScreenDisplay {
  private:
@@ -16,6 +17,7 @@ class ScreenDisplay {
     void gameInstructions(std::ostream& out);
     void drawMap(std::ostream& out, WorldMap* map, Location* current);
     void displayAlwaysChoices(std::ostream& out);
+    void displayInventory(std::ostream& out, Player _player);
 };
 
 #endif

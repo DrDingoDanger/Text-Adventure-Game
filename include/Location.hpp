@@ -27,6 +27,7 @@ class Location {
     void enter(Player* _player);
     void runEncounter(Player* _player, Mob* _mob);
     bool canExit(const std::string& _direction, WorldMap* map);
+    //Location* updateLocation(const std::string& _direction, Location* current);
     std::string getName();
     NPC* getNPC(int index);
     CraftingRecipe* getRecipe(int index);

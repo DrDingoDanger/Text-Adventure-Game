@@ -25,11 +25,17 @@ void Game::update() {
 
     if (action == 0) {
         std::string direction = _ui.moveDirection();
-        _player.moveAction(direction);
+        bool valid = true;
+        _player.moveAction(direction, &_map, valid);
+        while(!valid) {
+            std::cout << "You cannot go off the map. Try Again\n";
+            direction = _ui.moveDirection();
+            _player.moveAction(direction, &_map, valid);
+        }
 
     } else if (action == 1) {
         //display inventory
-        std::cout << "\nThis will be Inventory\n";
+        _display.displayInventory(std::cout, _player);
         //use item
         std::cout << "Would you like to use an item?\n";
         if(_player.inventorySize() > 0) {
@@ -49,7 +55,8 @@ void Game::update() {
             }
         }
     } else if (action == 2) {
-        _display.drawMap(std::cout, &_map, _player.getCurrent());
+        Location* loc = _player.getCurrent();
+        _display.drawMap(std::cout, &_map, loc);
     } else if (action == 3) {
         //display NPCs
         std::cout << "\nThis will be NPC list\n";

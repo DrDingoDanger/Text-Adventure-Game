@@ -14,6 +14,7 @@ class WorldMap {
     WorldMap();
     ~WorldMap();
     int getCurrentIndex(Location* current);
+    Location* updateLocation(const std::string& _direction, Location* current);
     Location* getLocation(int index);
 };
 

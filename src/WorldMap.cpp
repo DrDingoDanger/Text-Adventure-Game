@@ -21,6 +21,22 @@ WorldMap::~WorldMap() {
     }
 }
 
+Location* WorldMap::updateLocation(const std::string& _direction, Location* current) {
+    int index = getCurrentIndex(current);
+
+    if (_direction == "up") {
+        return _locations[index - 3];
+    } else if (_direction == "down") {
+        return _locations[index + 3];
+    } else if (_direction == "left") {
+        return _locations[index - 1];
+    } else if (_direction == "right") {
+        return _locations[index + 1];
+    }
+
+    return current;
+}
+
 int WorldMap::getCurrentIndex(Location* current) {
     auto it = std::find(_locations.begin(), _locations.end(), current);
 

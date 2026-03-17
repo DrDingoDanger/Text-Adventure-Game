@@ -19,8 +19,13 @@ Inventory& Player::getInventory() {
     return _inventory;
 }
 
-void Player::moveAction(const std::string& direction) {
-    (void)direction;
+void Player::moveAction(const std::string& direction, WorldMap* map, bool& valid) {
+    if(_currentLocation->canExit(direction, map)) {
+        _currentLocation = map->updateLocation(direction, _currentLocation);
+        valid = true;
+    } else {
+        valid = false;
+    }
 }
 
 void Player::takeDamage(int damage) {
@@ -55,7 +60,7 @@ Item* Player::getItemAt(int ind) {
 int Player::inventorySize() {
     return _inventory.size();
 }
-
+s
 Location* Player::getCurrent() {
     return _currentLocation;
 }
