@@ -1,45 +1,64 @@
 ### Game
-**Responsiblility:** The represents the game world as a whole. It manages the player, map, item win condition, ui/display, and game state.
+**Responsiblility:**  Handles the interactions for player movement, ui/display (map, inventory, NPC, crafting), win/lose/dead state.
 **Key Methods:**
+- 'isOver(): bool const' - Represents if the game is over.
 - 'start()' - Initializes the game.
-- 'update()' - Updates the current game/world state.
-- 'checkWin(): bool' - Verifies (returns true) if player has possesion of target win item.
-- 'checkLose(): bool' - Verifies (returns true) if the players health or hunger have reduced to zero.
-- 'endGame()' - Disables player and ends game. Rolls credits.
+- 'update()' - Handles the player interactions, displaying options.
+- 'checkWin(): bool const' - Verifies (returns true) if player has possesion of target win item.
+- 'checkLose(): bool const' - Verifies (returns true) if the players health has reduced to zero.
+- 'endGame()' - Tracks if game ends. Rolls credits.
 
 ### ScreenDisplay
-**Responsiblility:** Displays the game and its counterparts to the user. 
+**Responsiblility:** Displays player inventory, map, user actions, dialog, and gernal interfaces. 
 **Key Methods:**
-- 'drawMap(out:ostream,map:WorldMap*)' - Displays the world map with the players location.
-- 'displayChoices(out:ostream)' - Displays the players interactible choices to the user.
+- 'gameInstructions(out:ostream&)' - Displays the instrucitons for the game.
+- 'drawMap(out:ostream&,map:WorldMap*)' - Displays the world map with the players location.
+- 'displayChoices(out:ostream&)' - Displays the players interactible choices.
+- 'displayInventory(out:ostream&,_player:Player)' - Displays the characters current inventory.
 
 ### UserInput
 **Responsiblility:** Translates user input into player actions and movement.
 **Key Methods:**
-- 'moveDirection(): string' - Translates orthongonal input into a movement string for the player. 
-- 'playerAction(): int' - Use specified player actions and world interactions. Ex, "buy from store" or "view inventory".
+- 'moveDirection(): std::string' - takes orthoginal input and stores it as a movement string. 
+- 'playerAction(): int' - Use specified player actions and world interactions.
+- 'limitInput(max:int): int' - Checks that the players input is valid.
+- 'yesorNo(): char' - User confirmation prompt.
 - 'pressEnter()' - Confirmation input before continuing specified actions or scenarios.
 
 ### Player
 **Responsiblility:** Represents the player enitity. Manages player stats, crafting, buying, inventory, and location.
 **Key Methods:**
-- 'move(_direction:string)' - Updates the position of the player a location. Based on the movement string.
+- 'getHealth(): int const' - Returns the players current health.
+- 'getHunger(): int const' - Returns the players current hunger.
+- 'getInventory(): Inventory&' - Returns reference for player inventory.
+- 'getitemAt(ind:int): Item*' - Return pointer to player item.
+- 'getCurrent(): Location*' - return pointer to player location.
+- 'inventorySize(): int' - Returns the number of items in player inventory.
+- 'move(direction:Const std::string&,map:WorldMap*,valid:bool&)' - Validiates and preforms player move on map.
 - 'takeDamage(damage:int)' - Reduces health bar. Based on damage source.
-- 'eat(_food:Food)' - Allows the player to eat a food item.
-- 'craft(recipe:CraftingRecipe)' - Creates item using materials from inventory.
-- 'Buy(_item:Item,shop:ShopNPC)' - Transfers item from shop NPC to player.
+- 'eat(restore:int)' - Allows the player to eat a food item, restoring hunger.
+- 'craft(recipe:CraftingRecipe&)' - Verifies and creates item using materials from inventory.
+- 'Buy(_item:Item&,shop:ShopNPC&)' - Transfers item from shop NPC to player in echange for something else.
 
 ### WorldMap
-**Responsiblility:** Contains a list of locations the player can travel to.
+**Responsiblility:** Contains a list of locations the player can travel to and movement.
 **Key Methods:** 
-- None
+- 'getCurrentIndex(current:Location*): int' - Returns the index of a given location.
+- 'updateLocation(_direction:const std::string&,current:Location*): Location*' - Updated the players current location based on user input direction.
+- 'getLocation(index:int): Location*' - Returns a location given the index.
 
 ### Location (Abstract)
-**Responsiblility:** Tracks the resources, NPC's, recipes, and entounter rate of a set location in the world.
+**Responsiblility:** Tracks the name, resources, NPC's, Mobs, recipes, and entounter rate of a set location in the world.
 **Key Methods:**
-- 'enter(_player:Player)' -  Allows the player to enter a given location.
-- 'runEncounter(_player:Player,_mob:Mob): Mob' - Given the region encounter rate, determines if the player ecounters a Mob.
-- 'canExit(_direction:string)' - Checks if the direction (world location) chosen is a valid location.
+- 'enter(_player:Player*)' -  Allows the player to enter a given location.
+- 'runEncounter(_player:Player*,_mob:Mob*)' - Given the region encounter rate, determines if the player ecounters a Mob.
+- 'canExit(_direction:const std::string&,map:WorldMap*)' - Checks if the direction chosen to move is a valid location based on world border (3x3 grid square).
+- 'getName(_player:Player*): std::string' -  Returns the name of a given location.
+- 'getNPC(index:int): NPC*' -  Returns a specified NPC from a list within a given location.
+- 'getRecipe(index:int*): CraftingRecipe*' -  Returns a specified recipe from a list within a given location.
+- 'getInventoryt(_player:Player*): Inventory&' -  Returns a reference to the inventory (resources) of a given location.
+- 'getMob(index:int): Mob*' - Returns a specified Mob from a list within a given location..
+- 'numOfNPC(): int' -  Returns the number of NPCs in a given location.
 
 ### Village
 **Responsiblility:** Generalized reference for 'village' location.
@@ -57,25 +76,26 @@
 - None
 
 ### NPC (Abstract)
-**Responsiblility:** Tracks the name and location of each NPC.
+**Responsiblility:** Tracks the name and type of each NPC.
 **Key Methods:**
-- 'interact(_player:Player)' - Allows the player to interact with the given NPC.
+- 'getName(): std::string' - Returns NPC name;
+- 'getType(): std::string' - Returns NPC type;
 
 ### ShopNPC
-**Responsiblility:** Contains the inventory and price of a given NPC.
+**Responsiblility:** Contains the inventory of a given shop NPC.
 **Key Methods:**
-- 'buyItem(_player:Player,item:Item)' - Places item into player inventory in echange for materials.
-- 'sellItem(_player:Player,_item:Item)' - Removes item from player inventory and gains materials.
+- 'sellItem(player:Player&,item:Item&)' - Removes item from player inventory and player gains something.
 
 ### HelperNPC
 **Responsiblility:** Gives unique dialoge that hints how to solve the current puzzle.
 **Key Methods:**
-- 'giveHing()' - Allows the player to request a hint from the HelperNPC.
+- 'giveHing(): std::string' - Allows the player to request a hint from the HelperNPC.
 
 ### Item (Abstract)
-**Responsiblility:** Tracks item names and their corresponding use.
+**Responsiblility:** Tracks item names and types.
 **Key Methods:**
-- 'use(_player:Player)' - Allows the player to utalize an items 'use' property.
+- 'getName(): std::string' - Returns item name;
+- 'getType(): std::string' - Returns item type;
 
 ### Material
 **Responsiblility:** Represents a type of material used for crafting or trading. 
@@ -90,20 +110,28 @@
 ### Food
 **Responsiblility:** Refills the player hunger bar when used. Amount replenished varies on the food.
 **Key Methods:**
-- None
+- 'getHunger(): int' - Returns the players hunger.
+- 'setHunger(value:int)' - Sets the players hunger.
+
+### ItemCollection
+**Responsiblility:** Contains a list of all items and acts as the origin while everything either copies or points to its contents.
+**Key Methods:**
+- 'getSpecifiedItem(name:std::string): Item*' - Returns a pointer to a specified item.
 
 ### Inventory
-**Responsiblility:** Contains the players items and materials.
+**Responsiblility:** A vector containing the players items and materials.
 **Key Methods:**
-- 'add(_item:Item,count:int)' - Adds an amount of an item to the player inventory.
+- 'add(_item:Item*,count:int)' - Adds an amount of an item to the player inventory.
 - 'remove(_item:Item,count:int)' - Removes an amount of an item from the player inventory.
-- 'has(_item:Item,count:int): bool' - Verifies (returns true) if players inventory contains a specified item.
+- 'has(_item:Item*,count:int): bool' - Verifies (returns true) if players inventory contains a specified item.
+- 'size(): int' - Returns the total number of items within player inventory.
 
 ### Mob
-**Responsiblility:** Represents an enemy entity. Manages the mobs health, damage, and droppable inventory.
+**Responsiblility:** Represents an enemy entity. Manages the mobs name, health, damage, and droppable inventory.
 **Key Methods:**
-- 'attackPlayer(_player:Player)' - Deals damage to the player. Based on mod type.
-- 'takeDamage(damage:int)' - Reduces the mobs health. Based on player damage.
+- 'attackPlayer(_player:Player)' - Deals damage to the player.
+- 'takeDamage(damage:int)' - Reduces the mobs health.
+- 'isDead(): bool' - Verifies (returns true) if the mobs health is zero.
 
 ### Crafting Recipe
 **Responsiblility:** Contains a list of items the player can craft in exchange for materials from inventory. 
