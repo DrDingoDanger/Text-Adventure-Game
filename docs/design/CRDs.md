@@ -117,11 +117,6 @@
 - 'getHunger(): int' - Returns the players hunger.
 - 'setHunger(value:int)' - Sets the players hunger.
 
-### ItemCollection
-**Responsiblility:** Contains a list of all items and acts as the origin while everything either copies or points to its contents.
-**Key Methods:**
-- 'getSpecifiedItem(name:std::string): Item*' - Returns a pointer to a specified item.
-
 ### Inventory
 **Responsiblility:** A vector containing the players items and materials.
 **Key Methods:**
