@@ -24,13 +24,16 @@ void Game::update() {
     int action = _ui.playerAction();
 
     if (action == 0) {
+        Location* loc = _player.getCurrent();
+        _display.drawMap(std::cout, &_map, loc);
         std::string direction = _ui.moveDirection();
         bool valid = true;
         _player.moveAction(direction, &_map, valid);
-        while(!valid) {
+        if (!valid) {
             std::cout << "You cannot go off the map. Try Again\n";
-            direction = _ui.moveDirection();
-            _player.moveAction(direction, &_map, valid);
+            //Change to 'While' and un-comment for looping input
+            //direction = _ui.moveDirection();
+            //_player.moveAction(direction, &_map, valid);
         }
 
     } else if (action == 1) {
