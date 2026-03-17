@@ -19,8 +19,8 @@ class Player {
     Weapon* _equippedWeapon;
 
  public:
-    Player(Location* _currentLocation);
-
+    Player(Location* start);
+    ~Player();
     int getHealth() const;
     int getHunger() const;
     int inventorySize();
