@@ -5,6 +5,8 @@ Player::Player(Location* start)
         _inventory.add(new Material("Thing"), 1);
     }
 
+Player::~Player() {}
+
 int Player::getHealth() const {
     return _health;
 }

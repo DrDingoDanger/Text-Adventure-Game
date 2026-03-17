@@ -19,7 +19,7 @@ class Player {
 
  public:
     Player(Location* start);
-
+    ~Player();
     int getHealth() const;
     int getHunger() const;
     int inventorySize();
