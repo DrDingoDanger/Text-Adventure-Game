@@ -31,8 +31,13 @@ void Game::update() {
         _player.moveAction(direction, &_map, valid);
         if (!valid) {
             std::cout << "You cannot go off the map. Try Again\n";
+<<<<<<< HEAD
             //Change to 'While' and un-comment for looping input
             //direction = _ui.moveDirection();
+=======
+            //if we want it to loop just change this to 'while' and un-comment.
+           // direction = _ui.moveDirection();
+>>>>>>> Location/DisplayImplementation
             //_player.moveAction(direction, &_map, valid);
         }
 
