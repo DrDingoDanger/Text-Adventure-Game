@@ -24,16 +24,14 @@ void Inventory::remove(Item* _item, int count) {
     }
 }
 
-int Inventory::has(Item* _item, int count) {
-    (void)count;
-
+bool Inventory::has(Item* _item, int count) {
     int found = 0;
     for (Item* i : _items) {
         if (i->getName() == _item->getName()) {
             found++;
         }
     }
-    return found;
+    return found >= count;
 }
 
 int Inventory::size() {
