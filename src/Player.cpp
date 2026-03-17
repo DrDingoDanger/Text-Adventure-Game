@@ -60,7 +60,7 @@ Item* Player::getItemAt(int ind) {
 int Player::inventorySize() {
     return _inventory.size();
 }
-s
+
 Location* Player::getCurrent() {
     return _currentLocation;
 }
