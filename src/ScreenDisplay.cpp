@@ -10,10 +10,13 @@ void ScreenDisplay::gameInstructions(std::ostream& out) {
     out << "\n-- Text-Adventure-Game --\n"
     << "Enter the requested information to navigate through the game.\n"
     << "Move: change location by moving left, right, up, or down.\n"
-    << "viewInv: Look at the items in your inventory, you are given the option to use them.\n"
+    << "viewInv: Look at the items in your inventory,"
+    << "you are given the option to use them.\n"
     << "viewMap: View the world map, your location is in braces.\n"
-    << "interactNPC: get a list of NPCs in the current location and the ability to interact with them.\n"
-    << "areaResources: Look at all available resources in the location and the option to collect them.\n"
+    << "interactNPC: get a list of NPCs in the"
+    << "current location and the ability to interact with them.\n"
+    << "areaResources: Look at all available resources in the"
+    << "location and the option to collect them.\n"
     << "gameInstructions: View this help message.\n\n";
 }
 
@@ -31,7 +34,8 @@ void ScreenDisplay::displayNPC(std::ostream& out, Location*& loc) {
     out << str << "------------------\n";
 }
 
-void ScreenDisplay::drawMap(std::ostream& out, WorldMap* map, Location* current) {
+void ScreenDisplay::drawMap(std::ostream& out,
+            WorldMap* map, Location* current) {
     int cIndex = 0;
 
     if (current != nullptr) {
@@ -77,7 +81,7 @@ void ScreenDisplay::displayPlayerStats(std::ostream& out, Player player) {
         << "Health: " << player.getHealth() << '\n';
 }
 
-void ScreenDisplay::displayInventory(std::ostream& out, Inventory& inv){
+void ScreenDisplay::displayInventory(std::ostream& out, Inventory& inv) {
     //Commented stuff is for future implementaion.
     int num = inv.size();
     std::string str;

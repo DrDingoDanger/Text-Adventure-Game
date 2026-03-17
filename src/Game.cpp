@@ -1,9 +1,6 @@
-#include "Game.hpp"
-
 #include <iostream>
-
-Game::Game() : _player(_map.getLocation(0)){
-}
+#include "Game.hpp"
+Game::Game() : _player(_map.getLocation(0)) {}
 
 bool Game::isOver() const {
     return _isOver;
@@ -11,14 +8,12 @@ bool Game::isOver() const {
 
 void Game::start() {
     _isOver = false;
-
     while (!_isOver) {
         update();
     }
 }
 
 void Game::update() {
-
     _display.displayAlwaysChoices(std::cout);
 
     int action = _ui.playerAction();
@@ -42,14 +37,15 @@ void Game::update() {
         _display.displayPlayerStats(std::cout, _player);
         //use item
         std::cout << "Would you like to use an item?\n";
-        if(_player.inventorySize() > 0) {
+        if (_player.inventorySize() > 0) {
             char ans = _ui.yesOrNo();
-            if(ans == 'y') {
+            if (ans == 'y') {
                 std::cout << "Enter the items associated number.\n";
                 int choice = _ui.limitInput(_player.inventorySize());
                 Item* temp = _player.getItemAt(choice);
                 //will need to make this so they cant access non-existing num
-                if (temp->getType() == "material" || temp->getType() == "weapon") {
+                if (temp->getType() == "material" ||
+                    temp->getType() == "weapon") {
                     std::cout << "This item cannot be used.";
                 } else if (temp->getType() == "food") {
                     Food* tempF = dynamic_cast<Food*>(temp);
@@ -69,7 +65,7 @@ void Game::update() {
         //interact NPC
         std::cout << "Would you like to interact with an NPC?\n";
         char ans = _ui.yesOrNo();
-        if(ans == 'y') {
+        if (ans == 'y') {
             std::cout << "Enter the NPCs associated number.\n";
             int choice = _ui.limitInput(loc->numOfNPC());
             NPC* temp = loc->getNPC(choice);
@@ -89,9 +85,9 @@ void Game::update() {
         _display.displayInventory(std::cout, temp);
         std::cout << "Would you like to collect these items?\n";
         char ans = _ui.yesOrNo();
-        if(ans == 'y') {
+        if (ans == 'y') {
             Inventory& tempP = _player.getInventory();
-            while(temp.size() != 0) {
+            while (temp.size() != 0) {
                 Item* item = temp.get(0);
                 tempP.add(item, 1);
                 temp.remove(item, 1);

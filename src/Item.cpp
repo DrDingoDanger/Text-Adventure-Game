@@ -16,7 +16,8 @@ Material::Material(std::string name) : Item(name, "material") {}
 
 Material::~Material() {}
 
-Food::Food(std::string name, int value) : Item(name, "food"), _hungerValue(value){}
+Food::Food(std::string name, int value) : Item(name, "food"),
+           _hungerValue(value) {}
 
 Food::~Food() {}
 

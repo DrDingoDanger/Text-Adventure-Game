@@ -34,7 +34,5 @@ class Player {
     Inventory& getInventory();
     Item* getItemAt(int ind);
     Location* getCurrent();
-   
 };
-
 #endif

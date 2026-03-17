@@ -15,9 +15,9 @@ class Item {
 };
 
 class Material : public Item {
-   public:
-      Material(std::string name);
-      ~Material();
+ public:
+    Material(std::string name);
+    ~Material();
 };
 
 class Food : public Item {

@@ -2,6 +2,7 @@
 #define SCREENDISPLAY_HPP
 
 #include <iostream>
+#include <string>
 
 #include "WorldMap.hpp"
 #include "Location.hpp"
@@ -9,7 +10,8 @@
 
 class ScreenDisplay {
  private:
-    std::string base[6] = {"move", "viewStats", "viewMap", "interactNPC", "areaResources", "gameInstructions"};
+    std::string base[6] = {"move", "viewStats", "viewMap", "interactNPC",
+      "areaResources", "gameInstructions"};
 
  public:
     ScreenDisplay();
