@@ -8,7 +8,7 @@ WorldMap::WorldMap() : _current(nullptr) {
     inv.add(new Material("Diamond"), 2);
     std::vector<std::string> dia;
     dia.push_back("Trade items with NPC to gain new items.");
-    dia.push_back("Moving between locations costs"+
+    dia.push_back("Moving between locations costs"
                   "hunger, eating restores hunger.");
     dia.push_back("Enjoy this game or else you. are. cursed.");
     dia.push_back("I love this gamehousen.");
