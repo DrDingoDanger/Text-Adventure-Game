@@ -1,10 +1,11 @@
 ### Game
-**Responsiblility:** The represents the game world as a whole. It manages the player, map, item win condition, ui/display, and game state.
+**Responsiblility:**  Handles the interactions for player movement, ui/display (map, inventory, NPC, crafting), win/lose/dead state.
 **Key Methods:**
+- 'isOver(): bool' - Represents if the game is over.
 - 'start()' - Initializes the game.
-- 'update()' - Updates the current game/world state.
+- 'update()' - Handles the player interactions, displaying options.
 - 'checkWin(): bool' - Verifies (returns true) if player has possesion of target win item.
-- 'checkLose(): bool' - Verifies (returns true) if the players health or hunger have reduced to zero.
+- 'checkLose(): bool' - Verifies (returns true) if the players health has reduced to zero.
 - 'endGame()' - Disables player and ends game. Rolls credits.
 
 ### ScreenDisplay
