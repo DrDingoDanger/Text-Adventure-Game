@@ -15,10 +15,21 @@ WorldMap::WorldMap() : _current(nullptr) {
     std::vector<NPC*> npcs;
     npcs.push_back(new HelpNPC("Danhousen", dia));
     npcs.push_back(new ShopNPC("Hangman", inv));
-    for (int i = 0; i < 9; i++) {
-        _locations.push_back(new Location("L"+std::to_string(i), npcs, {}, {}, inv));
+    Inventory inv1;
+    inv1.add(new Food("Apple", 3), 1);
+    inv1.add(new Material("Coal"), 4);
+    for (int i = 0; i < 3; i++) {
+        _locations.push_back(new Mountain("M"+std::to_string(i), npcs, {}, {}, inv1));
     }
-
+    Inventory inv2;
+    inv2.add(new Food("Banana", 4), 6);
+    inv2.add(new Material("Grass"), 1);
+    for (int i = 3; i < 6; i++) {
+        _locations.push_back(new Field("F"+std::to_string(i), npcs, {}, {}, inv2));
+    }
+    for (int i = 6; i < 9; i++) {
+        _locations.push_back(new Mountain("M"+std::to_string(i), npcs, {}, {}, inv1));
+    }
     if (!_locations.empty()) {
         _current = _locations[0];
     }

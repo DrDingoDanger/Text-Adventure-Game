@@ -4,8 +4,8 @@
 #include "WorldMap.hpp"
 
 Location::Location(std::string name, std::vector<NPC*> npcCollection,
-    std::vector<CraftingRecipe*> recipes, std::vector<Mob*> mobs, Inventory areaResources)
-    : name(name), _npcCollection(npcCollection), _recipes(recipes), _mobs(mobs), _areaResources(areaResources) {}
+    std::vector<CraftingRecipe*> recipes, std::vector<Mob*> mobs, Inventory areaResources, float encounterRate)
+    : name(name), _npcCollection(npcCollection), _recipes(recipes), _mobs(mobs), _areaResources(areaResources), encounterRate(encounterRate) {}
 
 Location::~Location() {}
 
@@ -50,3 +50,17 @@ Inventory& Location::getInventory() {
 int Location::numOfNPC() {
     return _npcCollection.size();
 }
+
+Mountain::Mountain(std::string name, std::vector<NPC*> _npcCollection,
+         std::vector<CraftingRecipe*> _recipes, std::vector<Mob*> _mobs, Inventory inv) :
+         Location(name, _npcCollection, _recipes, _mobs, inv, 0.6){
+}
+
+Mountain::~Mountain() {}
+
+Field::Field(std::string name, std::vector<NPC*> _npcCollection,
+         std::vector<CraftingRecipe*> _recipes, std::vector<Mob*> _mobs, Inventory inv) :
+         Location(name, _npcCollection, _recipes, _mobs, inv, 0.3){
+}
+
+Field::~Field() {}
