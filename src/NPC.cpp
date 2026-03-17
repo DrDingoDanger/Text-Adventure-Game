@@ -29,14 +29,18 @@ std::string HelpNPC::giveHint() {
     return random;
 }
 
-ShopNPC::ShopNPC(std::string name, std::vector<Item*> items)
+ShopNPC::ShopNPC(std::string name, Inventory& items)
     : NPC(name, "shop") {
     for (std::size_t i = 0; i < items.size(); i++) {
-        stock.add(items[i], 1);
+        stock.add(items.get(i), 1);
     }
 }
 
 ShopNPC::~ShopNPC() {}
+
+Inventory& ShopNPC::getInventory() {
+    return stock;
+}
 
 void ShopNPC::sellItem(Player& player, Item& item) {
     (void)player;

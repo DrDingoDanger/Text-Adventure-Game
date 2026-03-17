@@ -40,10 +40,12 @@ void Game::update() {
 >>>>>>> Location/DisplayImplementation
             //_player.moveAction(direction, &_map, valid);
         }
+        _player.eat(-5);
 
     } else if (action == 1) {
         //display inventory
-        _display.displayInventory(std::cout, _player);
+        _display.displayInventory(std::cout, _player.getInventory());
+        _display.displayPlayerStats(std::cout, _player);
         //use item
         std::cout << "Would you like to use an item?\n";
         if(_player.inventorySize() > 0) {
@@ -59,6 +61,7 @@ void Game::update() {
                     Food* tempF = dynamic_cast<Food*>(temp);
                     int restore = tempF->getHunger();
                     _player.eat(restore);
+                    _player.removeItem(tempF);
                 }
             }
         }
@@ -67,29 +70,32 @@ void Game::update() {
         _display.drawMap(std::cout, &_map, loc);
     } else if (action == 3) {
         //display NPCs
-        std::cout << "\nThis will be NPC list\n";
+        Location* loc = _player.getCurrent();
+        _display.displayNPC(std::cout, loc);
         //interact NPC
         std::cout << "Would you like to interact with an NPC?\n";
         char ans = _ui.yesOrNo();
         if(ans == 'y') {
             std::cout << "Enter the NPCs associated number.\n";
-            Location* loc = _player.getCurrent();
             int choice = _ui.limitInput(loc->numOfNPC());
             NPC* temp = loc->getNPC(choice);
             if (temp->getType() == "help") {
                 HelpNPC* tempH = dynamic_cast<HelpNPC*>(temp);
-                tempH->giveHint();
+                std::cout << '\n' << tempH->giveHint() << '\n';
             } else if (temp->getType() == "shop") {
-
+                ShopNPC* tempS = dynamic_cast<ShopNPC*>(temp);
+                _display.displayInventory(std::cout, tempS->getInventory());
+                std::cout << "Trading with ShopNPC has not been implemented\n";
             }
         }
     } else if (action == 4) {
-        std::cout << "View area resources.\n";
+        Location* loc = _player.getCurrent();
+        Inventory& temp = loc->getInventory();
+        //std::cout << "View area resources.\n";
+        _display.displayInventory(std::cout, temp);
         std::cout << "Would you like to collect these items?\n";
         char ans = _ui.yesOrNo();
         if(ans == 'y') {
-            Location* loc = _player.getCurrent();
-            Inventory& temp = loc->getInventory();
             Inventory& tempP = _player.getInventory();
             while(temp.size() != 0) {
                 Item* item = temp.get(0);

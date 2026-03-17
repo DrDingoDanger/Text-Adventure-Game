@@ -53,6 +53,10 @@ void Player::buy(Item& item, ShopNPC& shop) {
     shop.sellItem(*this, item);
 }
 
+void Player::removeItem(Item* item) {
+    _inventory.remove(item, 1);
+}
+
 Item* Player::getItemAt(int ind) {
     return _inventory.get(ind);
 }

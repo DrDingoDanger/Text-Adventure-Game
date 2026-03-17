@@ -17,6 +17,20 @@ void ScreenDisplay::gameInstructions(std::ostream& out) {
     << "gameInstructions: View this help message.\n\n";
 }
 
+void ScreenDisplay::displayNPC(std::ostream& out, Location*& loc) {
+    int num = loc->numOfNPC();
+    std::string str;
+    out << "NPCs:\n" << "------------------\n";
+    //I is tracking current, skipping dups. J numbers each unique.
+    for (int i = 0, j = 0; i < num; i++, j++) {
+        str += std::to_string(j);
+        str += ". ";
+        str += loc->getNPC(i)->getName();
+        str += "\n";
+    }
+    out << str << "------------------\n";
+}
+
 void ScreenDisplay::drawMap(std::ostream& out, WorldMap* map, Location* current) {
     int cIndex = 0;
 
@@ -58,22 +72,26 @@ void ScreenDisplay::displayAlwaysChoices(std::ostream& out) {
     }
 }
 
-void ScreenDisplay::displayInventory(std::ostream& out, Player _player){
+void ScreenDisplay::displayPlayerStats(std::ostream& out, Player player) {
+    out << "Hunger: " << player.getHunger() << '\n'
+        << "Health: " << player.getHealth() << '\n';
+}
+
+void ScreenDisplay::displayInventory(std::ostream& out, Inventory& inv){
     //Commented stuff is for future implementaion.
-    Inventory& inventory = _player.getInventory();
-    int num = inventory.size();
+    int num = inv.size();
     std::string str;
 
     out << "Inventory:\n" << "------------------\n";
 
     //I is tracking current, skipping dups. J numbers each unique.
-    for (int i = 0, j = 1; i < num; i++, j++) {
-        //int mult = 1;
+    for (int i = 0, j = 0; i < num; i++, j++) {
+       // int mult = 1;
         str += std::to_string(j);
         str += ". ";
-        str += inventory.get(i)->getName();
-
-        /*while (i + 1 < num && inventory->get(i) == inventory->get(i + 1)) {
+        str += inv.get(i)->getName();
+        /*
+        while (i + 1 < num && inv.get(i) == inv.get(i + 1)) {
             mult++;
             i++;
         }
@@ -82,8 +100,8 @@ void ScreenDisplay::displayInventory(std::ostream& out, Player _player){
             str += ' ';
             str += std::to_string(mult);
             str += 'x';       
-        }*/
-
+        }
+*/
         str += "\n";
     }
 

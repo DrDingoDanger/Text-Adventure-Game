@@ -5,8 +5,18 @@
 WorldMap::WorldMap() : _current(nullptr) {
     Inventory inv;
     inv.add(new Food("Apple", 3), 1);
+    inv.add(new Material("Diamond"), 2);
+    std::vector<std::string> dia;
+    dia.push_back("Trade items with NPC to gain new items.");
+    dia.push_back("Moving between locations costs hunger, eating restores hunger.");
+    dia.push_back("Enjoy this game or else you. are. cursed.");
+    dia.push_back("I love this gamehousen.");
+    dia.push_back("Another random dialogue option");
+    std::vector<NPC*> npcs;
+    npcs.push_back(new HelpNPC("Danhousen", dia));
+    npcs.push_back(new ShopNPC("Hangman", inv));
     for (int i = 0; i < 9; i++) {
-        _locations.push_back(new Location("L"+std::to_string(i), {}, {}, {}, inv));
+        _locations.push_back(new Location("L"+std::to_string(i), npcs, {}, {}, inv));
     }
 
     if (!_locations.empty()) {
