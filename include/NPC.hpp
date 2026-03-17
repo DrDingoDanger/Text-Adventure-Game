@@ -36,7 +36,7 @@ class ShopNPC : public NPC {
     Inventory stock;
 
  public:
-    ShopNPC(std::string name, std::vector<Item*> items);
+    ShopNPC(std::string name, Inventory& items);
     ~ShopNPC();
     void sellItem(Player& player, Item& item);
 };

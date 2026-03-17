@@ -16,7 +16,7 @@ class Player {
     int _hunger = 100;
     Inventory _inventory;
     Location* _currentLocation;
-    Weapon _equippedWeapon;
+    Weapon* _equippedWeapon;
 
  public:
     Player(Location* start);
