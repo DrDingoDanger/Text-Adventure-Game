@@ -15,6 +15,8 @@
 - 'drawMap(out:ostream&,map:WorldMap*)' - Displays the world map with the players location.
 - 'displayChoices(out:ostream&)' - Displays the players interactible choices.
 - 'displayInventory(out:ostream&,_player:Player)' - Displays the characters current inventory.
+- 'displayNPC(out:ostream&,loc:Location*&)' - Displays what NPC's the player can interact with.
+- 'displayPlayerStats(out:ostream&,player:Player)' - Displays the characters current health and hunger.
 
 ### UserInput
 **Responsiblility:** Translates user input into player actions and movement.
@@ -39,6 +41,7 @@
 - 'eat(restore:int)' - Allows the player to eat a food item, restoring hunger.
 - 'craft(recipe:CraftingRecipe&)' - Verifies and creates item using materials from inventory.
 - 'Buy(_item:Item&,shop:ShopNPC&)' - Transfers item from shop NPC to player in echange for something else.
+- 'removeItem(item:Item*)' - Removes specified item from player inventory.
 
 ### WorldMap
 **Responsiblility:** Contains a list of locations the player can travel to and movement.
@@ -85,6 +88,7 @@
 **Responsiblility:** Contains the inventory of a given shop NPC.
 **Key Methods:**
 - 'sellItem(player:Player&,item:Item&)' - Removes item from player inventory and player gains something.
+- 'getInventory(): Inventory&' - Returns a reference to the shop NPC's inventory.
 
 ### HelperNPC
 **Responsiblility:** Gives unique dialoge that hints how to solve the current puzzle.
@@ -113,11 +117,6 @@
 - 'getHunger(): int' - Returns the players hunger.
 - 'setHunger(value:int)' - Sets the players hunger.
 
-### ItemCollection
-**Responsiblility:** Contains a list of all items and acts as the origin while everything either copies or points to its contents.
-**Key Methods:**
-- 'getSpecifiedItem(name:std::string): Item*' - Returns a pointer to a specified item.
-
 ### Inventory
 **Responsiblility:** A vector containing the players items and materials.
 **Key Methods:**
@@ -125,6 +124,7 @@
 - 'remove(_item:Item,count:int)' - Removes an amount of an item from the player inventory.
 - 'has(_item:Item*,count:int): bool' - Verifies (returns true) if players inventory contains a specified item.
 - 'size(): int' - Returns the total number of items within player inventory.
+- 'get(index:int): Item*' - Returns a pointer to an item at a specified index.
 
 ### Mob
 **Responsiblility:** Represents an enemy entity. Manages the mobs name, health, damage, and droppable inventory.
