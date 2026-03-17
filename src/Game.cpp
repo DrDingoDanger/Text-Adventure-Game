@@ -19,6 +19,7 @@ void Game::update() {
     int action = _ui.playerAction();
 
     if (action == 0) {
+        //MOVEMENT
         Location* loc = _player.getCurrent();
         _display.drawMap(std::cout, &_map, loc);
         std::string direction = _ui.moveDirection();
@@ -29,6 +30,7 @@ void Game::update() {
             direction = _ui.moveDirection();
             _player.moveAction(direction, &_map, valid);
         }
+        //REMOVE HUNGER
         _player.eat(-5);
 
     } else if (action == 1) {
@@ -40,10 +42,11 @@ void Game::update() {
         if (_player.inventorySize() > 0) {
             char ans = _ui.yesOrNo();
             if (ans == 'y') {
+                //GET ITEM NO USE
                 std::cout << "Enter the items associated number.\n";
+                //CAN ONLY CHOOSE ITEM THAT EXISTS
                 int choice = _ui.limitInput(_player.inventorySize());
                 Item* temp = _player.getItemAt(choice);
-                //will need to make this so they cant access non-existing num
                 if (temp->getType() == "material" ||
                     temp->getType() == "weapon") {
                     std::cout << "This item cannot be used.";
@@ -56,6 +59,7 @@ void Game::update() {
             }
         }
     } else if (action == 2) {
+        //DRAW MAP
         Location* loc = _player.getCurrent();
         _display.drawMap(std::cout, &_map, loc);
     } else if (action == 3) {
@@ -70,21 +74,24 @@ void Game::update() {
             int choice = _ui.limitInput(loc->numOfNPC());
             NPC* temp = loc->getNPC(choice);
             if (temp->getType() == "help") {
+                //HELPNPC INTERACT
                 HelpNPC* tempH = dynamic_cast<HelpNPC*>(temp);
                 std::cout << '\n' << tempH->giveHint() << '\n';
             } else if (temp->getType() == "shop") {
+                //SHOPNPC INTERACT
                 ShopNPC* tempS = dynamic_cast<ShopNPC*>(temp);
                 _display.displayInventory(std::cout, tempS->getInventory());
                 std::cout << "Trading with ShopNPC has not been implemented\n";
             }
         }
     } else if (action == 4) {
+        //DISPLAY AREA RESOURCES
         Location* loc = _player.getCurrent();
         Inventory& temp = loc->getInventory();
-        //std::cout << "View area resources.\n";
         _display.displayInventory(std::cout, temp);
         std::cout << "Would you like to collect these items?\n";
         char ans = _ui.yesOrNo();
+        //COLLECT RESOURCES
         if (ans == 'y') {
             Inventory& tempP = _player.getInventory();
             while (temp.size() != 0) {
@@ -94,8 +101,10 @@ void Game::update() {
             }
         }
     } else if (action == 5) {
+        //DISPLAY GAME INSTRUCTIONS
         _display.gameInstructions(std::cout);
     } else {
+        //NOT A VALID ACTION CHOICE
         std::cout << "Invalid input";
     }
 

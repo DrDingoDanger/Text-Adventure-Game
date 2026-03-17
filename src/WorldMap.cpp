@@ -1,7 +1,7 @@
 #include <algorithm>
 
 #include "WorldMap.hpp"
-
+//MAKE THE MAP
 WorldMap::WorldMap() : _current(nullptr) {
     Inventory inv;
     inv.add(new Food("Apple", 3), 1);
@@ -45,7 +45,6 @@ WorldMap::~WorldMap() {
         _locations.pop_back();
     }
 }
-
 Location* WorldMap::updateLocation(const std::string& _direction,
                                    Location* current) {
     int index = getCurrentIndex(current);

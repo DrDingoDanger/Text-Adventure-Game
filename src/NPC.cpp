@@ -17,7 +17,7 @@ HelpNPC::HelpNPC(std::string name, std::vector<std::string> dia)
     : NPC(name, "help"), diaOptions(dia) {}
 
 HelpNPC::~HelpNPC() {}
-
+//HELP NPC WILL RETURN "USEFUL" HINT
 std::string HelpNPC::giveHint() {
     if (diaOptions.empty()) {
         return "";
@@ -28,7 +28,7 @@ std::string HelpNPC::giveHint() {
     std::string random = diaOptions[dist(gen)];
     return random;
 }
-
+//SHOPNPC WILL MAKE TRADES WITH PLAYER
 ShopNPC::ShopNPC(std::string name, Inventory& items)
     : NPC(name, "shop") {
     for (std::size_t i = 0; i < items.size(); i++) {

@@ -18,7 +18,7 @@ int Player::getHunger() const {
 Inventory& Player::getInventory() {
     return _inventory;
 }
-
+//CHANGES PLAYERS CURRENT LOCATION
 void Player::moveAction(const std::string& direction,
                         WorldMap* map, bool& valid) {
     if (_currentLocation->canExit(direction, map)) {
@@ -28,7 +28,7 @@ void Player::moveAction(const std::string& direction,
         valid = false;
     }
 }
-
+//MODIFIES PLAYER HEALTH
 void Player::takeDamage(int damage) {
     _health -= damage;
 
@@ -36,7 +36,7 @@ void Player::takeDamage(int damage) {
         _health = 0;
     }
 }
-
+//MODIFIES PLAYER HUNGER
 void Player::eat(int restore) {
     _hunger += restore;
     if (_hunger > 100) {

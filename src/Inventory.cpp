@@ -3,13 +3,13 @@
 Inventory::Inventory() {}
 
 Inventory::~Inventory() {}
-
+//ADD ITEM TO INVENTORY
 void Inventory::add(Item* _item, int count) {
     for (int i = 0; i < count; i++) {
         _items.push_back(_item);
     }
 }
-
+//REMOVE ITEM FROM INVENTORY
 void Inventory::remove(Item* _item, int count) {
     int removed = 0;
     auto it = _items.begin();
@@ -23,7 +23,7 @@ void Inventory::remove(Item* _item, int count) {
         }
     }
 }
-
+//CHECK IF INVENTORY HAS NUMBER OF ITEM
 bool Inventory::has(Item* _item, int count) {
     int found = 0;
     for (Item* i : _items) {
@@ -33,11 +33,11 @@ bool Inventory::has(Item* _item, int count) {
     }
     return found >= count;
 }
-
+//RETURN CURRENT INVENTORY SIZE
 int Inventory::size() {
     return _items.size();
 }
-
+//GET ITEM AT INDEX
 Item* Inventory::get(int index) {
     return _items[index];
 }

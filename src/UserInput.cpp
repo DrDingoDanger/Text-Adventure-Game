@@ -10,7 +10,7 @@ std::string UserInput::moveDirection() {
     std::cin >> direction;
     return direction;
 }
-
+//GET NUM 0<=X<MAX
 int UserInput::limitInput(int max) {
     int choice;
     bool goodInput = false;
@@ -25,10 +25,10 @@ int UserInput::limitInput(int max) {
     }
     return choice;
 }
-
+//GET ACTION NUMBER
 int UserInput::playerAction() {
     int action;
-    std::cout << "Enter action: ";
+    std::cout << "Enter action number: ";
     std::cin >> action;
     return action;
 }

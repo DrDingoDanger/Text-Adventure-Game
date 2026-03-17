@@ -11,8 +11,6 @@ Location::Location(std::string name, std::vector<NPC*> npcCollection,
 
 Location::~Location() {}
 
-void Location::enter(Player* _player) {}
-
 void Location::runEncounter(Player* _player, Mob* _mob) {}
 
 bool Location::canExit(const std::string& _direction, WorldMap* map) {
