@@ -86,11 +86,11 @@ void ScreenDisplay::displayInventory(std::ostream& out, Inventory& inv){
 
     //I is tracking current, skipping dups. J numbers each unique.
     for (int i = 0, j = 0; i < num; i++, j++) {
-        int mult = 1;
+       // int mult = 1;
         str += std::to_string(j);
         str += ". ";
         str += inv.get(i)->getName();
-
+        /*
         while (i + 1 < num && inv.get(i) == inv.get(i + 1)) {
             mult++;
             i++;
@@ -101,7 +101,7 @@ void ScreenDisplay::displayInventory(std::ostream& out, Inventory& inv){
             str += std::to_string(mult);
             str += 'x';       
         }
-
+*/
         str += "\n";
     }
 

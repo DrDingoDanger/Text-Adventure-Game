@@ -30,6 +30,7 @@ class Player {
     void eat(int restore);
     void craft(CraftingRecipe& recipe);
     void buy(Item& item, ShopNPC& shop);
+    void removeItem(Item* item);
     Inventory& getInventory();
     Item* getItemAt(int ind);
     Location* getCurrent();

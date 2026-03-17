@@ -53,6 +53,7 @@ void Game::update() {
                     Food* tempF = dynamic_cast<Food*>(temp);
                     int restore = tempF->getHunger();
                     _player.eat(restore);
+                    _player.removeItem(tempF);
                 }
             }
         }
@@ -74,7 +75,9 @@ void Game::update() {
                 HelpNPC* tempH = dynamic_cast<HelpNPC*>(temp);
                 std::cout << '\n' << tempH->giveHint() << '\n';
             } else if (temp->getType() == "shop") {
-
+                ShopNPC* tempS = dynamic_cast<ShopNPC*>(temp);
+                _display.displayInventory(std::cout, tempS->getInventory());
+                std::cout << "Trading with ShopNPC has not been implemented\n";
             }
         }
     } else if (action == 4) {

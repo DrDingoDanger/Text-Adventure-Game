@@ -38,6 +38,10 @@ ShopNPC::ShopNPC(std::string name, Inventory& items)
 
 ShopNPC::~ShopNPC() {}
 
+Inventory& ShopNPC::getInventory() {
+    return stock;
+}
+
 void ShopNPC::sellItem(Player& player, Item& item) {
     (void)player;
     stock.remove(&item, 1);

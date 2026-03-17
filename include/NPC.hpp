@@ -39,6 +39,7 @@ class ShopNPC : public NPC {
     ShopNPC(std::string name, Inventory& items);
     ~ShopNPC();
     void sellItem(Player& player, Item& item);
+    Inventory& getInventory();
 };
 
 #endif
