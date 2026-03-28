@@ -6,6 +6,7 @@
 #include <random>
 #include "Inventory.hpp"
 #include "Item.hpp"
+#include "CraftingRecipe.hpp"
 
 class Location;
 class Player;
@@ -33,13 +34,14 @@ class HelpNPC : public NPC {
 
 class ShopNPC : public NPC {
  private:
-    Inventory stock;
+    std::vector<CraftingRecipe*> _trades;
 
  public:
-    ShopNPC(std::string name, Inventory& items);
+    ShopNPC(std::string name, std::vector<CraftingRecipe*> trades);
     ~ShopNPC();
-    void sellItem(Player& player, Item& item);
-    Inventory& getInventory();
+    //void sellItem(Player& player, Item& item);
+
+    std::vector<CraftingRecipe*>& getTrades();
 };
 
 #endif

@@ -21,6 +21,7 @@ class ScreenDisplay {
     void drawMap(std::ostream& out, WorldMap* map, Location* current);
     void displayAlwaysChoices(std::ostream& out);
     void displayPlayerStats(std::ostream& out, Player player);
+    void displayTrades(std::ostream& out, std::vector<CraftingRecipe*>& trades);
     void displayInventory(std::ostream& out, Inventory& inv);
 };
 

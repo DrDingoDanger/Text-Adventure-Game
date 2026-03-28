@@ -2,17 +2,20 @@
 #define CRAFTINGRECIPE_HPP
 
 #include <vector>
+#include <string>
 #include "Inventory.hpp"
 #include "Item.hpp"
 
 class CraftingRecipe {
  private:
-    Inventory inputs;
-    Item* output;
+    std::vector<std::string> _inputs;
+    Item* _output;
 
  public:
-    CraftingRecipe(std::vector<Item*> _inputs, Item* _output);
+    CraftingRecipe(std::vector<std::string> inputs, Item* output);
     ~CraftingRecipe();
+    std::vector<std::string> getInputs();
+    Item* getOutput();
     bool canCraft(Inventory _inventory);
     void craft(Inventory _inventory);
 };

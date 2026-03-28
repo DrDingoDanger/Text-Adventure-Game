@@ -51,7 +51,7 @@ void Player::craft(CraftingRecipe& recipe) {
 }
 
 void Player::buy(Item& item, ShopNPC& shop) {
-    shop.sellItem(*this, item);
+    //shop.sellItem(*this, item);
 }
 
 void Player::removeItem(Item* item) {
