@@ -80,7 +80,8 @@ void Game::update() {
             } else if (temp->getType() == "shop") {
                 //SHOPNPC INTERACT
                 ShopNPC* tempS = dynamic_cast<ShopNPC*>(temp);
-                _display.displayTrades(std::cout, tempS->getTrades());
+                Inventory& temp = _player.getInventory();
+                _display.displayTrades(std::cout, tempS->getTrades(), temp);
                 std::cout << "Trading with ShopNPC has not been implemented\n";
             }
         }

@@ -13,12 +13,17 @@ Item* CraftingRecipe::getOutput() {
     return _output;
 }
 
-bool CraftingRecipe::canCraft(Inventory _inventory) {
+bool CraftingRecipe::canCraft(Inventory& _inventory) {
+    std::map<std::string, int> requirements;
     for (const std::string& name : _inputs) {
-        //Need to make function to return count by name
-        //if (!inventoryHasItemByName(_inventory, name)) {
+        requirements[name]++;
+    }
+    for (const auto& kvp : requirements) {
+        const std::string& name = kvp.first;
+        int amountNeeded = kvp.second;
+        if (!_inventory.hasName(name, amountNeeded)) {
             return false;
-        //}
+        }
     }
     return true;
 }

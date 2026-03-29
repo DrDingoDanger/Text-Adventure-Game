@@ -14,7 +14,9 @@ class Inventory {
     ~Inventory();
     void add(Item* _item, int _count);
     void remove(Item* _item, int count);
+    void removeByName(std::string name, int count);
     bool has(Item* _item, int count);
+    bool hasName(std::string name, int count);
     int size();
     Item* get(int index);
 };

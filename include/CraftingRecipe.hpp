@@ -2,6 +2,8 @@
 #define CRAFTINGRECIPE_HPP
 
 #include <vector>
+#include <utility>
+#include <map>
 #include <string>
 #include "Inventory.hpp"
 #include "Item.hpp"
@@ -16,7 +18,7 @@ class CraftingRecipe {
     ~CraftingRecipe();
     std::vector<std::string> getInputs();
     Item* getOutput();
-    bool canCraft(Inventory _inventory);
+    bool canCraft(Inventory& _inventory);
     void craft(Inventory _inventory);
 };
 

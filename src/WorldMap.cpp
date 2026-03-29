@@ -16,7 +16,7 @@ WorldMap::WorldMap() : _current(nullptr) {
     std::vector<NPC*> npcs;
     std::vector<CraftingRecipe*> trades;
     std::vector<std::string> emeraldCost;
-    emeraldCost.push_back("Banana");
+    emeraldCost.push_back("Apple");
     emeraldCost.push_back("Coal");
     std::vector<std::string> chickenCost;
     chickenCost.push_back("Banana");

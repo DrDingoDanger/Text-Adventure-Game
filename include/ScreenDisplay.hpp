@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 #include "WorldMap.hpp"
 #include "Location.hpp"
@@ -21,7 +22,7 @@ class ScreenDisplay {
     void drawMap(std::ostream& out, WorldMap* map, Location* current);
     void displayAlwaysChoices(std::ostream& out);
     void displayPlayerStats(std::ostream& out, Player player);
-    void displayTrades(std::ostream& out, std::vector<CraftingRecipe*>& trades);
+    void displayTrades(std::ostream& out, std::vector<CraftingRecipe*>& trades, Inventory& inv);
     void displayInventory(std::ostream& out, Inventory& inv);
 };
 
