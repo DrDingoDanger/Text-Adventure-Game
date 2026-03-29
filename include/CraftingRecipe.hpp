@@ -19,7 +19,7 @@ class CraftingRecipe {
     std::vector<std::string> getInputs();
     Item* getOutput();
     bool canCraft(Inventory& _inventory);
-    void craft(Inventory _inventory);
+    void craft(Inventory& _inventory);
 };
 
 #endif

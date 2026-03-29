@@ -81,8 +81,16 @@ void Game::update() {
                 //SHOPNPC INTERACT
                 ShopNPC* tempS = dynamic_cast<ShopNPC*>(temp);
                 Inventory& temp = _player.getInventory();
-                _display.displayTrades(std::cout, tempS->getTrades(), temp);
-                std::cout << "Trading with ShopNPC has not been implemented\n";
+                std::vector<CraftingRecipe*>& tempTrades = tempS->getTrades();
+                _display.displayTrades(std::cout, tempTrades, temp);
+                std::cout << "Would you like to make a trade?\n";
+                char ans = _ui.yesOrNo();
+                if (ans == 'y') {
+                    std::cout << "Enter the trade's associated number.\n";
+                    choice = _ui.limitInput(tempTrades.size());
+                    CraftingRecipe* recipe = tempTrades[choice];
+                    recipe->craft(temp);
+                }
             }
         }
     } else if (action == 4) {

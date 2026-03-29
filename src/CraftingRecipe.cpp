@@ -28,14 +28,16 @@ bool CraftingRecipe::canCraft(Inventory& _inventory) {
     return true;
 }
 
-void CraftingRecipe::craft(Inventory _inventory) {
+void CraftingRecipe::craft(Inventory& _inventory) {
     if (!canCraft(_inventory)) {
         return;
     }
 
-    for (int i = 0; i < _inputs.size(); i++) {
-        //_inventory.remove(inputs.get(i), 1);
+    // Remove the required items by name
+    for (const std::string& name : _inputs) {
+        _inventory.removeByName(name, 1);
     }
 
+    // Add the resulting item to the inventory
     _inventory.add(_output, 1);
 }

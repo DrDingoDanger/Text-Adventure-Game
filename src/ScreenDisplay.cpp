@@ -84,6 +84,7 @@ void ScreenDisplay::displayPlayerStats(std::ostream& out, Player player) {
 void ScreenDisplay::displayTrades(std::ostream& out, std::vector<CraftingRecipe*>& trades, Inventory& inv) {
     out << "Trades: \n";
     for (int i = 0; i < trades.size(); i++) {
+        out << '\n' << i << ". ";
         CraftingRecipe* trade = trades[i];
         std::vector<std::string> inputNames = trade->getInputs();
         for (int i = 0; i < inputNames.size(); i++) {
