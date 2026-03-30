@@ -14,8 +14,17 @@ WorldMap::WorldMap() : _current(nullptr) {
     dia.push_back("I love this gamehousen.");
     dia.push_back("Another random dialogue option");
     std::vector<NPC*> npcs;
+    std::vector<CraftingRecipe*> trades;
+    std::vector<std::string> emeraldCost;
+    emeraldCost.push_back("Apple");
+    emeraldCost.push_back("Coal");
+    std::vector<std::string> chickenCost;
+    chickenCost.push_back("Banana");
+    chickenCost.push_back("Banana");
+    trades.push_back(new CraftingRecipe(emeraldCost, new Material("Emerald")));
+    trades.push_back(new CraftingRecipe(chickenCost, new Food("Chicken", 2)));
     npcs.push_back(new HelpNPC("Danhousen", dia));
-    npcs.push_back(new ShopNPC("Hangman", inv));
+    npcs.push_back(new ShopNPC("Hangman", trades));
     Inventory inv1;
     inv1.add(new Food("Apple", 3), 1);
     inv1.add(new Material("Coal"), 4);

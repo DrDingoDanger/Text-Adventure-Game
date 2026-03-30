@@ -29,20 +29,16 @@ std::string HelpNPC::giveHint() {
     return random;
 }
 //SHOPNPC WILL MAKE TRADES WITH PLAYER
-ShopNPC::ShopNPC(std::string name, Inventory& items)
-    : NPC(name, "shop") {
-    for (std::size_t i = 0; i < items.size(); i++) {
-        stock.add(items.get(i), 1);
-    }
-}
+ShopNPC::ShopNPC(std::string name, std::vector<CraftingRecipe*> trades)
+    : _trades(trades), NPC(name, "shop") {}
 
 ShopNPC::~ShopNPC() {}
 
-Inventory& ShopNPC::getInventory() {
-    return stock;
+std::vector<CraftingRecipe*>& ShopNPC::getTrades() {
+    return _trades;
 }
-
+/*
 void ShopNPC::sellItem(Player& player, Item& item) {
     (void)player;
     stock.remove(&item, 1);
-}
+}*/

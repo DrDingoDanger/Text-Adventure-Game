@@ -1,32 +1,43 @@
 #include "CraftingRecipe.hpp"
 
-CraftingRecipe::CraftingRecipe(std::vector<Item*> _inputs, Item* _output)
-    : output(_output) {
-    for (std::size_t i = 0; i < _inputs.size(); i++) {
-        inputs.add(_inputs[i], 1);
-    }
-}
+CraftingRecipe::CraftingRecipe(std::vector<std::string> inputs, Item* output)
+    : _inputs(inputs), _output(output) {}
 
 CraftingRecipe::~CraftingRecipe() {}
 
-bool CraftingRecipe::canCraft(Inventory _inventory) {
-    for (int i = 0; i < inputs.size(); i++) {
-        Item* item = inputs.get(i);
-        if (_inventory.has(item, 1) < 1) {
+std::vector<std::string> CraftingRecipe::getInputs() {
+    return _inputs;
+}
+
+Item* CraftingRecipe::getOutput() {
+    return _output;
+}
+
+bool CraftingRecipe::canCraft(Inventory& _inventory) {
+    std::map<std::string, int> requirements;
+    for (const std::string& name : _inputs) {
+        requirements[name]++;
+    }
+    for (const auto& kvp : requirements) {
+        const std::string& name = kvp.first;
+        int amountNeeded = kvp.second;
+        if (!_inventory.hasName(name, amountNeeded)) {
             return false;
         }
     }
     return true;
 }
 
-void CraftingRecipe::craft(Inventory _inventory) {
+void CraftingRecipe::craft(Inventory& _inventory) {
     if (!canCraft(_inventory)) {
         return;
     }
 
-    for (int i = 0; i < inputs.size(); i++) {
-        _inventory.remove(inputs.get(i), 1);
+    // Remove the required items by name
+    for (const std::string& name : _inputs) {
+        _inventory.removeByName(name, 1);
     }
 
-    _inventory.add(output, 1);
+    // Add the resulting item to the inventory
+    _inventory.add(_output, 1);
 }
