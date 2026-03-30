@@ -3,6 +3,9 @@
 Player::Player(Location* start)
     : _currentLocation(start), _equippedWeapon(nullptr) {
         _inventory.add(new Material("Thing"), 1);
+        _health = 100;
+        _hunger = 100;
+        _attack = 1;
     }
 
 Player::~Player() {}
@@ -13,6 +16,10 @@ int Player::getHealth() const {
 
 int Player::getHunger() const {
     return _hunger;
+}
+
+int Player::getAttack() const {
+    return _attack;
 }
 
 Inventory& Player::getInventory() {
@@ -35,6 +42,7 @@ void Player::takeDamage(int damage) {
     if (_health < 0) {
         _health = 0;
     }
+    std::cout << "Current player health is " << _health << '\n';
 }
 //MODIFIES PLAYER HUNGER
 void Player::eat(int restore) {
@@ -52,6 +60,10 @@ void Player::craft(CraftingRecipe& recipe) {
 
 void Player::buy(Item& item, ShopNPC& shop) {
     //shop.sellItem(*this, item);
+}
+
+void Player::addItem(Item* item) {
+    _inventory.add(item, 1);
 }
 
 void Player::removeItem(Item* item) {

@@ -2,22 +2,31 @@
 #include "Player.hpp"
 
 Mob::Mob(std::string name, int health, int attack, Inventory dropTable)
-    : name(name), health(health), attack(attack), dropTable(dropTable) {}
+    : name(name), _health(health), _attack(attack), dropTable(dropTable) {}
 
 Mob::~Mob() {}
 
-void Mob::attackPlayer(Player _player) {
-    (void)_player;
+int Mob::getAttack() {
+    return _attack;
+}
+
+std::string Mob::getName() {
+    return name;
+}
+
+Inventory& Mob::getInventory() {
+    return dropTable;
 }
 
 void Mob::takeDamage(int damage) {
-    health -= damage;
+    _health -= damage;
 
-    if (health < 0) {
-        health = 0;
+    if (_health < 0) {
+        _health = 0;
     }
+    std::cout << "Current mob health is " << _health << '\n';
 }
 
 bool Mob::isDead() {
-    return health == 0;
+    return _health == 0;
 }

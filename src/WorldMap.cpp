@@ -25,23 +25,31 @@ WorldMap::WorldMap() : _current(nullptr) {
     trades.push_back(new CraftingRecipe(chickenCost, new Food("Chicken", 2)));
     npcs.push_back(new HelpNPC("Danhousen", dia));
     npcs.push_back(new ShopNPC("Hangman", trades));
-    Inventory inv1;
-    inv1.add(new Food("Apple", 3), 1);
-    inv1.add(new Material("Coal"), 4);
+    Inventory invM;
+    invM.add(new Food("Apple", 3), 1);
+    invM.add(new Material("Coal"), 4);
+    Inventory invZ;
+    invZ.add(new Material("Flesh"),1);
+    std::vector<Mob*> mobs;
+    Inventory invS;
+    invS.add(new Material("Bone"), 1);
+    mobs.push_back(new Mob("Zombie", 5, 5, invZ));
+    mobs.push_back(new Mob("Skelly", 3, 8, invS));
     for (int i = 0; i < 3; i++) {
         _locations.push_back(new Mountain("M"+std::to_string(i),
-                             npcs, {}, {}, inv1));
+                             npcs, {}, mobs, invM));
     }
-    Inventory inv2;
-    inv2.add(new Food("Banana", 4), 6);
-    inv2.add(new Material("Grass"), 1);
+    Inventory invF;
+    invF.add(new Food("Banana", 4), 6);
+    invF.add(new Material("Grass"), 1);
+    mobs.pop_back();
     for (int i = 3; i < 6; i++) {
         _locations.push_back(new Field("F"+std::to_string(i),
-                             npcs, {}, {}, inv2));
+                             npcs, {}, mobs, invF));
     }
     for (int i = 6; i < 9; i++) {
         _locations.push_back(new Mountain("M"+std::to_string(i),
-                             npcs, {}, {}, inv1));
+                             npcs, {}, mobs, invM));
     }
     if (!_locations.empty()) {
         _current = _locations[0];
