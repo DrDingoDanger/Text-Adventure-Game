@@ -72,19 +72,19 @@ void ScreenDisplay::displayAlwaysChoices(std::ostream& out) {
     out << "What do you want to do?\n";
 
     for (int i = 0; i < 6; i++) {
-        out << i << "- " << base[i] << '\n';
+        out << (i + 1) << "- " << base[i] << '\n';
     }
 }
 
 void ScreenDisplay::displayPlayerStats(std::ostream& out, Player player) {
-    out << "Hunger: " << player.getHunger() << '\n'
-        << "Health: " << player.getHealth() << '\n';
+    out << "Health: " << player.getHealth() << '\n'
+        << "Hunger: " << player.getHunger() << '\n';
 }
 
 void ScreenDisplay::displayTrades(std::ostream& out, std::vector<CraftingRecipe*>& trades, Inventory& inv) {
-    out << "Trades: \n";
+    out << "Trades: \n" << "------------------\n";
     for (int i = 0; i < trades.size(); i++) {
-        out << '\n' << i << ". ";
+        out << (i + 1) << ". ";
         CraftingRecipe* trade = trades[i];
         std::vector<std::string> inputNames = trade->getInputs();
         for (int i = 0; i < inputNames.size(); i++) {
@@ -98,23 +98,24 @@ void ScreenDisplay::displayTrades(std::ostream& out, std::vector<CraftingRecipe*
         out << outputItem->getName() << " " << std::boolalpha << trade->canCraft(inv);
         out << '\n';
     }
+    
+    out << "------------------\n";
 }
 
 void ScreenDisplay::displayInventory(std::ostream& out, Inventory& inv) {
-    //Commented stuff is for future implementaion.
     int num = inv.size();
     std::string str;
 
     out << "Inventory:\n" << "------------------\n";
 
     //I is tracking current, skipping dups. J numbers each unique.
-    for (int i = 0, j = 0; i < num; i++, j++) {
-       // int mult = 1;
+    for (int i = 0, j = 1; i < num; i++, j++) {
+        int mult = 1;
         str += std::to_string(j);
         str += ". ";
         str += inv.get(i)->getName();
-        /*
-        while (i + 1 < num && inv.get(i) == inv.get(i + 1)) {
+        
+        while (i + 1 < num && inv.get(i)->getName() == inv.get(i + 1)->getName()) {
             mult++;
             i++;
         }
@@ -124,7 +125,7 @@ void ScreenDisplay::displayInventory(std::ostream& out, Inventory& inv) {
             str += std::to_string(mult);
             str += 'x';       
         }
-*/
+
         str += "\n";
     }
 

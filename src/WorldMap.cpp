@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <exception>
 
 #include "WorldMap.hpp"
 //MAKE THE MAP
@@ -59,13 +60,13 @@ Location* WorldMap::updateLocation(const std::string& _direction,
     int index = getCurrentIndex(current);
 
     if (_direction == "up") {
-        return _locations[index - 3];
+        if (index - 3 >= 0) return _locations[index - 3];
     } else if (_direction == "down") {
-        return _locations[index + 3];
+        if (index + 3 <= 8) return _locations[index + 3];
     } else if (_direction == "left") {
-        return _locations[index - 1];
+        if (index - 1 >= 0) return _locations[index - 1];
     } else if (_direction == "right") {
-        return _locations[index + 1];
+        if (index + 1 <= 8) return _locations[index + 1];
     }
 
     return current;
