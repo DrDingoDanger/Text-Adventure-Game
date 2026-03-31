@@ -1,12 +1,13 @@
+#include <iostream>
 #include "Player.hpp"
 
 Player::Player(Location* start)
     : _currentLocation(start), _equippedWeapon(nullptr) {
-        _inventory->add(new Material("Thing"), 1);
-        _health = 100;
-        _hunger = 100;
-        _attack = 1;
-    }
+    _inventory->add(new Material("Thing"), 1);
+    _health = 100;
+    _hunger = 100;
+    _attack = 1;
+}
 
 Player::~Player() {
     delete _inventory;
@@ -32,7 +33,6 @@ void Player::setAttack(int attack) {
     _attack = attack;
 }
 
-//CHANGES PLAYERS CURRENT LOCATION
 void Player::moveAction(const std::string& direction,
                         WorldMap* map, bool valid) {
     if (_currentLocation->canExit(direction, map)) {
@@ -42,21 +42,29 @@ void Player::moveAction(const std::string& direction,
         valid = false;
     }
 }
-//MODIFIES PLAYER HEALTH
+
 void Player::takeDamage(int damage) {
     _health -= damage;
 
     if (_health < 0) {
         _health = 0;
     }
+
     std::cout << "Current player health is " << _health << '\n';
 }
-//MODIFIES PLAYER HUNGER
+
 void Player::eat(int restore) {
     _hunger += restore;
+
     if (_hunger > 100) {
         _hunger = 100;
     }
+
+    if (_hunger < 0) {
+        _hunger = 0;
+    }
+
+    std::cout << "Current player hunger is " << _hunger << '\n';
 }
 
 void Player::craft(CraftingRecipe recipe) {
