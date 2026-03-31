@@ -45,6 +45,15 @@ TEST(TestPlayer, eatIncreasesHungerUpToMax100) {
     EXPECT_EQ(player.getHunger(), 100);
 }
 
+TEST(TestPlayer, eatDoesNotDropHungerBelowZero) {
+    WorldMap map;
+    Player player(map.getLocation(0));
+
+    player.eat(-150);
+
+    EXPECT_EQ(player.getHunger(), 0);
+}
+
 TEST(TestPlayer, moveActionUpdatesLocationWhenValid) {
     WorldMap map;
     Player player(map.getLocation(0));
