@@ -16,7 +16,7 @@ void Game::start() {
 void Game::update() {
     _display.displayAlwaysChoices(std::cout);
     Location* location = _player.getCurrent();
-    location->runEncounter(_player);
+    location->runEncounter(&_player);
     int action = _ui.playerAction();
 
     if (action == 0) {
@@ -55,14 +55,15 @@ void Game::update() {
                     int restore = tempF->getHunger();
                     _player.eat(restore);
                     _player.removeItem(tempF);
-                } else if (temp->getType() == "weapon" ) {
+                } else if (temp->getType() == "weapon") {
                     Weapon* tempW = dynamic_cast<Weapon*>(temp);
                     int power = tempW->getPower();
                     if (power > _player.getAttack()) {
-                        _player.setAttack(power); 
-                        _player.removeItem(tempW);  
+                        _player.setAttack(power);
+                        _player.removeItem(tempW);
                     } else {
-                        std::cout << "Cannot use item, does not effect attack damage\n";
+                        std::cout << "Cannot use item, does"
+                                  << "not effect attack damage\n";
                     }
                 }
             }
@@ -89,33 +90,33 @@ void Game::update() {
             } else if (temp->getType() == "shop") {
                 //SHOPNPC INTERACT
                 ShopNPC* tempS = dynamic_cast<ShopNPC*>(temp);
-                Inventory& temp = _player.getInventory();
+                Inventory* invT = _player.getInventory();
                 std::vector<CraftingRecipe*>& tempTrades = tempS->getTrades();
-                _display.displayTrades(std::cout, tempTrades, temp);
+                _display.displayTrades(std::cout, tempTrades, invT);
                 std::cout << "Would you like to make a trade?\n";
-                char ans = _ui.yesOrNo();
-                if (ans == 'y') {
+                char ansr = _ui.yesOrNo();
+                if (ansr == 'y') {
                     std::cout << "Enter the trade's associated number.\n";
                     choice = _ui.limitInput(tempTrades.size());
                     CraftingRecipe* recipe = tempTrades[choice];
-                    recipe->craft(temp);
+                    recipe->craft(invT);
                 }
             }
         }
     } else if (action == 4) {
         //DISPLAY AREA RESOURCES
         Location* loc = _player.getCurrent();
-        Inventory& temp = loc->getInventory();
+        Inventory* temp = loc->getInventory();
         _display.displayInventory(std::cout, temp);
         std::cout << "Would you like to collect these items?\n";
         char ans = _ui.yesOrNo();
         //COLLECT RESOURCES
         if (ans == 'y') {
-            Inventory& tempP = _player.getInventory();
-            while (temp.size() != 0) {
-                Item* item = temp.get(0);
-                tempP.add(item, 1);
-                temp.remove(item, 1);
+            Inventory* tempP = _player.getInventory();
+            while (temp->size() != 0) {
+                Item* item = temp->get(0);
+                tempP->add(item, 1);
+                temp->remove(item, 1);
             }
         }
     } else if (action == 5) {

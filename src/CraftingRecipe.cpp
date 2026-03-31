@@ -13,7 +13,7 @@ Item* CraftingRecipe::getOutput() {
     return _output;
 }
 
-bool CraftingRecipe::canCraft(Inventory& _inventory) {
+bool CraftingRecipe::canCraft(Inventory* _inventory) {
     std::map<std::string, int> requirements;
     for (const std::string& name : _inputs) {
         requirements[name]++;
@@ -21,23 +21,23 @@ bool CraftingRecipe::canCraft(Inventory& _inventory) {
     for (const auto& kvp : requirements) {
         const std::string& name = kvp.first;
         int amountNeeded = kvp.second;
-        if (!_inventory.hasName(name, amountNeeded)) {
+        if (!_inventory->hasName(name, amountNeeded)) {
             return false;
         }
     }
     return true;
 }
 
-void CraftingRecipe::craft(Inventory& _inventory) {
+void CraftingRecipe::craft(Inventory* _inventory) {
     if (!canCraft(_inventory)) {
         return;
     }
 
     // Remove the required items by name
     for (const std::string& name : _inputs) {
-        _inventory.removeByName(name, 1);
+        _inventory->removeByName(name, 1);
     }
 
     // Add the resulting item to the inventory
-    _inventory.add(_output, 1);
+    _inventory->add(_output, 1);
 }

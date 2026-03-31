@@ -28,12 +28,12 @@ class Location {
          std::vector<CraftingRecipe*> _recipes, std::vector<Mob*> _mobs,
          Inventory areaResources, float encounterRate);
     virtual ~Location();
-    void runEncounter(Player& _player);
+    void runEncounter(Player* player);
     bool canExit(const std::string& _direction, WorldMap* map);
     std::string getName();
     NPC* getNPC(int index);
     CraftingRecipe* getRecipe(int index);
-    Inventory& getInventory();
+    Inventory* getInventory();
     Mob* getMob(int index);
     int numOfNPC();
 };

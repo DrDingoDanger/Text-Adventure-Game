@@ -33,7 +33,7 @@ class Food : public Item {
 
 class Weapon : public Item {
  private:
-   int _power;
+    int _power;
  public:
     Weapon(std::string name, int power);
     ~Weapon();

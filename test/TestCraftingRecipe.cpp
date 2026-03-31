@@ -2,8 +2,6 @@
 #include "CraftingRecipe.hpp"
 #include "Inventory.hpp"
 #include "Item.hpp"
-#include <vector>
-#include <string>
 
 TEST(TestCraftingRecipe, canCraftReturnsTrueWhenInputsExist) {
     Material wood("Wood");

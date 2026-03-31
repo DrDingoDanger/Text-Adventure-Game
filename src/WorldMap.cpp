@@ -31,7 +31,7 @@ WorldMap::WorldMap() : _current(nullptr) {
     invM.add(new Material("Coal"), 4);
     invM.add(new Weapon("woodSword", 3), 1);
     Inventory invZ;
-    invZ.add(new Material("Flesh"),1);
+    invZ.add(new Material("Flesh"), 1);
     std::vector<Mob*> mobs;
     Inventory invS;
     invS.add(new Material("Bone"), 1);

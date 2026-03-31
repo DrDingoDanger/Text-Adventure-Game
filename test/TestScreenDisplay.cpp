@@ -6,8 +6,6 @@
 #include "NPC.hpp"
 #include "Player.hpp"
 
-#include <iostream>
-
 TEST(TestScreenDisplay, constructionTest) {
     //STUB : IDK
 }
@@ -50,7 +48,7 @@ TEST(TestScreenDisplay, npcTest) {
 
     want += "NPCs:\n";
     want += "------------------\n";
-    
+
     for (int i = 0, j = 0; i < 1; i++, j++) {
         str += std::to_string(j);
         str += ". ";
@@ -92,7 +90,7 @@ TEST(TestScreenDisplay, newLocationMapTest) {
 
     dis.drawMap(have, map, map->getLocation(1));
 
-    EXPECT_EQ(have.str(), want); 
+    EXPECT_EQ(have.str(), want);
 }
 
 TEST(TestScreenDisplay, numDefaultChoiceTest) {

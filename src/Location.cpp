@@ -11,8 +11,8 @@ Location::Location(std::string name, std::vector<NPC*> npcCollection,
 
 Location::~Location() {}
 
-void Location::runEncounter(Player& player) {
-    for(int i = 0; i < _mobs.size(); i++) {
+void Location::runEncounter(Player* player) {
+    for (int i = 0; i < _mobs.size(); i++) {
         Mob* mob = _mobs[i];
         std::cout << "Encounter #" << i+1 << ": ";
         std::cout << mob->getName() << '\n';
@@ -22,8 +22,8 @@ void Location::runEncounter(Player& player) {
         float encounter = dis(gen);
         std::cout << encounter << std::endl;
         if (encounter < encounterRate) {
-            player.takeDamage(mob->getAttack());
-            mob->takeDamage(player.getAttack());
+            player->takeDamage(mob->getAttack());
+            mob->takeDamage(player->getAttack());
         } else {
             std::cout << "You did not encounter this mob\n";
         }
@@ -35,7 +35,7 @@ void Location::runEncounter(Player& player) {
             Inventory& mobInv = mob->getInventory();
             while (mobInv.size() > 0) {
                 Item* item = mobInv.get(0);
-                player.getInventory().add(item, 1);
+                player->getInventory()->add(item, 1);
                 mobInv.remove(item, 1);
             }
             delete mob;
@@ -44,9 +44,9 @@ void Location::runEncounter(Player& player) {
             ++it;
         }
     }
-    _mobs.erase(std::remove_if(_mobs.begin(), _mobs.end(), 
+    _mobs.erase(std::remove_if(_mobs.begin(), _mobs.end(),
     [](Mob* mob) {
-        return mob->isDead(); 
+        return mob->isDead();
     }), _mobs.end());
 }
 
@@ -80,8 +80,8 @@ Mob* Location::getMob(int index) {
     return _mobs[index];
 }
 
-Inventory& Location::getInventory() {
-    return _areaResources;
+Inventory* Location::getInventory() {
+    return &_areaResources;
 }
 
 int Location::numOfNPC() {
