@@ -122,12 +122,9 @@ TEST(TestScreenDisplay, statsTest) {
     ScreenDisplay dis;
     Player player(map->getLocation(0));
 
-    want =  "Health: ";
-    want += "100";
-    want += '\n';
-    want += "Hunger: ";
-    want += "100";
-    want += '\n';
+    want =  "Health: 100\n";
+    want += "Hunger: 100\n";
+    want += "Attack: 1\n";
 
     dis.displayPlayerStats(have, player);
 
@@ -146,12 +143,9 @@ TEST(TestScreenDisplay, decreaseStatsTest) {
     player.takeDamage(15);
     player.eat(-5);
 
-    want =  "Health: ";
-    want += "85";
-    want += '\n';
-    want += "Hunger: ";
-    want += "95";
-    want += '\n';
+    want =  "Health: 85\n";
+    want += "Hunger: 95\n";
+    want += "Attack: 1\n";
 
     dis.displayPlayerStats(have, player);
 
@@ -171,12 +165,9 @@ TEST(TestScreenDisplay, increaseStatsTest) {
     player.eat(-15);
     player.eat(5);
 
-    want =  "Health: ";
-    want += "80";
-    want += '\n';
-    want += "Hunger: ";
-    want += "90";
-    want += '\n';
+    want =  "Health: 80\n";
+    want += "Hunger: 90\n";
+    want += "Attack: 1\n";
 
     dis.displayPlayerStats(have, player);
 
@@ -234,7 +225,7 @@ TEST(TestScreenDisplay, addItemInventoryTest) {
 }
 
 TEST(TestScreenDisplay, removeItemInventoryTest) {
-    //STUB : Progress
+    //STUB : Added
     std::stringstream have;
     std::string want;
     ScreenDisplay dis;
@@ -262,7 +253,7 @@ TEST(TestScreenDisplay, removeItemInventoryTest) {
 }
 
 TEST(TestScreenDisplay, tradesTest) {
-    //STUB : Progress
+    //STUB : Added
     std::stringstream have;
     std::string want;
     ScreenDisplay dis;

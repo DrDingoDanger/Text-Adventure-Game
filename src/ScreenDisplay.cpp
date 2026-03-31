@@ -78,7 +78,8 @@ void ScreenDisplay::displayAlwaysChoices(std::ostream& out) {
 
 void ScreenDisplay::displayPlayerStats(std::ostream& out, Player player) {
     out << "Health: " << player.getHealth() << '\n'
-        << "Hunger: " << player.getHunger() << '\n';
+        << "Hunger: " << player.getHunger() << '\n'
+        << "Attack: " << player.getAttack() << '\n';
 }
 
 void ScreenDisplay::displayTrades(std::ostream& out, std::vector<CraftingRecipe*>& trades, Inventory& inv) {
