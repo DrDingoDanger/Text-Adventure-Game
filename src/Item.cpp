@@ -29,6 +29,11 @@ void Food::setHunger(int value) {
     _hungerValue = value;
 }
 
-Weapon::Weapon(std::string name) : Item(name, "weapon") {}
+Weapon::Weapon(std::string name, int power) : Item(name, "weapon"),
+               _power(power) {}
 
 Weapon::~Weapon() {}
+
+int Weapon::getPower() {
+    return _power;
+}

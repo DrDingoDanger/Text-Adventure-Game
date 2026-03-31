@@ -25,6 +25,11 @@ int Player::getAttack() const {
 Inventory& Player::getInventory() {
     return _inventory;
 }
+
+void Player::setAttack(int attack) {
+    _attack = attack;
+}
+
 //CHANGES PLAYERS CURRENT LOCATION
 void Player::moveAction(const std::string& direction,
                         WorldMap* map, bool& valid) {
@@ -56,10 +61,6 @@ void Player::craft(CraftingRecipe& recipe) {
     if (recipe.canCraft(_inventory)) {
         recipe.craft(_inventory);
     }
-}
-
-void Player::buy(Item& item, ShopNPC& shop) {
-    //shop.sellItem(*this, item);
 }
 
 void Player::addItem(Item* item) {

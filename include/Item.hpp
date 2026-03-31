@@ -33,9 +33,11 @@ class Food : public Item {
 
 class Weapon : public Item {
  private:
+   int _power;
  public:
-    Weapon(std::string name);
+    Weapon(std::string name, int power);
     ~Weapon();
+    int getPower();
 };
 
 #endif

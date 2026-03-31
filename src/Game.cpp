@@ -48,14 +48,22 @@ void Game::update() {
                 //CAN ONLY CHOOSE ITEM THAT EXISTS
                 int choice = _ui.limitInput(_player.inventorySize());
                 Item* temp = _player.getItemAt(choice);
-                if (temp->getType() == "material" ||
-                    temp->getType() == "weapon") {
+                if (temp->getType() == "material") {
                     std::cout << "This item cannot be used.";
                 } else if (temp->getType() == "food") {
                     Food* tempF = dynamic_cast<Food*>(temp);
                     int restore = tempF->getHunger();
                     _player.eat(restore);
                     _player.removeItem(tempF);
+                } else if (temp->getType() == "weapon" ) {
+                    Weapon* tempW = dynamic_cast<Weapon*>(temp);
+                    int power = tempW->getPower();
+                    if (power > _player.getAttack()) {
+                        _player.setAttack(power); 
+                        _player.removeItem(tempW);  
+                    } else {
+                        std::cout << "Cannot use item, does not effect attack damage\n";
+                    }
                 }
             }
         }
