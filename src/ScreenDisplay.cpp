@@ -20,7 +20,7 @@ void ScreenDisplay::gameInstructions(std::ostream& out) {
     << "gameInstructions: View this help message.\n\n";
 }
 
-void ScreenDisplay::displayNPC(std::ostream& out, Location*& loc) {
+void ScreenDisplay::displayNPC(std::ostream& out, Location* loc) {
     int num = loc->numOfNPC();
     std::string str;
     out << "NPCs:\n" << "------------------\n";
@@ -82,29 +82,31 @@ void ScreenDisplay::displayPlayerStats(std::ostream& out, Player player) {
         << "Attack: " << player.getAttack() << '\n';
 }
 
-void ScreenDisplay::displayTrades(std::ostream& out, std::vector<CraftingRecipe*>& trades, Inventory& inv) {
+void ScreenDisplay::displayTrades(std::ostream& out,
+    const std::vector<CraftingRecipe*>& trades, Inventory* inv) {
     out << "Trades: \n" << "------------------\n";
     for (int i = 0; i < trades.size(); i++) {
         out << (i + 1) << ". ";
         CraftingRecipe* trade = trades[i];
         std::vector<std::string> inputNames = trade->getInputs();
-        for (int i = 0; i < inputNames.size(); i++) {
-            out << inputNames[i];
-            if (i < inputNames.size() - 1) {
+        for (int j = 0; j < inputNames.size(); j++) {
+            out << inputNames[j];
+            if (j < inputNames.size() - 1) {
                 out << ", ";
             }
         }
         out << " for ";
         Item* outputItem = trade->getOutput();
-        out << outputItem->getName() << " " << std::boolalpha << trade->canCraft(inv);
+        out << outputItem->getName() << " "
+            << std::boolalpha << trade->canCraft(inv);
         out << '\n';
     }
-    
+
     out << "------------------\n";
 }
 
-void ScreenDisplay::displayInventory(std::ostream& out, Inventory& inv) {
-    int num = inv.size();
+void ScreenDisplay::displayInventory(std::ostream& out, Inventory* inv) {
+    int num = inv->size();
     std::string str;
 
     out << "Inventory:\n" << "------------------\n";
@@ -114,17 +116,18 @@ void ScreenDisplay::displayInventory(std::ostream& out, Inventory& inv) {
         int mult = 1;
         str += std::to_string(j);
         str += ". ";
-        str += inv.get(i)->getName();
-        
-        while (i + 1 < num && inv.get(i)->getName() == inv.get(i + 1)->getName()) {
+        str += inv->get(i)->getName();
+
+        while (i + 1 < num && inv->get(i)->getName()
+                    == inv->get(i + 1)->getName()) {
             mult++;
             i++;
         }
-        
+
         if (mult > 1) {
             str += ' ';
             str += std::to_string(mult);
-            str += 'x';       
+            str += 'x';
         }
 
         str += "\n";

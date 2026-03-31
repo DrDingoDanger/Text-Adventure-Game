@@ -34,7 +34,7 @@ TEST(TestWorldMap, updateInvalidLocationTest) {
 
     loc = map->updateLocation("left", loc);
     EXPECT_EQ(map->getCurrentIndex(loc), 0);
-    
+
     loc = map->updateLocation("down", loc);
     loc = map->updateLocation("right", loc);
     loc = map->updateLocation("down", loc);

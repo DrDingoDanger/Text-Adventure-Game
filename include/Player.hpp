@@ -15,7 +15,7 @@ class Player {
     int _health;
     int _hunger;
     int _attack;
-    Inventory _inventory;
+    Inventory* _inventory;
     Location* _currentLocation;
     Weapon* _equippedWeapon;
 
@@ -27,15 +27,16 @@ class Player {
     int getAttack() const;
     int inventorySize();
 
-    void moveAction(const std::string& direction, WorldMap* map, bool& valid);
+    void moveAction(const std::string& direction, WorldMap* map,
+      bool valid);
     void takeDamage(int damage);
     void eat(int restore);
     void setAttack(int attack);
-    void craft(CraftingRecipe& recipe);
-    void buy(Item& item, ShopNPC& shop);
+    void craft(CraftingRecipe recipe);
+    void buy(const Item& item, const ShopNPC& shop);
     void addItem(Item* item);
     void removeItem(Item* item);
-    Inventory& getInventory();
+    Inventory* getInventory();
     Item* getItemAt(int ind);
     Location* getCurrent();
 };

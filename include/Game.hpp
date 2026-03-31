@@ -24,7 +24,7 @@ class Game {
 
     void start();
     void update();
-    bool checkWin();
+    bool checkWin() const;
     bool checkLose() const;
     void endGame();
 };

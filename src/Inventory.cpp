@@ -1,5 +1,7 @@
 #include "Inventory.hpp"
 
+#include <algorithm>
+
 Inventory::Inventory() {}
 
 Inventory::~Inventory() {}
@@ -50,22 +52,18 @@ void Inventory::removeByName(std::string name, int count) {
 
 //CHECK IF INVENTORY HAS NUMBER OF ITEM
 bool Inventory::has(Item* _item, int count) {
-    int found = 0;
-    for (Item* i : _items) {
-        if (i->getName() == _item->getName()) {
-            found++;
-        }
-    }
+    int found = std::count_if(_items.begin(), _items.end(), [_item](Item* i) {
+        return i->getName() == _item->getName();
+    });
+
     return found >= count;
 }
 
 bool Inventory::hasName(std::string name, int count) {
-    int found = 0;
-    for (Item* i : _items) {
-        if (i->getName() == name) { //
-            found++;
-        }
-    }
+    int found = std::count_if(_items.begin(), _items.end(), [&name](Item* i) {
+        return i->getName() == name;
+    });
+
     return found >= count;
 }
 

@@ -12,7 +12,7 @@ TEST(TestLocation, constructionTest) {
 
 TEST(TestLocation, storesNameTest) {
     //STUB : Added
-    Inventory inv; 
+    Inventory inv;
 
     Location* loc = new Mountain("Name", {}, {}, {}, inv);
 
@@ -38,7 +38,7 @@ TEST(TestLocation, storesRecipeTest) {
 
 TEST(TestLocation, storesNPCTest) {
     //STUB : Added
-    Inventory inv; 
+    Inventory inv;
     std::vector<NPC*> npcs;
 
     HelpNPC* dan = new HelpNPC("dan", {});
@@ -56,12 +56,12 @@ TEST(TestLocation, storesNPCTest) {
 
 TEST(TestLocation, storesMobTest) {
     //STUB : Added
-    Inventory inv; 
+    Inventory inv;
     std::vector<Mob*> mobs;
 
     Mob* bob = new Mob("bob", 5, 1, inv);
     Mob* mike = new Mob("mike", 5, 1, inv);
-    
+
     mobs.push_back(bob);
     mobs.push_back(mike);
 
@@ -74,8 +74,8 @@ TEST(TestLocation, storesMobTest) {
 
 TEST(TestLocation, storesInventoryTest) {
     //STUB : Added
-    Inventory inv; 
-    
+    Inventory inv;
+
     inv.add(new Food("Apple", 3), 1);
     inv.add(new Material("Diamond"), 2);
 

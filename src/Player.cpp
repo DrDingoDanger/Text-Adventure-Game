@@ -3,13 +3,15 @@
 
 Player::Player(Location* start)
     : _currentLocation(start), _equippedWeapon(nullptr) {
-    _inventory.add(new Material("Thing"), 1);
+    _inventory->add(new Material("Thing"), 1);
     _health = 100;
     _hunger = 100;
     _attack = 1;
 }
 
-Player::~Player() {}
+Player::~Player() {
+    delete _inventory;
+}
 
 int Player::getHealth() const {
     return _health;
@@ -23,7 +25,7 @@ int Player::getAttack() const {
     return _attack;
 }
 
-Inventory& Player::getInventory() {
+Inventory* Player::getInventory() {
     return _inventory;
 }
 
@@ -32,7 +34,7 @@ void Player::setAttack(int attack) {
 }
 
 void Player::moveAction(const std::string& direction,
-                        WorldMap* map, bool& valid) {
+                        WorldMap* map, bool valid) {
     if (_currentLocation->canExit(direction, map)) {
         _currentLocation = map->updateLocation(direction, _currentLocation);
         valid = true;
@@ -65,26 +67,26 @@ void Player::eat(int restore) {
     std::cout << "Current player hunger is " << _hunger << '\n';
 }
 
-void Player::craft(CraftingRecipe& recipe) {
+void Player::craft(CraftingRecipe recipe) {
     if (recipe.canCraft(_inventory)) {
         recipe.craft(_inventory);
     }
 }
 
 void Player::addItem(Item* item) {
-    _inventory.add(item, 1);
+    _inventory->add(item, 1);
 }
 
 void Player::removeItem(Item* item) {
-    _inventory.remove(item, 1);
+    _inventory->remove(item, 1);
 }
 
 Item* Player::getItemAt(int ind) {
-    return _inventory.get(ind);
+    return _inventory->get(ind);
 }
 
 int Player::inventorySize() {
-    return _inventory.size();
+    return _inventory->size();
 }
 
 Location* Player::getCurrent() {
