@@ -2,6 +2,7 @@
 #define MOB_HPP
 
 #include <string>
+#include <iostream>
 #include "Inventory.hpp"
 
 class Player;
@@ -9,15 +10,17 @@ class Player;
 class Mob {
  private:
     std::string name;
-    int health;
-    int attack;
+    int _health;
+    int _attack;
     Inventory dropTable;
 
  public:
     Mob(std::string name, int health, int attack, Inventory dropTable);
     ~Mob();
-    void attackPlayer(Player _player);
+    int getAttack();
+    Inventory& getInventory();
     void takeDamage(int damage);
+    std::string getName();
     bool isDead();
 };
 

@@ -11,7 +11,44 @@ Location::Location(std::string name, std::vector<NPC*> npcCollection,
 
 Location::~Location() {}
 
-void Location::runEncounter(Player* _player, Mob* _mob) {}
+void Location::runEncounter(Player& player) {
+    for(int i = 0; i < _mobs.size(); i++) {
+        Mob* mob = _mobs[i];
+        std::cout << "Encounter #" << i+1 << ": ";
+        std::cout << mob->getName() << '\n';
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<double> dis(0.0, 1.0);
+        float encounter = dis(gen);
+        std::cout << encounter << std::endl;
+        if (encounter < encounterRate) {
+            player.takeDamage(mob->getAttack());
+            mob->takeDamage(player.getAttack());
+        } else {
+            std::cout << "You did not encounter this mob\n";
+        }
+    }
+    auto it = _mobs.begin();
+    while (it != _mobs.end()) {
+        Mob* mob = *it;
+        if (mob && mob->isDead()) {
+            Inventory& mobInv = mob->getInventory();
+            while (mobInv.size() > 0) {
+                Item* item = mobInv.get(0);
+                player.getInventory().add(item, 1);
+                mobInv.remove(item, 1);
+            }
+            delete mob;
+            it = _mobs.erase(it);
+        } else {
+            ++it;
+        }
+    }
+    _mobs.erase(std::remove_if(_mobs.begin(), _mobs.end(), 
+    [](Mob* mob) {
+        return mob->isDead(); 
+    }), _mobs.end());
+}
 
 bool Location::canExit(const std::string& _direction, WorldMap* map) {
     int index = map->getCurrentIndex(this);

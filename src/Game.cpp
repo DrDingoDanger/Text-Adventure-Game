@@ -15,7 +15,8 @@ void Game::start() {
 
 void Game::update() {
     _display.displayAlwaysChoices(std::cout);
-
+    Location* location = _player.getCurrent();
+    location->runEncounter(_player);
     int action = _ui.playerAction();
 
     if (action == 0) {

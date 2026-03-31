@@ -3,9 +3,12 @@
 
 #include <string>
 #include <vector>
+#include <random>
 
 #include "NPC.hpp"
 #include "Mob.hpp"
+#include "Player.hpp"
+#include "Inventory.hpp"
 #include "CraftingRecipe.hpp"
 
 class Player;
@@ -25,7 +28,7 @@ class Location {
          std::vector<CraftingRecipe*> _recipes, std::vector<Mob*> _mobs,
          Inventory areaResources, float encounterRate);
     virtual ~Location();
-    void runEncounter(Player* _player, Mob* _mob);
+    void runEncounter(Player& _player);
     bool canExit(const std::string& _direction, WorldMap* map);
     std::string getName();
     NPC* getNPC(int index);

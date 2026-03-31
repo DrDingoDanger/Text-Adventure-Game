@@ -9,11 +9,12 @@
 #include "Item.hpp"
 #include "NPC.hpp"
 #include "CraftingRecipe.hpp"
-
+class WorldMap;
 class Player {
  private:
-    int _health = 100;
-    int _hunger = 100;
+    int _health;
+    int _hunger;
+    int _attack;
     Inventory _inventory;
     Location* _currentLocation;
     Weapon* _equippedWeapon;
@@ -23,13 +24,16 @@ class Player {
     ~Player();
     int getHealth() const;
     int getHunger() const;
+    int getAttack() const;
     int inventorySize();
 
     void moveAction(const std::string& direction, WorldMap* map, bool& valid);
     void takeDamage(int damage);
     void eat(int restore);
+    void setAttack(int attack);
     void craft(CraftingRecipe& recipe);
     void buy(Item& item, ShopNPC& shop);
+    void addItem(Item* item);
     void removeItem(Item* item);
     Inventory& getInventory();
     Item* getItemAt(int ind);
