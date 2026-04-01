@@ -3,6 +3,8 @@
 
 Game::Game() : _player(_map.getLocation(0)) {}
 
+Game::~Game() {}
+
 bool Game::isOver() const {
     return _isOver;
 }
@@ -20,7 +22,7 @@ void Game::update() {
     location->runEncounter(&_player);
     int action = _ui.playerAction();
 
-    if (action == 0) {
+    if (action == 1) {
         Location* loc = _player.getCurrent();
         _display.drawMap(std::cout, &_map, loc);
         std::string direction = _ui.moveDirection();
@@ -33,7 +35,7 @@ void Game::update() {
         }
         _player.eat(-5);
 
-    } else if (action == 1) {
+    } else if (action == 2) {
         _display.displayInventory(std::cout, _player.getInventory());
         _display.displayPlayerStats(std::cout, _player);
         std::cout << "Would you like to use an item?\n";
@@ -42,7 +44,21 @@ void Game::update() {
             if (ans == 'y') {
                 std::cout << "Enter the items associated number.\n";
                 int choice = _ui.limitInput(_player.inventorySize());
-                Item* temp = _player.getItemAt(choice);
+                Inventory* invT = _player.getInventory();
+                Item* temp = invT->get(0);
+                std::string prev = "";
+                for (int index = 0, num = 0;
+                        index < _player.inventorySize(); index++) {
+                    Item* current = invT->get(index);
+                    if (current->getName() != prev) {
+                        num++;
+                        prev = current->getName();
+                    }
+                    if (num == choice) {
+                        temp = current;
+                        break;
+                    }
+                }
                 if (temp->getType() == "material") {
                     std::cout << "This item cannot be used.";
                 } else if (temp->getType() == "food") {
@@ -63,10 +79,10 @@ void Game::update() {
                 }
             }
         }
-    } else if (action == 2) {
+    } else if (action == 3) {
         Location* loc = _player.getCurrent();
         _display.drawMap(std::cout, &_map, loc);
-    } else if (action == 3) {
+    } else if (action == 4) {
         Location* loc = _player.getCurrent();
         _display.displayNPC(std::cout, loc);
         std::cout << "Would you like to interact with an NPC?\n";
@@ -93,7 +109,7 @@ void Game::update() {
                 }
             }
         }
-    } else if (action == 4) {
+    } else if (action == 5) {
         Location* loc = _player.getCurrent();
         Inventory* temp = loc->getInventory();
         _display.displayInventory(std::cout, temp);
@@ -107,7 +123,7 @@ void Game::update() {
                 temp->remove(item, 1);
             }
         }
-    } else if (action == 5) {
+    } else if (action == 6) {
         _display.gameInstructions(std::cout);
     } else {
         std::cout << "Invalid input";

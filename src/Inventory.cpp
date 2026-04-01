@@ -4,7 +4,11 @@
 
 Inventory::Inventory() {}
 
-Inventory::~Inventory() {}
+Inventory::~Inventory() {
+    for (Item* item : _items) delete item;
+    _items.clear();
+}
+
 //ADD ITEM TO INVENTORY (SORTS ALPHABETICALLY)
 void Inventory::add(Item* _item, int count) {
     for (int i = 0; i < count; i++) {

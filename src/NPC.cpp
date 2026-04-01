@@ -32,7 +32,10 @@ std::string HelpNPC::giveHint() {
 ShopNPC::ShopNPC(std::string name, std::vector<CraftingRecipe*> trades)
     : _trades(trades), NPC(name, "shop") {}
 
-ShopNPC::~ShopNPC() {}
+ShopNPC::~ShopNPC() {
+    for (CraftingRecipe* trades : _trades) delete trades;
+    _trades.clear();
+}
 
 std::vector<CraftingRecipe*>& ShopNPC::getTrades() {
     return _trades;

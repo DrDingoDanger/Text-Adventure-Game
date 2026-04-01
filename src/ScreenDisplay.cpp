@@ -79,7 +79,8 @@ void ScreenDisplay::displayAlwaysChoices(std::ostream& out) {
 void ScreenDisplay::displayPlayerStats(std::ostream& out, Player player) {
     out << "Health: " << player.getHealth() << '\n'
         << "Hunger: " << player.getHunger() << '\n'
-        << "Attack: " << player.getAttack() << '\n';
+        << "Attack: " << player.getAttack() << '\n'
+        << "test";
 }
 
 void ScreenDisplay::displayTrades(std::ostream& out,

@@ -3,7 +3,9 @@
 CraftingRecipe::CraftingRecipe(std::vector<std::string> inputs, Item* output)
     : _inputs(inputs), _output(output) {}
 
-CraftingRecipe::~CraftingRecipe() {}
+CraftingRecipe::~CraftingRecipe() {
+    delete _output;
+}
 
 std::vector<std::string> CraftingRecipe::getInputs() {
     return _inputs;

@@ -5,11 +5,22 @@
 
 Location::Location(std::string name, std::vector<NPC*> npcCollection,
     std::vector<CraftingRecipe*> recipes, std::vector<Mob*> mobs,
-    Inventory areaResources, float encounterRate)
+    Inventory* areaResources, float encounterRate)
     : name(name), _npcCollection(npcCollection), _recipes(recipes),
      _mobs(mobs), _areaResources(areaResources), encounterRate(encounterRate) {}
 
-Location::~Location() {}
+Location::~Location() {
+    for (NPC* npc : _npcCollection) delete npc;
+    _npcCollection.clear();
+
+    for (CraftingRecipe* recipe : _recipes) delete recipe;
+    _recipes.clear();
+
+    for (Mob* mob : _mobs) delete mob;
+    _mobs.clear();
+
+    delete _areaResources;
+}
 
 void Location::runEncounter(Player* player) {
     for (int i = 0; i < _mobs.size(); i++) {
@@ -32,11 +43,11 @@ void Location::runEncounter(Player* player) {
     while (it != _mobs.end()) {
         Mob* mob = *it;
         if (mob && mob->isDead()) {
-            Inventory& mobInv = mob->getInventory();
-            while (mobInv.size() > 0) {
-                Item* item = mobInv.get(0);
+            Inventory* mobInv = mob->getInventory();
+            while (mobInv->size() > 0) {
+                Item* item = mobInv->get(0);
                 player->getInventory()->add(item, 1);
-                mobInv.remove(item, 1);
+                mobInv->remove(item, 1);
             }
             delete mob;
             it = _mobs.erase(it);
@@ -81,7 +92,7 @@ Mob* Location::getMob(int index) {
 }
 
 Inventory* Location::getInventory() {
-    return &_areaResources;
+    return _areaResources;
 }
 
 int Location::numOfNPC() {
@@ -90,7 +101,7 @@ int Location::numOfNPC() {
 
 Mountain::Mountain(std::string name, std::vector<NPC*> _npcCollection,
          std::vector<CraftingRecipe*> _recipes,
-         std::vector<Mob*> _mobs, Inventory inv) :
+         std::vector<Mob*> _mobs, Inventory* inv) :
          Location(name, _npcCollection, _recipes, _mobs, inv, 0.6) {
 }
 
@@ -98,7 +109,7 @@ Mountain::~Mountain() {}
 
 Field::Field(std::string name, std::vector<NPC*> _npcCollection,
          std::vector<CraftingRecipe*> _recipes,
-         std::vector<Mob*> _mobs, Inventory inv) :
+         std::vector<Mob*> _mobs, Inventory* inv) :
          Location(name, _npcCollection, _recipes, _mobs, inv, 0.3) {
 }
 

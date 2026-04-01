@@ -3,6 +3,7 @@
 
 Player::Player(Location* start)
     : _currentLocation(start), _equippedWeapon(nullptr) {
+    _inventory = new Inventory();
     _inventory->add(new Material("Thing"), 1);
     _health = 100;
     _hunger = 100;
@@ -11,6 +12,8 @@ Player::Player(Location* start)
 
 Player::~Player() {
     delete _inventory;
+    delete _currentLocation;
+    delete _equippedWeapon;
 }
 
 int Player::getHealth() const {

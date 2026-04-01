@@ -12,13 +12,13 @@ class Mob {
     std::string name;
     int _health;
     int _attack;
-    Inventory dropTable;
+    Inventory* dropTable;
 
  public:
-    Mob(std::string name, int health, int attack, Inventory dropTable);
+    Mob(std::string name, int health, int attack, Inventory* dropTable);
     ~Mob();
     int getAttack();
-    Inventory& getInventory();
+    Inventory* getInventory();
     void takeDamage(int damage);
     std::string getName();
     bool isDead();

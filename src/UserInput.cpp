@@ -44,4 +44,5 @@ void UserInput::pressEnter() {
     std::cout << "Press Enter to continue...";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cin.get();
+    std::cout << "\033[H\033[2J";
 }

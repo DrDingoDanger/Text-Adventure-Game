@@ -20,13 +20,13 @@ class Location {
     std::string name;
     std::vector<NPC*> _npcCollection;
     std::vector<CraftingRecipe*> _recipes;
-    Inventory _areaResources;
+    Inventory* _areaResources;
     std::vector<Mob*> _mobs;
 
  public:
     Location(std::string name, std::vector<NPC*> _npcCollection,
          std::vector<CraftingRecipe*> _recipes, std::vector<Mob*> _mobs,
-         Inventory areaResources, float encounterRate);
+         Inventory* areaResources, float encounterRate);
     virtual ~Location();
     void runEncounter(Player* player);
     bool canExit(const std::string& _direction, WorldMap* map);
@@ -42,7 +42,7 @@ class Mountain : public Location {
  public:
     Mountain(std::string name, std::vector<NPC*> _npcCollection,
             std::vector<CraftingRecipe*> _recipes,
-            std::vector<Mob*> _mobs, Inventory inv);
+            std::vector<Mob*> _mobs, Inventory* inv);
     ~Mountain();
 };
 
@@ -50,7 +50,7 @@ class Field : public Location {
  public:
     Field(std::string name, std::vector<NPC*> _npcCollection,
           std::vector<CraftingRecipe*> _recipes,
-          std::vector<Mob*> _mobs, Inventory inv);
+          std::vector<Mob*> _mobs, Inventory* inv);
     ~Field();
 };
 #endif

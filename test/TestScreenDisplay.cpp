@@ -6,12 +6,7 @@
 #include "NPC.hpp"
 #include "Player.hpp"
 
-TEST(TestScreenDisplay, constructionTest) {
-    //STUB : IDK
-}
-
 TEST(TestScreenDisplay, instructionsTest) {
-    //STUB : Added
     ScreenDisplay dis;
     std::stringstream have;
     std::string want;
@@ -34,12 +29,11 @@ TEST(TestScreenDisplay, instructionsTest) {
 }
 
 TEST(TestScreenDisplay, npcTest) {
-    //STUB : Added
     std::stringstream have;
     std::string want;
     ScreenDisplay dis;
     std::string str;
-    Inventory inv;
+    Inventory* inv = new Inventory();
     std::vector<NPC*> npcs;
     npcs.push_back(new HelpNPC("Danhousen", {}));
     Location* loc = new Mountain("Name", npcs, {}, {}, inv);
@@ -59,10 +53,11 @@ TEST(TestScreenDisplay, npcTest) {
     want += "------------------\n";
 
     EXPECT_EQ(have.str(), want);
+
+    delete loc;
 }
 
 TEST(TestScreenDisplay, defaultMapTest) {
-    //STUB : Added
     std::stringstream have;
     std::string want;
     WorldMap* map = new WorldMap();
@@ -75,10 +70,11 @@ TEST(TestScreenDisplay, defaultMapTest) {
     dis.drawMap(have, map, map->getLocation(0));
 
     EXPECT_EQ(have.str(), want);
+
+    delete map;
 }
 
 TEST(TestScreenDisplay, newLocationMapTest) {
-    //STUB : Added
     std::stringstream have;
     std::string want;
     WorldMap* map = new WorldMap();
@@ -91,10 +87,11 @@ TEST(TestScreenDisplay, newLocationMapTest) {
     dis.drawMap(have, map, map->getLocation(1));
 
     EXPECT_EQ(have.str(), want);
+
+    delete map;
 }
 
 TEST(TestScreenDisplay, numDefaultChoiceTest) {
-    //STUB : Added
     std::stringstream have;
     std::string want;
     ScreenDisplay dis;
@@ -113,7 +110,6 @@ TEST(TestScreenDisplay, numDefaultChoiceTest) {
 }
 
 TEST(TestScreenDisplay, statsTest) {
-    //STUB : Added
     std::stringstream have;
     std::string want;
     WorldMap* map = new WorldMap();
@@ -127,10 +123,11 @@ TEST(TestScreenDisplay, statsTest) {
     dis.displayPlayerStats(have, player);
 
     EXPECT_EQ(have.str(), want);
+
+    delete map;
 }
 
 TEST(TestScreenDisplay, decreaseStatsTest) {
-    //STUB : Added
     std::stringstream have;
     std::string want;
     WorldMap* map = new WorldMap();
@@ -148,10 +145,11 @@ TEST(TestScreenDisplay, decreaseStatsTest) {
     dis.displayPlayerStats(have, player);
 
     EXPECT_EQ(have.str(), want);
+
+    delete map;
 }
 
 TEST(TestScreenDisplay, increaseStatsTest) {
-    //STUB : Added
     std::stringstream have;
     std::string want;
     WorldMap* map = new WorldMap();
@@ -170,17 +168,18 @@ TEST(TestScreenDisplay, increaseStatsTest) {
     dis.displayPlayerStats(have, player);
 
     EXPECT_EQ(have.str(), want);
+
+    delete map;
 }
 
 TEST(TestScreenDisplay, inventoryTest) {
-    //STUB : Added
     std::stringstream have;
     std::string want;
     ScreenDisplay dis;
-    Inventory inv;
+    Inventory* inv = new Inventory();
 
-    inv.add(new Food("Apple", 3), 1);
-    inv.add(new Material("Diamond"), 2);
+    inv->add(new Food("Apple", 3), 1);
+    inv->add(new Material("Diamond"), 2);
 
     want =  "Inventory:\n";
     want += "------------------\n";
@@ -193,19 +192,20 @@ TEST(TestScreenDisplay, inventoryTest) {
     dis.displayInventory(have, inv);
 
     EXPECT_EQ(have.str(), want);
+
+    delete inv;
 }
 
 TEST(TestScreenDisplay, addItemInventoryTest) {
-    //STUB : Added
     std::stringstream have;
     std::string want;
     ScreenDisplay dis;
-    Inventory inv;
+    Inventory* inv = new Inventory();
 
-    inv.add(new Food("Apple", 3), 1);
-    inv.add(new Material("Diamond"), 2);
-    inv.add(new Food("Apple", 3), 2);
-    inv.add(new Food("Tiddies", 10), 1);
+    inv->add(new Food("Apple", 3), 1);
+    inv->add(new Material("Diamond"), 2);
+    inv->add(new Food("Apple", 3), 2);
+    inv->add(new Food("Tiddies", 10), 1);
 
     want =  "Inventory:\n";
     want += "------------------\n";
@@ -220,22 +220,23 @@ TEST(TestScreenDisplay, addItemInventoryTest) {
     dis.displayInventory(have, inv);
 
     EXPECT_EQ(have.str(), want);
+
+    delete inv;
 }
 
 TEST(TestScreenDisplay, removeItemInventoryTest) {
-    //STUB : Added
     std::stringstream have;
     std::string want;
     ScreenDisplay dis;
-    Inventory inv;
+    Inventory* inv = new Inventory();
 
-    inv.add(new Food("Apple", 3), 1);
-    inv.add(new Material("Diamond"), 2);
-    inv.add(new Food("Apple", 3), 2);
-    inv.add(new Food("Tiddies", 10), 1);
+    inv->add(new Food("Apple", 3), 1);
+    inv->add(new Material("Diamond"), 2);
+    inv->add(new Food("Apple", 3), 2);
+    inv->add(new Food("Tiddies", 10), 1);
 
-    inv.remove(new Food("Apple", 3), 1);
-    inv.remove(new Material("Diamond"), 2);
+    inv->remove(new Food("Apple", 3), 1);
+    inv->remove(new Material("Diamond"), 2);
 
     want =  "Inventory:\n";
     want += "------------------\n";
@@ -248,14 +249,15 @@ TEST(TestScreenDisplay, removeItemInventoryTest) {
     dis.displayInventory(have, inv);
 
     EXPECT_EQ(have.str(), want);
+
+    delete inv;
 }
 
 TEST(TestScreenDisplay, tradesTest) {
-    //STUB : Added
     std::stringstream have;
     std::string want;
     ScreenDisplay dis;
-    Inventory inv;
+    Inventory* inv = new Inventory();
     std::vector<CraftingRecipe*> trades;
     std::vector<std::string> emeraldCost;
     std::vector<std::string> chickenCost;
@@ -280,4 +282,9 @@ TEST(TestScreenDisplay, tradesTest) {
     dis.displayTrades(have, trades, inv);
 
     EXPECT_EQ(have.str(), want);
+
+    for (CraftingRecipe* trade : trades) delete trade;
+    trades.clear();
+
+    delete inv;
 }

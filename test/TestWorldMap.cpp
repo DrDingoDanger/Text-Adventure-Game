@@ -1,15 +1,13 @@
 #include "gtest/gtest.h"
 #include "WorldMap.hpp"
 #include "Location.hpp"
-
-TEST(TestWorldMap, constructionTest) {
-    //STUB : IDK
-}
+#include "Inventory.hpp"
 
 TEST(TestWorldMap, updateLocationTest) {
-    //STUB : Added
     WorldMap* map = new WorldMap();
-    Location* loc;
+    Inventory* inv = new Inventory();
+    Location* loc = new Mountain("Name", {}, {}, {}, inv);
+
 
     loc = map->updateLocation("down", loc);
     EXPECT_EQ(map->getCurrentIndex(loc), 3);
@@ -22,12 +20,15 @@ TEST(TestWorldMap, updateLocationTest) {
 
     loc = map->updateLocation("left", loc);
     EXPECT_EQ(map->getCurrentIndex(loc), 0);
+
+    delete map;
+    delete loc;
 }
 
 TEST(TestWorldMap, updateInvalidLocationTest) {
-    //STUB : Added
     WorldMap* map = new WorldMap();
-    Location* loc;
+    Inventory* inv = new Inventory();
+    Location* loc = new Mountain("Name", {}, {}, {}, inv);
 
     loc = map->updateLocation("up", loc);
     EXPECT_EQ(map->getCurrentIndex(loc), 0);
@@ -45,4 +46,7 @@ TEST(TestWorldMap, updateInvalidLocationTest) {
 
     loc = map->updateLocation("down", loc);
     EXPECT_EQ(map->getCurrentIndex(loc), 8);
+
+    delete map;
+    delete loc;
 }

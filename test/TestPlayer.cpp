@@ -11,10 +11,12 @@ TEST(TestPlayer, startsWithDefaultStats) {
 }
 
 TEST(TestPlayer, startsAtRequestedLocation) {
-    WorldMap map;
-    Player player(map.getLocation(2));
+    WorldMap* map = new WorldMap();
+    Player player(map->getLocation(2));
 
-    EXPECT_EQ(player.getCurrent(), map.getLocation(2));
+    EXPECT_EQ(player.getCurrent(), map->getLocation(2));
+
+    delete map;
 }
 
 TEST(TestPlayer, takeDamageReducesHealth) {

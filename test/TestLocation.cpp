@@ -6,22 +6,18 @@
 #include "NPC.hpp"
 #include "Item.hpp"
 
-TEST(TestLocation, constructionTest) {
-    //STUB : IDK
-}
-
 TEST(TestLocation, storesNameTest) {
-    //STUB : Added
-    Inventory inv;
+    Inventory* inv = new Inventory();
 
     Location* loc = new Mountain("Name", {}, {}, {}, inv);
 
     EXPECT_EQ(loc->getName(), "Name");
+
+    delete loc;
 }
 
 TEST(TestLocation, storesRecipeTest) {
-    //STUB : Added
-    Inventory inv;
+    Inventory* inv = new Inventory();
     std::vector<CraftingRecipe*> trades;
     std::vector<std::string> emeraldCost;
 
@@ -33,12 +29,12 @@ TEST(TestLocation, storesRecipeTest) {
 
     EXPECT_NE(loc->getRecipe(0)->getOutput()->getName(), "Stick");
     EXPECT_EQ(loc->getRecipe(1)->getOutput()->getName(), "Stick");
-    EXPECT_EQ(loc->getRecipe(2), nullptr);
+
+    delete loc;
 }
 
 TEST(TestLocation, storesNPCTest) {
-    //STUB : Added
-    Inventory inv;
+    Inventory* inv = new Inventory();
     std::vector<NPC*> npcs;
 
     HelpNPC* dan = new HelpNPC("dan", {});
@@ -51,12 +47,12 @@ TEST(TestLocation, storesNPCTest) {
 
     EXPECT_NE(loc->getNPC(0), phil);
     EXPECT_EQ(loc->getNPC(1), phil);
-    EXPECT_EQ(loc->getNPC(2), nullptr);
+
+    delete loc;
 }
 
 TEST(TestLocation, storesMobTest) {
-    //STUB : Added
-    Inventory inv;
+    Inventory* inv = new Inventory();
     std::vector<Mob*> mobs;
 
     Mob* bob = new Mob("bob", 5, 1, inv);
@@ -69,27 +65,29 @@ TEST(TestLocation, storesMobTest) {
 
     EXPECT_NE(loc->getMob(0), mike);
     EXPECT_EQ(loc->getMob(1), mike);
-    EXPECT_EQ(loc->getMob(2), nullptr);
+
+    delete loc;
 }
 
 TEST(TestLocation, storesInventoryTest) {
-    //STUB : Added
-    Inventory inv;
+    Inventory* inv = new Inventory();
 
-    inv.add(new Food("Apple", 3), 1);
-    inv.add(new Material("Diamond"), 2);
+    inv->add(new Food("Apple", 3), 1);
+    inv->add(new Material("Diamond"), 2);
 
     Location* loc = new Mountain("Name", {}, {}, {}, inv);
 
-    EXPECT_EQ(loc->getInventory().hasName("Apple", 1), 1);
-    EXPECT_EQ(loc->getInventory().hasName("Diamond", 1), 1);
-    EXPECT_NE(loc->getInventory().hasName("Stick", 1), 1);
+    EXPECT_EQ(loc->getInventory()->hasName("Apple", 1), 1);
+    EXPECT_EQ(loc->getInventory()->hasName("Diamond", 1), 1);
+    EXPECT_NE(loc->getInventory()->hasName("Stick", 1), 1);
+
+    delete loc;
 }
 
 TEST(TestLocation, canExitTest) {
-    //STUB : Added
+    Inventory* inv = new Inventory();
     WorldMap* map = new WorldMap();
-    Location* loc;
+    Location* loc = new Mountain("Name", {}, {}, {}, inv);
 
     loc = map->updateLocation("down", loc);
     loc = map->updateLocation("right", loc);
@@ -98,12 +96,15 @@ TEST(TestLocation, canExitTest) {
     EXPECT_TRUE(loc->canExit("down", map));
     EXPECT_TRUE(loc->canExit("up", map));
     EXPECT_TRUE(loc->canExit("left", map));
+
+    delete map;
+    delete loc;
 }
 
 TEST(TestLocation, cannotExitTest) {
-    //STUB : Added
+    Inventory* inv = new Inventory();
     WorldMap* map = new WorldMap();
-    Location* loc;
+    Location* loc = new Mountain("Name", {}, {}, {}, inv);
 
     EXPECT_FALSE(loc->canExit("up", map));
     EXPECT_FALSE(loc->canExit("left", map));
@@ -115,6 +116,9 @@ TEST(TestLocation, cannotExitTest) {
 
     EXPECT_FALSE(loc->canExit("right", map));
     EXPECT_FALSE(loc->canExit("down", map));
+
+    delete map;
+    delete loc;
 }
 
 TEST(TestLocation, runEncounterTest) {

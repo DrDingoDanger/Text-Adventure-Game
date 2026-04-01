@@ -19,6 +19,7 @@ class Game {
 
  public:
     Game();
+    ~Game();
 
     bool isOver() const;
 
