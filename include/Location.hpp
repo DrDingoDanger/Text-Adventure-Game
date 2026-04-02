@@ -38,19 +38,27 @@ class Location {
     int numOfNPC();
 };
 
-class Mountain : public Location {
+class Terrain : public Location {
  public:
-    Mountain(std::string name, std::vector<NPC*> _npcCollection,
+    Terrain(std::string name, std::vector<NPC*> _npcCollection,
             std::vector<CraftingRecipe*> _recipes,
             std::vector<Mob*> _mobs, Inventory* inv);
-    ~Mountain();
+    ~Terrain();
 };
 
-class Field : public Location {
+class Village : public Location {
  public:
-    Field(std::string name, std::vector<NPC*> _npcCollection,
+    Village(std::string name, std::vector<NPC*> _npcCollection,
           std::vector<CraftingRecipe*> _recipes,
           std::vector<Mob*> _mobs, Inventory* inv);
-    ~Field();
+    ~Village();
+};
+
+class Unique : public Location {
+ public:
+    Unique(std::string name, std::vector<NPC*> _npcCollection,
+          std::vector<CraftingRecipe*> _recipes,
+          std::vector<Mob*> _mobs, Inventory* inv);
+    ~Unique();
 };
 #endif

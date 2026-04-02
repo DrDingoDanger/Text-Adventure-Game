@@ -35,7 +35,7 @@ void Game::update() {
         }
         location = _player.getCurrent();
         location->runEncounter(&_player);
-        _player.eat(-5);
+        _player.eat(-10);
         std::cout << '\n';
 // CHECK STATS/INVENTORY
     } else if (action == 2) {
