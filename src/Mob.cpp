@@ -26,7 +26,10 @@ void Mob::takeDamage(int damage) {
     if (_health < 0) {
         _health = 0;
     }
-    std::cout << "Current mob health is " << _health << '\n';
+    std::cout << "Current mob"
+              << "\033[0;31m" << " health "
+              << "\033[0m" << "is "
+              << _health << '\n';
 }
 
 bool Mob::isDead() {

@@ -34,8 +34,8 @@ WorldMap::WorldMap() : _current(nullptr) {
         mobs.push_back(new Mob("Skelly", 3, 8, invS));
         npcs.push_back(new HelpNPC("Danhousen", dia));
         npcs.push_back(new ShopNPC("Hangman", trades));
-        inv->add(new Food("Apple", 3), 1);
-        inv->add(new Material("Coal"), 4);
+        inv->add(new Food("Apple", 3), 2);
+        inv->add(new Material("Coal"), 1);
         inv->add(new Weapon("woodSword", 3), 1);
         invZ->add(new Material("Flesh"), 1);
         invS->add(new Material("Bone"), 1);

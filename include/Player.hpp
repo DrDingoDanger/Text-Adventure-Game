@@ -27,8 +27,7 @@ class Player {
     int getAttack() const;
     int inventorySize();
 
-    void moveAction(const std::string& direction, WorldMap* map,
-      bool valid);
+    bool moveAction(const std::string& direction, WorldMap* map);
     void takeDamage(int damage);
     void eat(int restore);
     void setAttack(int attack);

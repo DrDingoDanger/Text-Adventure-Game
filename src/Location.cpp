@@ -23,21 +23,28 @@ Location::~Location() {
 }
 
 void Location::runEncounter(Player* player) {
+    std::cout << "\033[H\033[2J\033[2;1H";
+
     for (int i = 0; i < _mobs.size(); i++) {
         Mob* mob = _mobs[i];
-        std::cout << "Encounter #" << i+1 << ": ";
-        std::cout << mob->getName() << '\n';
+        std::cout << "\033[0;31m" << "Encounter #"
+                  << i+1 << "\033[0m" << ": ";
+        std::cout << mob->getName() << " (";
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_real_distribution<double> dis(0.0, 1.0);
         float encounter = dis(gen);
-        std::cout << encounter << std::endl;
+        std::cout << encounter << ')' << std::endl;
         if (encounter < encounterRate) {
+            std::cout << "Player damage: "
+                      << std::to_string(player->getAttack())
+                      << "\n\n";
             player->takeDamage(mob->getAttack());
             mob->takeDamage(player->getAttack());
         } else {
             std::cout << "You did not encounter this mob\n";
         }
+        std::cout << '\n';
     }
     auto it = _mobs.begin();
     while (it != _mobs.end()) {
@@ -47,6 +54,9 @@ void Location::runEncounter(Player* player) {
             while (mobInv->size() > 0) {
                 Item* item = mobInv->get(0);
                 player->getInventory()->add(item, 1);
+                std::cout << '\n' << item->getName()
+                          << " has been added to your"
+                          << " inventory\n\n";
                 mobInv->remove(item, 1);
             }
             delete mob;

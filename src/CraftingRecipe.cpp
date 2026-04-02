@@ -1,4 +1,5 @@
 #include "CraftingRecipe.hpp"
+#include <iostream>
 
 CraftingRecipe::CraftingRecipe(std::vector<std::string> inputs, Item* output)
     : _inputs(inputs), _output(output) {}
@@ -24,6 +25,9 @@ bool CraftingRecipe::canCraft(Inventory* _inventory) {
         const std::string& name = kvp.first;
         int amountNeeded = kvp.second;
         if (!_inventory->hasName(name, amountNeeded)) {
+            std::cout << "You need "
+                      << amountNeeded << " " << name
+                      << " for this\n";
             return false;
         }
     }
@@ -42,4 +46,5 @@ void CraftingRecipe::craft(Inventory* _inventory) {
 
     // Add the resulting item to the inventory
     _inventory->add(_output, 1);
+    std::cout << _output->getName() << " has been added to you inventory\n";
 }

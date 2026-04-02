@@ -12,7 +12,6 @@ Player::Player(Location* start)
 
 Player::~Player() {
     delete _inventory;
-    delete _currentLocation;
     delete _equippedWeapon;
 }
 
@@ -36,13 +35,13 @@ void Player::setAttack(int attack) {
     _attack = attack;
 }
 
-void Player::moveAction(const std::string& direction,
-                        WorldMap* map, bool valid) {
+bool Player::moveAction(const std::string& direction,
+                        WorldMap* map) {
     if (_currentLocation->canExit(direction, map)) {
         _currentLocation = map->updateLocation(direction, _currentLocation);
-        valid = true;
+        return true;
     } else {
-        valid = false;
+        return false;
     }
 }
 
@@ -53,7 +52,10 @@ void Player::takeDamage(int damage) {
         _health = 0;
     }
 
-    std::cout << "Current player health is " << _health << '\n';
+    std::cout << "Current player"
+              << "\033[0;31m" << " health "
+              << "\033[0m" << "is "
+              << _health << '\n';
 }
 
 void Player::eat(int restore) {
@@ -67,7 +69,10 @@ void Player::eat(int restore) {
         _hunger = 0;
     }
 
-    std::cout << "Current player hunger is " << _hunger << '\n';
+    std::cout << "Current player"
+              << "\033[0;32m" << " hunger "
+              << "\033[0m" << "is "
+              << _hunger << '\n';
 }
 
 void Player::craft(CraftingRecipe recipe) {

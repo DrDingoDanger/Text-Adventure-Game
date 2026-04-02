@@ -61,7 +61,7 @@ TEST(TestPlayer, moveActionUpdatesLocationWhenValid) {
     Player player(map.getLocation(0));
     bool valid = false;
 
-    player.moveAction("right", &map, valid);
+    valid = player.moveAction("right", &map);
 
     EXPECT_TRUE(valid);
     EXPECT_EQ(player.getCurrent(), map.getLocation(1));
@@ -72,7 +72,7 @@ TEST(TestPlayer, moveActionLeavesLocationWhenInvalidMoveAttempted) {
     Player player(map.getLocation(0));
     bool valid = true;
 
-    player.moveAction("up", &map, valid);
+    valid = player.moveAction("up", &map);
 
     EXPECT_FALSE(valid);
     EXPECT_EQ(player.getCurrent(), map.getLocation(0));

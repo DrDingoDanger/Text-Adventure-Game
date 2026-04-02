@@ -9,6 +9,7 @@
 #include "WorldMap.hpp"
 #include "Location.hpp"
 #include "Player.hpp"
+#include "Mob.hpp"
 
 class ScreenDisplay {
  private:
@@ -22,7 +23,7 @@ class ScreenDisplay {
     void displayNPC(std::ostream& out, Location* loc);
     void drawMap(std::ostream& out, WorldMap* map, Location* current);
     void displayAlwaysChoices(std::ostream& out);
-    void displayPlayerStats(std::ostream& out, Player player);
+    void displayPlayerStats(std::ostream& out, const Player& player);
     void displayTrades(std::ostream& out,
       const std::vector<CraftingRecipe*>& trades, Inventory* inv);
     void displayInventory(std::ostream& out, Inventory* inv);
