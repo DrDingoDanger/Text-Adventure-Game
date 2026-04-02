@@ -34,13 +34,13 @@ WorldMap::WorldMap() : _current(nullptr) {
         mobs.push_back(new Mob("Skelly", 3, 8, invS));
         npcs.push_back(new HelpNPC("Danhousen", dia));
         npcs.push_back(new ShopNPC("Hangman", trades));
-        inv->add(new Food("Apple", 3), 2);
+        inv->add(new Food("Apple", 5), 2);
         inv->add(new Material("Coal"), 1);
-        inv->add(new Weapon("woodSword", 3), 1);
+        inv->add(new Weapon("Wood Sword", 3), 1);
         invZ->add(new Material("Flesh"), 1);
         invS->add(new Material("Bone"), 1);
 
-        _locations.push_back(new Mountain("M"+std::to_string(i),
+        _locations.push_back(new Mountain("Mountain",
                              npcs, {}, mobs, inv));
     }
 
@@ -67,7 +67,7 @@ WorldMap::WorldMap() : _current(nullptr) {
         invS->add(new Material("Bone"), 1);
 
 
-        _locations.push_back(new Field("F"+std::to_string(i),
+        _locations.push_back(new Field("Field",
                              npcs, {}, mobs, inv));
     }
 
@@ -92,7 +92,7 @@ WorldMap::WorldMap() : _current(nullptr) {
         invZ->add(new Material("Flesh"), 1);
         invS->add(new Material("Bone"), 1);
 
-        _locations.push_back(new Mountain("M"+std::to_string(i),
+        _locations.push_back(new Mountain("Village",
                              npcs, {}, mobs, inv));
     }
 

@@ -18,16 +18,27 @@ Item* CraftingRecipe::getOutput() {
 
 bool CraftingRecipe::canCraft(Inventory* _inventory) {
     std::map<std::string, int> requirements;
+    bool craft = true;
+
     for (const std::string& name : _inputs) {
         requirements[name]++;
     }
+
+    int numReq = requirements.size();
+    int numCurrent = 0;
+    
     for (const auto& kvp : requirements) {
         const std::string& name = kvp.first;
         int amountNeeded = kvp.second;
         if (!_inventory->hasName(name, amountNeeded)) {
-            std::cout << "You need "
-                      << amountNeeded << " " << name
-                      << " for this\n";
+                std::cout << "You need "
+                        << amountNeeded << " " << name
+                        << " for this\n";
+                craft = false;
+        }
+
+        numCurrent++;
+        if (numCurrent == numReq && craft == false){
             return false;
         }
     }

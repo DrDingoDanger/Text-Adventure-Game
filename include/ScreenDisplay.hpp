@@ -14,7 +14,7 @@
 class ScreenDisplay {
  private:
     std::string base[6] = {"move", "viewStats", "viewMap", "interactNPC",
-      "areaResources", "gameInstructions"};
+      "checkArea", "gameInstructions"};
 
  public:
     ScreenDisplay();

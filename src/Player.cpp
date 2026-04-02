@@ -2,17 +2,17 @@
 #include "Player.hpp"
 
 Player::Player(Location* start)
-    : _currentLocation(start), _equippedWeapon(nullptr) {
+    : _currentLocation(start) {
     _inventory = new Inventory();
     _inventory->add(new Material("Thing"), 1);
     _health = 100;
     _hunger = 100;
     _attack = 1;
+    _equippedWeapon = "Fist";
 }
 
 Player::~Player() {
     delete _inventory;
-    delete _equippedWeapon;
 }
 
 int Player::getHealth() const {
@@ -29,6 +29,14 @@ int Player::getAttack() const {
 
 Inventory* Player::getInventory() {
     return _inventory;
+}
+
+std::string Player::getWeapon() const {
+    return _equippedWeapon;
+}
+
+void Player::setWeapon(Weapon* weapon) {
+    _equippedWeapon = weapon->getName();
 }
 
 void Player::setAttack(int attack) {
