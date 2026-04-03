@@ -11,6 +11,9 @@ bool Game::isOver() const {
 
 void Game::start() {
     _isOver = false;
+    _display.showTitleScreen(std::cout);
+    _ui.pressEnter();
+
     while (!_isOver) {
         update();
     }
@@ -21,6 +24,7 @@ void Game::update() {
     Location* location = _player.getCurrent();
     int action = _ui.playerAction();
 
+// MOVE
     if (action == 1) {
         Location* loc = _player.getCurrent();
         _display.drawMap(std::cout, &_map, loc);
@@ -143,6 +147,7 @@ void Game::update() {
     } else {
         std::cout << "Invalid input";
     }
+
     if (checkWin() || checkLose()) {
         endGame();
     }

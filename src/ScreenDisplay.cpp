@@ -6,6 +6,22 @@ ScreenDisplay::ScreenDisplay() {}
 
 ScreenDisplay::~ScreenDisplay() {}
 
+void ScreenDisplay::showTitleScreen(std::ostream& out) {
+    out << "\033[H\033[2J";
+    out << "============================================================\n";
+    out << "                       TEXT ADVENTURE\n";
+    out << "============================================================\n\n";
+    out << "              /\\                     /\\\n";
+    out << "             /  \\       /\\          /  \\\n";
+    out << "            /    \\     /  \\        /    \\\n";
+    out << "           /      \\   /    \\      /      \\\n";
+    out << "          /________\\ /______\\    /________\\\n\n";
+    out << "                 ~ ~ ~  QUEST FOR THE EMERALD  ~ ~ ~\n\n";
+    out << "              Explore. Collect. Trade. Survive.\n\n";
+    out << "============================================================\n";
+}
+
+
 void ScreenDisplay::gameInstructions(std::ostream& out) {
     out << "\033[H\033[2J"
     << "\n               -- \033[0;36mText-Adventure-Game\033[0m --\n\n"
@@ -113,7 +129,6 @@ void ScreenDisplay::displayTrades(std::ostream& out,
         Item* outputItem = trade->getOutput();
         out << " for "
             << outputItem->getName()
-        //  << " (" << std::boolalpha << trade->canCraft(inv) << ") "
             << '\n';
     }
 
@@ -151,4 +166,3 @@ void ScreenDisplay::displayInventory(std::ostream& out, Inventory* inv) {
 
     out << str << "------------------\n";
 }
-

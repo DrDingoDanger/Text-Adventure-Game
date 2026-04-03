@@ -19,6 +19,7 @@ class ScreenDisplay {
  public:
     ScreenDisplay();
     ~ScreenDisplay();
+    void showTitleScreen(std::ostream& out);
     void gameInstructions(std::ostream& out);
     void displayNPC(std::ostream& out, Location* loc);
     void drawMap(std::ostream& out, WorldMap* map, Location* current);
