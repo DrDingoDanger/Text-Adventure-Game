@@ -24,7 +24,6 @@ void Game::update() {
     Location* location = _player.getCurrent();
     int action = _ui.playerAction();
 
-// MOVE
     if (action == 1) {
         Location* loc = _player.getCurrent();
         _display.drawMap(std::cout, &_map, loc);
@@ -39,6 +38,7 @@ void Game::update() {
         location->runEncounter(&_player);
         _player.eat(-10);
         std::cout << '\n';
+
     } else if (action == 2) {
         std::cout << "\033[H\033[2J";
         _display.displayInventory(std::cout, _player.getInventory());
@@ -89,9 +89,11 @@ void Game::update() {
             }
         }
         std::cout << '\n';
+
     } else if (action == 3) {
         Location* loc = _player.getCurrent();
         _display.drawMap(std::cout, &_map, loc);
+
     } else if (action == 4) {
         Location* loc = _player.getCurrent();
         _display.displayNPC(std::cout, loc);
@@ -120,6 +122,7 @@ void Game::update() {
             }
         }
         std::cout << '\n';
+
     } else if (action == 5) {
         std::cout << "\033[H\033[2J";
         Location* loc = _player.getCurrent();
@@ -142,8 +145,15 @@ void Game::update() {
         std::cout << '\n';
         _ui.pressEnter();
         location->runEncounter(&_player);
+
     } else if (action == 6) {
         _display.gameInstructions(std::cout);
+    } else if (action == 7) {
+        std::cout << "\033[H\033[2J";
+        std::cout << "Thank you for playing!\n";
+        endGame();
+        return;
+
     } else {
         std::cout << "Invalid input";
     }

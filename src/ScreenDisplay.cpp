@@ -21,7 +21,6 @@ void ScreenDisplay::showTitleScreen(std::ostream& out) {
     out << "============================================================\n";
 }
 
-
 void ScreenDisplay::gameInstructions(std::ostream& out) {
     out << "\033[H\033[2J"
     << "\n               -- \033[0;36mText-Adventure-Game\033[0m --\n\n"
@@ -40,7 +39,9 @@ void ScreenDisplay::gameInstructions(std::ostream& out) {
     << ": Search the current location for resources to"
     << " collect or mobs to fight.\n"
     << " -\033[0;32mgameInstructions\033[0m"
-    << ": View this help message.\n\n";
+    << ": View this help message.\n"
+    << " -\033[0;32mquit\033[0m"
+    << ": End the game.\n\n";
 }
 
 void ScreenDisplay::displayNPC(std::ostream& out, Location* loc) {
@@ -97,7 +98,7 @@ void ScreenDisplay::drawMap(std::ostream& out,
 void ScreenDisplay::displayAlwaysChoices(std::ostream& out) {
     out << "What do you want to do?\n";
 
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
         out << (i + 1) << "- " << base[i] << '\n';
     }
 }

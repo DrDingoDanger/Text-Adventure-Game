@@ -15,7 +15,7 @@ std::string UserInput::moveDirection() {
     }
     return direction;
 }
-//GET NUM 0<X<MAX
+
 int UserInput::limitInput(int max) {
     int choice;
     bool goodInput = false;
@@ -28,23 +28,32 @@ int UserInput::limitInput(int max) {
                       << "Try again: ";
         }
         if (choice < max && choice > 0) {
-                goodInput = true;
-            } else {
-                std::cout << "Input is not a valid item\n"
+            goodInput = true;
+        } else {
+            std::cout << "Input is not a valid item\n"
                       << "Try again: ";
-            }
+        }
     }
     return choice;
 }
-//GET ACTION NUMBER
+
 int UserInput::playerAction() {
     int action;
+    bool goodInput = false;
     std::cout << "Enter action number: ";
-    while (!(std::cin >> action)) {
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "Invalid input. Numbers only!\n"
-                  << "Try again: ";
+    while (goodInput == false) {
+        while (!(std::cin >> action)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Numbers only!\n"
+                      << "Try again: ";
+        }
+        if (action >= 1 && action <= 7) {
+            goodInput = true;
+        } else {
+            std::cout << "Invalid action. Choose 1-7.\n"
+                      << "Try again: ";
+        }
     }
     return action;
 }
