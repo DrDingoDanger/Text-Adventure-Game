@@ -127,3 +127,11 @@ Field::Field(std::string name, std::vector<NPC*> _npcCollection,
 }
 
 Field::~Field() {}
+
+Village::Village(std::string name, std::vector<NPC*> _npcCollection,
+         std::vector<CraftingRecipe*> _recipes,
+         std::vector<Mob*> _mobs, Inventory* inv) :
+         Location(name, _npcCollection, _recipes, _mobs, inv, 0.0) {
+}
+
+Village::~Village() {}

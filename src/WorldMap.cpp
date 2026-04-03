@@ -2,38 +2,38 @@
 #include <exception>
 
 #include "WorldMap.hpp"
-//MAKE THE MAP
+
 WorldMap::WorldMap() : _current(nullptr) {
-//Initialize Help Dialog
     std::vector<std::string> dia;
     dia.push_back("Trade items with NPC to gain new items.");
-    dia.push_back("Moving between locations costs"
-                  "hunger, eating restores hunger.");
+    dia.push_back("Moving between locations costshunger, eating restores hunger.");
     dia.push_back("Enjoy this game or else you. are. cursed.");
     dia.push_back("I love this gamehousen.");
     dia.push_back("Another random dialogue option");
 
-//Initialize Trades
     std::vector<std::string> emeraldCost;
     emeraldCost.push_back("Iron");
     emeraldCost.push_back("Leather");
+
     std::vector<std::string> chickenCost;
     chickenCost.push_back("Emerald");
+
     std::vector<std::string> porkCost;
     porkCost.push_back("Raw pork");
     porkCost.push_back("Bone");
     porkCost.push_back("Bone");
+
     std::vector<std::string> eggCost;
     eggCost.push_back("Grass");
     eggCost.push_back("Grass");
+
     std::vector<std::string> ironCost;
     ironCost.push_back("Raw iron");
     ironCost.push_back("raw pork");
-    std::vector<std::string> ironCost;
-    ironCost.push_back("Raw iron");
-    ironCost.push_back("raw pork");
+
     std::vector<std::string> fishingCost;
     fishingCost.push_back("Rod");
+
     std::vector<std::string> rodCost;
     rodCost.push_back("String");
     rodCost.push_back("String");
@@ -41,7 +41,6 @@ WorldMap::WorldMap() : _current(nullptr) {
     rodCost.push_back("Stick");
     rodCost.push_back("Stick");
 
-//Initialize Locations
     for (int i = 0; i < 3; i++) {
         std::vector<NPC*> npcs;
         std::vector<CraftingRecipe*> trades;
@@ -76,7 +75,6 @@ WorldMap::WorldMap() : _current(nullptr) {
         Inventory* invZ = new Inventory();
         Inventory* invS = new Inventory();
 
-
         trades.push_back(new CraftingRecipe(emeraldCost,
             new Material("Emerald")));
         trades.push_back(new CraftingRecipe(chickenCost,
@@ -89,7 +87,6 @@ WorldMap::WorldMap() : _current(nullptr) {
         inv->add(new Material("Grass"), 1);
         invZ->add(new Material("Flesh"), 1);
         invS->add(new Material("Bone"), 1);
-
 
         _locations.push_back(new Field("Field",
                              npcs, {}, mobs, inv));
@@ -116,7 +113,7 @@ WorldMap::WorldMap() : _current(nullptr) {
         invZ->add(new Material("Flesh"), 1);
         invS->add(new Material("Bone"), 1);
 
-        _locations.push_back(new Mountain("Village",
+        _locations.push_back(new Village("Village",
                              npcs, {}, mobs, inv));
     }
 

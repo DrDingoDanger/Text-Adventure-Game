@@ -75,7 +75,7 @@ bool Inventory::hasName(std::string name, int count) {
 int Inventory::size() {
     return _items.size();
 }
-//GET ITEM AT INDEX
+
 Item* Inventory::get(int index) {
     return _items[index];
 }
