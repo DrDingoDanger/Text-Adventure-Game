@@ -57,5 +57,7 @@ void CraftingRecipe::craft(Inventory* _inventory) {
 
     // Add the resulting item to the inventory
     _inventory->add(_output, 1);
-    std::cout << _output->getName() << " has been added to you inventory\n";
+    std::cout << "\n\033[33m" << _output->getName()
+              << "\033[0m"
+              << " has been added to you inventory\n";
 }

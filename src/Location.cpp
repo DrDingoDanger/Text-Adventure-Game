@@ -54,7 +54,9 @@ void Location::runEncounter(Player* player) {
                 while (mobInv->size() > 0) {
                     Item* item = mobInv->get(0);
                     player->getInventory()->add(item, 1);
-                    std::cout << item->getName()
+                    std::cout << "\033[33m"
+                              << item->getName()
+                              << "\033[0m"
                               << " has been added to your"
                               << " inventory\n\n";
                     mobInv->remove(item, 1);
@@ -70,7 +72,7 @@ void Location::runEncounter(Player* player) {
             return mob->isDead();
         }), _mobs.end());
     } else {
-        std::cout << "There are no more mobs in the area\n";
+        std::cout << "There are no mobs in the area\n\n";
     }
 }
 
@@ -112,21 +114,21 @@ int Location::numOfNPC() {
     return _npcCollection.size();
 }
 
-Mountain::Mountain(std::string name, std::vector<NPC*> _npcCollection,
+Terrain::Terrain(std::string name, std::vector<NPC*> _npcCollection,
          std::vector<CraftingRecipe*> _recipes,
          std::vector<Mob*> _mobs, Inventory* inv) :
          Location(name, _npcCollection, _recipes, _mobs, inv, 0.6) {
 }
 
-Mountain::~Mountain() {}
+Terrain::~Terrain() {}
 
-Field::Field(std::string name, std::vector<NPC*> _npcCollection,
+Unique::Unique(std::string name, std::vector<NPC*> _npcCollection,
          std::vector<CraftingRecipe*> _recipes,
          std::vector<Mob*> _mobs, Inventory* inv) :
          Location(name, _npcCollection, _recipes, _mobs, inv, 0.3) {
 }
 
-Field::~Field() {}
+Unique::~Unique() {}
 
 Village::Village(std::string name, std::vector<NPC*> _npcCollection,
          std::vector<CraftingRecipe*> _recipes,

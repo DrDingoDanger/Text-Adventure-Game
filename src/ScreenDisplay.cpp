@@ -8,17 +8,17 @@ ScreenDisplay::~ScreenDisplay() {}
 
 void ScreenDisplay::showTitleScreen(std::ostream& out) {
     out << "\033[H\033[2J";
-    out << "============================================================\n";
-    out << "                       TEXT ADVENTURE\n";
-    out << "============================================================\n\n";
+    out << "==========================================================\n";
+    out << "                    TEXT ADVENTURE\n";
+    out << "==========================================================\n\n";
     out << "              /\\                     /\\\n";
     out << "             /  \\       /\\          /  \\\n";
     out << "            /    \\     /  \\        /    \\\n";
     out << "           /      \\   /    \\      /      \\\n";
     out << "          /________\\ /______\\    /________\\\n\n";
-    out << "                 ~ ~ ~  QUEST FOR THE EMERALD  ~ ~ ~\n\n";
-    out << "              Explore. Collect. Trade. Survive.\n\n";
-    out << "============================================================\n";
+    out << "          ~ ~ ~  QUEST FOR THE \033[32mEMERALD\033[0m  ~ ~ ~\n\n";
+    out << "           Explore. Collect. Trade. Survive.\n\n";
+    out << "==========================================================\n";
 }
 
 void ScreenDisplay::gameInstructions(std::ostream& out) {
@@ -115,21 +115,36 @@ void ScreenDisplay::displayPlayerStats(std::ostream& out,
 
 void ScreenDisplay::displayTrades(std::ostream& out,
     const std::vector<CraftingRecipe*>& trades, Inventory* inv) {
+    int numT = trades.size();
+
     out << "\033[H\033[2J\033[0;34m" << "Trades: \n"
         << "\033[0m" << "------------------\n";
-    for (int i = 0; i < trades.size(); i++) {
+
+    for (int i = 0; i < numT; i++) {
         out << (i + 1) << ". ";
-        CraftingRecipe* trade = trades[i];
-        std::vector<std::string> inputNames = trade->getInputs();
-        for (int j = 0; j < inputNames.size(); j++) {
+        std::vector<std::string> inputNames = trades[i]->getInputs();
+        int numI = inputNames.size();
+
+        for (int j = 0; j < numI; j++){
+            int mult = 1;
             out << inputNames[j];
-            if (j < inputNames.size() - 1) {
-                out << " & ";
+
+            while (j + 1 < numI && inputNames[j] == inputNames[j + 1]) {
+                mult++;
+                j++;
+            }
+
+            if (mult > 1) {
+                    out << ' ' << std::to_string(mult) << 'x';
+            }
+
+            if (j < numI - 1){
+                    out << " & ";
             }
         }
-        Item* outputItem = trade->getOutput();
+
         out << " for "
-            << outputItem->getName()
+            << trades[i]->getOutput()->getName()
             << '\n';
     }
 

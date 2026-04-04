@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Game.hpp"
 
-Game::Game() : _player(_map.getLocation(0)) {}
+Game::Game() : _player(_map.getLocation(4)) {}
 
 Game::~Game() {}
 
@@ -82,8 +82,8 @@ void Game::update() {
                         _player.setWeapon(tempW);
                         _player.removeItem(tempW);
                     } else {
-                        std::cout << temp->getName()
-                                  << " is already equipped\n";
+                        std::cout << _player.getWeapon()
+                                  << " is better.\n";
                     }
                 }
             }
