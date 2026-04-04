@@ -158,19 +158,36 @@ void Game::update() {
         std::cout << "Invalid input";
     }
 
-    if (checkWin() || checkLose()) {
+    if (checkWin(&_player) || checkLose()) {
         endGame();
     }
 
     _ui.pressEnter();
 }
 
-bool Game::checkWin() const {
+bool Game::checkWin(Player* player) const {
+    if (player->getInventory()->hasName("Emerald", 1) == true) {
+        std::cout << "\033[H\033[2J"
+        << "\033[5;8H\033[31m"
+        << "Game Over"
+        << "\033[9;8H\033[0m"
+        << "You WIN!\n\n\n";
+        return true;
+    }
     return false;
 }
 
 bool Game::checkLose() const {
-    return _player.getHealth() <= 0;
+    if (_player.getHealth() <= 0 ||
+          _player.getHunger() <= 0) {
+        std::cout << "\033[H\033[2J"
+              << "\033[5;8H\033[31m"
+              << "Game Over"
+              << "\033[9;7H\033[0m"
+              << "You Lose >:D\n\n\n";
+        return true;
+    }
+    return false;
 }
 
 void Game::endGame() {

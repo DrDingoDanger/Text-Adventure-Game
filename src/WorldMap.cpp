@@ -121,7 +121,7 @@ WorldMap::WorldMap() : _current(nullptr) {
     inv2->add(new Material("Grass"), 1);
     invR2->add(new Material("Horn"), 1);
 
-    _locations.push_back(new Terrain("Mountain Ridge",
+    _locations.push_back(new Terrain("Cliff",
                          npcs2, {}, mobs2, inv2));
 // 03
     std::vector<std::string> dia3;
@@ -153,7 +153,7 @@ WorldMap::WorldMap() : _current(nullptr) {
 
     inv3->add(new Food("Potato", 4), 1);
 
-    _locations.push_back(new Village("Mountain Top Forge",
+    _locations.push_back(new Village("Forge",
                          npcs3, {}, {}, inv3));
 // 04
     std::vector<std::string> dia4;
@@ -185,12 +185,12 @@ WorldMap::WorldMap() : _current(nullptr) {
     npcs4.push_back(new HelpNPC("Villiger Number 23", dia4));
     npcs4.push_back(new ShopNPC("Merchant", trades4));
 
-    inv4->add(new Food("Beat", 2), 4);
+    inv4->add(new Food("Beet", 2), 4);
     inv4->add(new Material("Clock"), 1);
     inv4->add(new Material("Wood"), 1);
     inv4->add(new Material("Note: ""Stealing is bad!"""), 1);
 
-    _locations.push_back(new Village("Village",
+    _locations.push_back(new Village("Town",
                          npcs4, {}, {}, inv4));
 // 05
     std::vector<std::string> dia5;
@@ -231,12 +231,12 @@ WorldMap::WorldMap() : _current(nullptr) {
 
     inv6->add(new Food("Random Mushroom", -4), 2);
     inv6->add(new Material("Rose"), 1);
-    inv6->add(new Material("Raw Iron"), 1);
+    inv6->add(new Material("Raw Iron"), 2);
     inv6->add(new Material("Grass"), 3);
     inv1Sk6->add(new Material("Bone"), 1);
     inv2Sk6->add(new Material("Bone"), 1);
 
-    _locations.push_back(new Terrain("Mountain Base",
+    _locations.push_back(new Terrain("Valley",
                          npcs6, {}, mobs6, inv6));
 // 07
     std::vector<std::string> dia7;
@@ -308,7 +308,7 @@ WorldMap::WorldMap() : _current(nullptr) {
 
     invSp8->add(new Material("String"), 4);
 
-    _locations.push_back(new Unique("Hermits Hut",
+    _locations.push_back(new Unique("Hermit",
                          npcs8, {}, mobs8, inv8));
 // 09
     std::vector<std::string> dia9;
@@ -341,7 +341,7 @@ WorldMap::WorldMap() : _current(nullptr) {
     inv9->add(new Material("Stick"), 1);
     inv9->add(new Material("Pickle"), 1);
 
-    _locations.push_back(new Village("Lakeside Cabin",
+    _locations.push_back(new Village("Lake",
                          npcs9, {}, {}, inv9));
 
     if (!_locations.empty()) {

@@ -26,21 +26,22 @@ void ScreenDisplay::gameInstructions(std::ostream& out) {
     << "\n               -- \033[0;36mText-Adventure-Game\033[0m --\n\n"
     << "Enter the requested information to navigate through the game.\n\n"
     << " -\033[0;32mMove\033[0m"
-    << ": Change location by moving left, right, up, or down.\n"
-    << " -\033[0;32mviewInv\033[0m"
-    << ": Look at the items in your inventory,"
+    << ": \033[4;36mChange location\033[0m by moving left, right, up, or down.\n"
+    << " -\033[0;32mView Inventory\033[0m"
+    << ": Look at the \033[4;36mitems in your inventory\033[0m,"
     << " you are given the option to use them.\n"
-    << " -\033[0;32mviewMap\033[0m"
-    << ": View the world map, your location is in braces.\n"
-    << " -\033[0;32minteractNPC\033[0m"
-    << ": Get a list of NPCs in the"
-    << " current location and the ability to interact with them.\n"
-    << " -\033[0;32mcheckArea\033[0m"
-    << ": Search the current location for resources to"
-    << " collect or mobs to fight.\n"
-    << " -\033[0;32mgameInstructions\033[0m"
+    << " -\033[0;32mView Map\033[0m"
+    << ": View the world map, your \033[4;36mlocation is in brackets\033[0m.\n"
+    << " -\033[0;32mFind NPC's\033[0m"
+    << ": Check the area for any \033[4;36mshop or dialog NPC's\033[0m."
+    << " NPC's have \033[4;36mmutiple dialog options\033[0m and"
+    << " can give \033[4;36mhints\033[0m.\n"
+    << " -\033[0;32mCheck Area\033[0m"
+    << ": \033[4;36mCollect resources\033[0m from the area and"
+    << " \033[4;36mfight mobs for their drops\033[0m.\n"
+    << " -\033[0;32mGame Instructions\033[0m"
     << ": View this help message.\n"
-    << " -\033[0;32mquit\033[0m"
+    << " -\033[0;32mQuit\033[0m"
     << ": End the game.\n\n";
 }
 
@@ -75,13 +76,11 @@ void ScreenDisplay::drawMap(std::ostream& out,
 
             if (index == cIndex) {
                 out << "[\033[0;36m"
-                    << location->getName()[0]
-                    << std::to_string(index)
+                    << location->getName()
                     << "\033[0m]  ";
             } else {
                 out << " "
-                    << location->getName()[0]
-                    << std::to_string(index);
+                    << location->getName();
                 if (j != 2) {
                     out << "   ";
                 }

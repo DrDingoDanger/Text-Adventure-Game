@@ -4,7 +4,7 @@
 Player::Player(Location* start)
     : _currentLocation(start) {
     _inventory = new Inventory();
-    _inventory->add(new Material("Thing"), 1);
+    _inventory->add(new Material("Pocket lint"), 2);
     _health = 100;
     _hunger = 100;
     _attack = 1;
