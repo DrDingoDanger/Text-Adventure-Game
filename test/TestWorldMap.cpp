@@ -5,8 +5,7 @@
 
 TEST(TestWorldMap, updateLocationTest) {
     WorldMap* map = new WorldMap();
-    Inventory* inv = new Inventory();
-    Location* loc = new Mountain("Name", {}, {}, {}, inv);
+    Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
 
 
     loc = map->updateLocation("down", loc);
@@ -22,13 +21,11 @@ TEST(TestWorldMap, updateLocationTest) {
     EXPECT_EQ(map->getCurrentIndex(loc), 0);
 
     delete map;
-    delete loc;
 }
 
 TEST(TestWorldMap, updateInvalidLocationTest) {
     WorldMap* map = new WorldMap();
-    Inventory* inv = new Inventory();
-    Location* loc = new Mountain("Name", {}, {}, {}, inv);
+    Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
 
     loc = map->updateLocation("up", loc);
     EXPECT_EQ(map->getCurrentIndex(loc), 0);
@@ -48,5 +45,4 @@ TEST(TestWorldMap, updateInvalidLocationTest) {
     EXPECT_EQ(map->getCurrentIndex(loc), 8);
 
     delete map;
-    delete loc;
 }

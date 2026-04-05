@@ -23,10 +23,8 @@ bool CraftingRecipe::canCraft(Inventory* _inventory) {
     for (const std::string& name : _inputs) {
         requirements[name]++;
     }
-
     int numReq = requirements.size();
     int numCurrent = 0;
-
     for (const auto& kvp : requirements) {
         const std::string& name = kvp.first;
         int amountNeeded = kvp.second;

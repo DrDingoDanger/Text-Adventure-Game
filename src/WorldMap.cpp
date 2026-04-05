@@ -42,7 +42,7 @@ WorldMap::WorldMap() : _current(nullptr) {
     ironBar2Cost.push_back("Wood");
 
     std::vector<std::string> aFishCost;
-    aFishCost.push_back("Pickle");
+    aFishCost.push_back("Clock");
     aFishCost.push_back("Hay");
 
     std::vector<std::string> bookCost;
@@ -95,9 +95,11 @@ WorldMap::WorldMap() : _current(nullptr) {
     mobs1.push_back(new Mob("Zombie", 7, 5, invZ1));
     mobs1.push_back(new Mob("Spider", 6, 11, invSp1));
 
-    inv1->add(new Food("Apple", 5), 2);
+    inv1->add(new Food("Apple", 5), 1);
+    inv1->add(new Food("Apple", 5), 1);
     inv1->add(new Material("Stick"), 1);
-    inv1->add(new Material("Grass"), 2);
+    inv1->add(new Material("Grass"), 1);
+    inv1->add(new Material("Grass"), 1);
     inv1->add(new Weapon("Stone Sword", 3), 1);
     invZ1->add(new Material("Flesh"), 1);
     invSp1->add(new Material("String"), 1);
@@ -117,7 +119,12 @@ WorldMap::WorldMap() : _current(nullptr) {
     npcs2.push_back(new HelpNPC("void", dia2));
     mobs2.push_back(new Mob("Ram", 5, 5, invR2));
 
-    inv2->add(new Food("Coal", 4), 6);
+    inv2->add(new Material("Coal"), 1);
+    inv2->add(new Material("Coal"), 1);
+    inv2->add(new Material("Coal"), 1);
+    inv2->add(new Material("Coal"), 1);
+    inv2->add(new Material("Coal"), 1);
+    inv2->add(new Material("Coal"), 1);
     inv2->add(new Material("Grass"), 1);
     invR2->add(new Material("Horn"), 1);
 
@@ -147,7 +154,7 @@ WorldMap::WorldMap() : _current(nullptr) {
         new Material("Iron Block")));
     trades3.push_back(new CraftingRecipe(spearCost,
         new Weapon("Spear", 4)));
-    
+
     npcs3.push_back(new HelpNPC("Desk Worker", dia3));
     npcs3.push_back(new ShopNPC("Blacksmith", trades3));
 
@@ -185,7 +192,10 @@ WorldMap::WorldMap() : _current(nullptr) {
     npcs4.push_back(new HelpNPC("Villiger Number 23", dia4));
     npcs4.push_back(new ShopNPC("Merchant", trades4));
 
-    inv4->add(new Food("Beet", 2), 4);
+    inv4->add(new Food("Beet", 2), 1);
+    inv4->add(new Food("Beet", 2), 1);
+    inv4->add(new Food("Beet", 2), 1);
+    inv4->add(new Food("Beet", 2), 1);
     inv4->add(new Material("Clock"), 1);
     inv4->add(new Material("Wood"), 1);
     inv4->add(new Material("Note: ""Stealing is bad!"""), 1);
@@ -207,8 +217,11 @@ WorldMap::WorldMap() : _current(nullptr) {
 
     npcs5.push_back(new HelpNPC("Roommate", dia5));
 
-    inv5->add(new Food("Baguette", 8), 3);
-    inv5->add(new Material("Wood"), 2);
+    inv5->add(new Food("Baguette", 8), 1);
+    inv5->add(new Food("Baguette", 8), 1);
+    inv5->add(new Food("Baguette", 8), 1);
+    inv5->add(new Material("Wood"), 1);
+    inv5->add(new Material("Wood"), 1);
     inv5->add(new Weapon("Wood Sword", 2), 1);
 
     _locations.push_back(new Unique("Home",
@@ -229,10 +242,14 @@ WorldMap::WorldMap() : _current(nullptr) {
     mobs6.push_back(new Mob("Skelly", 3, 8, inv1Sk6));
     mobs6.push_back(new Mob("Skelly", 3, 8, inv2Sk6));
 
-    inv6->add(new Food("Random Mushroom", -4), 2);
+    inv6->add(new Food("Random Mushroom", -4), 1);
+    inv6->add(new Food("Random Mushroom", -4), 1);
     inv6->add(new Material("Rose"), 1);
-    inv6->add(new Material("Raw Iron"), 2);
-    inv6->add(new Material("Grass"), 3);
+    inv6->add(new Material("Raw Iron"), 1);
+    inv6->add(new Material("Raw Iron"), 1);
+    inv6->add(new Material("Grass"), 1);
+    inv6->add(new Material("Grass"), 1);
+    inv6->add(new Material("Grass"), 1);
     inv1Sk6->add(new Material("Bone"), 1);
     inv2Sk6->add(new Material("Bone"), 1);
 
@@ -270,11 +287,20 @@ WorldMap::WorldMap() : _current(nullptr) {
     npcs7.push_back(new HelpNPC("Elder Fowl", dia7));
     npcs7.push_back(new ShopNPC("Nest", trades7));
 
-    inv7->add(new Food("Slop", 4), 3);
-    inv7->add(new Material("Hay"), 3);
+    inv7->add(new Food("Slop", 4), 1);
+    inv7->add(new Food("Slop", 4), 1);
+    inv7->add(new Food("Slop", 4), 1);
+    inv7->add(new Material("Hay"), 1);
+    inv7->add(new Material("Hay"), 1);
+    inv7->add(new Material("Hay"), 1);
     inv7->add(new Food("Dirt", -1), 1);
-    invC7->add(new Material("Leather"), 3);
-    invP7->add(new Material("Raw Pork"), 4);
+    invC7->add(new Material("Leather"), 1);
+    invC7->add(new Material("Leather"), 1);
+    invC7->add(new Material("Leather"), 1);
+    invP7->add(new Material("Raw Pork"), 1);
+    invP7->add(new Material("Raw Pork"), 1);
+    invP7->add(new Material("Raw Pork"), 1);
+    invP7->add(new Material("Raw Pork"), 1);
 
     _locations.push_back(new Unique("Field",
                          npcs7, {}, mobs7, inv7));
@@ -287,7 +313,8 @@ WorldMap::WorldMap() : _current(nullptr) {
     Inventory* invSp8 = new Inventory();
 
     dia8.push_back("\nTrade items with NPC to gain new items.");
-    dia8.push_back("\nMoving between locations costs hunger, eating restores hunger.");
+    dia8.push_back("\nMoving between locations costs hunger, eating"
+        " restores hunger.");
     dia8.push_back("\nEnjoy this game or else you. are. cursed.");
     dia8.push_back("\nI love this gamehousen.");
     dia8.push_back("\nAnother random dialogue option");
@@ -306,7 +333,10 @@ WorldMap::WorldMap() : _current(nullptr) {
 
     inv8->add(new Food("Meaning of Life", 50), 1);
 
-    invSp8->add(new Material("String"), 4);
+    invSp8->add(new Material("String"), 1);
+    invSp8->add(new Material("String"), 1);
+    invSp8->add(new Material("String"), 1);
+    invSp8->add(new Material("String"), 1);
 
     _locations.push_back(new Unique("Hermit",
                          npcs8, {}, mobs8, inv8));
@@ -336,10 +366,13 @@ WorldMap::WorldMap() : _current(nullptr) {
     npcs9.push_back(new HelpNPC("Child", dia9));
     npcs9.push_back(new ShopNPC("Fisherman", trades9));
 
-    inv9->add(new Material("Grass"), 4);
+    inv9->add(new Material("Grass"), 1);
+    inv9->add(new Material("Grass"), 1);
+    inv9->add(new Material("Grass"), 1);
+    inv9->add(new Material("Grass"), 1);
     inv9->add(new Material("Wood"), 1);
     inv9->add(new Material("Stick"), 1);
-    inv9->add(new Material("Pickle"), 1);
+    inv9->add(new Food("Pickle", 10), 1);
 
     _locations.push_back(new Village("Lake",
                          npcs9, {}, {}, inv9));

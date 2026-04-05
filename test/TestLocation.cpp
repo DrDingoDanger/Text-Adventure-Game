@@ -7,9 +7,7 @@
 #include "Item.hpp"
 
 TEST(TestLocation, storesNameTest) {
-    Inventory* inv = new Inventory();
-
-    Location* loc = new Mountain("Name", {}, {}, {}, inv);
+    Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
 
     EXPECT_EQ(loc->getName(), "Name");
 
@@ -17,7 +15,6 @@ TEST(TestLocation, storesNameTest) {
 }
 
 TEST(TestLocation, storesRecipeTest) {
-    Inventory* inv = new Inventory();
     std::vector<CraftingRecipe*> trades;
     std::vector<std::string> emeraldCost;
 
@@ -25,7 +22,7 @@ TEST(TestLocation, storesRecipeTest) {
     trades.push_back(new CraftingRecipe(emeraldCost, new Material("Emerald")));
     trades.push_back(new CraftingRecipe(emeraldCost, new Material("Stick")));
 
-    Location* loc = new Mountain("Name", {}, trades, {}, inv);
+    Location* loc = new Terrain("Name", {}, trades, {}, new Inventory());
 
     EXPECT_NE(loc->getRecipe(0)->getOutput()->getName(), "Stick");
     EXPECT_EQ(loc->getRecipe(1)->getOutput()->getName(), "Stick");
@@ -34,7 +31,6 @@ TEST(TestLocation, storesRecipeTest) {
 }
 
 TEST(TestLocation, storesNPCTest) {
-    Inventory* inv = new Inventory();
     std::vector<NPC*> npcs;
 
     HelpNPC* dan = new HelpNPC("dan", {});
@@ -43,7 +39,7 @@ TEST(TestLocation, storesNPCTest) {
     npcs.push_back(dan);
     npcs.push_back(phil);
 
-    Location* loc = new Mountain("Name", npcs, {}, {}, inv);
+    Location* loc = new Terrain("Name", npcs, {}, {}, new Inventory());
 
     EXPECT_NE(loc->getNPC(0), phil);
     EXPECT_EQ(loc->getNPC(1), phil);
@@ -52,16 +48,15 @@ TEST(TestLocation, storesNPCTest) {
 }
 
 TEST(TestLocation, storesMobTest) {
-    Inventory* inv = new Inventory();
     std::vector<Mob*> mobs;
 
-    Mob* bob = new Mob("bob", 5, 1, inv);
-    Mob* mike = new Mob("mike", 5, 1, inv);
+    Mob* bob = new Mob("bob", 5, 1, new Inventory());
+    Mob* mike = new Mob("mike", 5, 1, new Inventory());
 
     mobs.push_back(bob);
     mobs.push_back(mike);
 
-    Location* loc = new Mountain("Name", {}, {}, mobs, inv);
+    Location* loc = new Terrain("Name", {}, {}, mobs, new Inventory());
 
     EXPECT_NE(loc->getMob(0), mike);
     EXPECT_EQ(loc->getMob(1), mike);
@@ -73,9 +68,10 @@ TEST(TestLocation, storesInventoryTest) {
     Inventory* inv = new Inventory();
 
     inv->add(new Food("Apple", 3), 1);
-    inv->add(new Material("Diamond"), 2);
+    inv->add(new Material("Diamond"), 1);
+    inv->add(new Material("Diamond"), 1);
 
-    Location* loc = new Mountain("Name", {}, {}, {}, inv);
+    Location* loc = new Terrain("Name", {}, {}, {}, inv);
 
     EXPECT_EQ(loc->getInventory()->hasName("Apple", 1), 1);
     EXPECT_EQ(loc->getInventory()->hasName("Diamond", 1), 1);
@@ -85,9 +81,8 @@ TEST(TestLocation, storesInventoryTest) {
 }
 
 TEST(TestLocation, canExitTest) {
-    Inventory* inv = new Inventory();
     WorldMap* map = new WorldMap();
-    Location* loc = new Mountain("Name", {}, {}, {}, inv);
+    Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
 
     loc = map->updateLocation("down", loc);
     loc = map->updateLocation("right", loc);
@@ -98,13 +93,11 @@ TEST(TestLocation, canExitTest) {
     EXPECT_TRUE(loc->canExit("left", map));
 
     delete map;
-    delete loc;
 }
 
 TEST(TestLocation, cannotExitTest) {
-    Inventory* inv = new Inventory();
     WorldMap* map = new WorldMap();
-    Location* loc = new Mountain("Name", {}, {}, {}, inv);
+    Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
 
     EXPECT_FALSE(loc->canExit("up", map));
     EXPECT_FALSE(loc->canExit("left", map));
@@ -118,7 +111,6 @@ TEST(TestLocation, cannotExitTest) {
     EXPECT_FALSE(loc->canExit("down", map));
 
     delete map;
-    delete loc;
 }
 
 TEST(TestLocation, runEncounterTest) {

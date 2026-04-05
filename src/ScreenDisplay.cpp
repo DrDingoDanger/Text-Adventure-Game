@@ -26,7 +26,8 @@ void ScreenDisplay::gameInstructions(std::ostream& out) {
     << "\n               -- \033[0;36mText-Adventure-Game\033[0m --\n\n"
     << "Enter the requested information to navigate through the game.\n\n"
     << " -\033[0;32mMove\033[0m"
-    << ": \033[4;36mChange location\033[0m by moving left, right, up, or down.\n"
+    << ": \033[4;36mChange location\033[0m by moving left, right,"
+    << " up, or down.\n"
     << " -\033[0;32mView Inventory\033[0m"
     << ": Look at the \033[4;36mitems in your inventory\033[0m,"
     << " you are given the option to use them.\n"
@@ -124,7 +125,7 @@ void ScreenDisplay::displayTrades(std::ostream& out,
         std::vector<std::string> inputNames = trades[i]->getInputs();
         int numI = inputNames.size();
 
-        for (int j = 0; j < numI; j++){
+        for (int j = 0; j < numI; j++) {
             int mult = 1;
             out << inputNames[j];
 
@@ -137,7 +138,7 @@ void ScreenDisplay::displayTrades(std::ostream& out,
                     out << ' ' << std::to_string(mult) << 'x';
             }
 
-            if (j < numI - 1){
+            if (j < numI - 1) {
                     out << " & ";
             }
         }

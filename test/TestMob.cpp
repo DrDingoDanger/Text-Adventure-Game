@@ -3,44 +3,69 @@
 #include "Inventory.hpp"
 
 TEST(TestMob, startsAliveWhenHealthPositive) {
-    Inventory* drops = new Inventory();
-    Mob mob("Wolf", 10, 3, drops);
+    Mob* mob = new Mob("Zombie", 7, 5, new Inventory());
 
-    EXPECT_FALSE(mob.isDead());
+    EXPECT_FALSE(mob->isDead());
 
-    delete drops;
+    delete mob;
 }
 
 TEST(TestMob, takeDamageReducesHealthWithoutKilling) {
-    Inventory* drops = new Inventory();
-    Mob mob("Wolf", 10, 3, drops);
+    std::stringstream tempStream;
+    std::streambuf* origStream = std::cout.rdbuf();
+    std::cout.rdbuf(tempStream.rdbuf());
 
-    mob.takeDamage(4);
-    std::string str = "Current mob health is 6";
+    Mob* mob = new Mob("Zombie", 10, 5, new Inventory());
 
-    EXPECT_FALSE(mob.isDead());
+    mob->takeDamage(4);
+    std::string str = "Current mob"
+              "\033[0;31m health "
+              "\033[0mis 6\n";
 
-    delete drops;
+    std::cout.rdbuf(origStream);
+
+    EXPECT_EQ(tempStream.str(), str);
+    EXPECT_FALSE(mob->isDead());
+
+    delete mob;
 }
 
 TEST(TestMob, takeDamageToZeroKillsMob) {
-    Inventory* drops = new Inventory();
-    Mob mob("Wolf", 10, 3, drops);
+    std::stringstream tempStream;
+    std::streambuf* origStream = std::cout.rdbuf();
+    std::cout.rdbuf(tempStream.rdbuf());
 
-    mob.takeDamage(10);
+    Mob* mob = new Mob("Zombie", 10, 5, new Inventory());
 
-    EXPECT_TRUE(mob.isDead());
+    mob->takeDamage(10);
+    std::string str = "Current mob"
+              "\033[0;31m health "
+              "\033[0mis 0\n";
 
-    delete drops;
+    std::cout.rdbuf(origStream);
+
+    EXPECT_EQ(tempStream.str(), str);
+    EXPECT_TRUE(mob->isDead());
+
+    delete mob;
 }
 
 TEST(TestMob, overkillStillLeavesMobDead) {
-    Inventory* drops = new Inventory();
-    Mob mob("Wolf", 10, 3, drops);
+    std::stringstream tempStream;
+    std::streambuf* origStream = std::cout.rdbuf();
+    std::cout.rdbuf(tempStream.rdbuf());
 
-    mob.takeDamage(100);
+    Mob* mob = new Mob("Zombie", 1, 5, new Inventory());
 
-    EXPECT_TRUE(mob.isDead());
+    mob->takeDamage(10);
+    std::string str = "Current mob"
+              "\033[0;31m health "
+              "\033[0mis 0\n";
 
-    delete drops;
+    std::cout.rdbuf(origStream);
+
+    EXPECT_EQ(tempStream.str(), str);
+    EXPECT_TRUE(mob->isDead());
+
+    delete mob;
 }

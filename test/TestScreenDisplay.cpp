@@ -11,17 +11,29 @@ TEST(TestScreenDisplay, instructionsTest) {
     std::stringstream have;
     std::string want;
 
-    want = "\n-- Text-Adventure-Game --\n";
-    want += "Enter the requested information to navigate through the game.\n";
-    want += "Move: change location by moving left, right, up, or down.\n";
-    want += "viewInv: Look at the items in your inventory,";
-    want += "you are given the option to use them.\n";
-    want += "viewMap: View the world map, your location is in braces.\n";
-    want += "interactNPC: get a list of NPCs in the";
-    want += "current location and the ability to interact with them.\n";
-    want += "areaResources: Look at all available resources in the";
-    want += "location and the option to collect them.\n";
-    want += "gameInstructions: View this help message.\n\n";
+    want = "\x1B[H\x1B[2J\n               --"
+           " \x1B[0;36mText-Adventure-Game\x1B[0m"
+           " --\n\nEnter the requested information"
+           " to navigate through the game.\n\n -"
+           "\x1B[0;32mMove\x1B[0m: \x1B[4;36mChange"
+           " location\x1B[0m by moving left, right,"
+           " up, or down.\n -\x1B[0;32mView Inventory"
+           "\x1B[0m: Look at the \x1B[4;36mitems in"
+           " your inventory\x1B[0m, you are given the"
+           " option to use them.\n -\x1B[0;32mView Map"
+           "\x1B[0m: View the world map, your "
+           "\x1B[4;36mlocation is in brackets\x1B[0m."
+           "\n -\x1B[0;32mFind NPC's\x1B[0m: Check"
+           " the area for any \x1B[4;36mshop or dialog"
+           " NPC's\x1B[0m. NPC's have \x1B[4;36m"
+           "mutiple dialog options\x1B[0m and can give"
+           " \x1B[4;36mhints\x1B[0m.\n -\x1B[0;32mCheck"
+           " Area\x1B[0m: \x1B[4;36mCollect resources"
+           "\x1B[0m from the area and \x1B[4;36mfight"
+           " mobs for their drops\x1B[0m.\n -\x1B[0;32m"
+           "Game Instructions\x1B[0m: View this help"
+           " message.\n -\x1B[0;32mQuit\x1B[0m: End"
+           " the game.\n\n";
 
     dis.gameInstructions(have);
 
@@ -33,62 +45,52 @@ TEST(TestScreenDisplay, npcTest) {
     std::string want;
     ScreenDisplay dis;
     std::string str;
-    Inventory* inv = new Inventory();
     std::vector<NPC*> npcs;
+
     npcs.push_back(new HelpNPC("Danhousen", {}));
-    Location* loc = new Mountain("Name", npcs, {}, {}, inv);
+    dis.displayNPC(have, new Terrain("Name", npcs, {}, {},
+                                    new Inventory()));
 
-    dis.displayNPC(have, loc);
-
-    want += "NPCs:\n";
-    want += "------------------\n";
-
-    for (int i = 0, j = 0; i < 1; i++, j++) {
-        str += std::to_string(j);
-        str += ". ";
-        str += loc->getNPC(i)->getName();
-        str += "\n";
-    }
-    want += str;
-    want += "------------------\n";
+    want = "\x1B[H\x1B[2J\x1B[0;34mNPCs:"
+           "\n\x1B[0m------------------\n"
+           "1. Danhousen\n------------------\n";
 
     EXPECT_EQ(have.str(), want);
-
-    delete loc;
 }
 
 TEST(TestScreenDisplay, defaultMapTest) {
     std::stringstream have;
     std::string want;
-    WorldMap* map = new WorldMap();
+    WorldMap map;
     ScreenDisplay dis;
 
-    want = "[M0]  M1  M2\n";
-    want += "F3  F4  F5\n";
-    want += "M6  M7  M8\n";
+    want = "\x1B[H\x1B[2J\x1B[2;1H"
+           "  [\x1B[0;36mForest\x1B[0m]"
+           "   Cliff    Forge\n   Town"
+           "    Home    Valley\n   Field"
+           "    Hermit    Lake\nCurrent"
+           " area: Forest\n\n";
 
-    dis.drawMap(have, map, map->getLocation(0));
+    dis.drawMap(have, &map, map.getLocation(0));
 
     EXPECT_EQ(have.str(), want);
-
-    delete map;
 }
 
 TEST(TestScreenDisplay, newLocationMapTest) {
     std::stringstream have;
     std::string want;
-    WorldMap* map = new WorldMap();
+    WorldMap map;
     ScreenDisplay dis;
 
-    want =  "M0  [M1]  M2\n";
-    want += "F3  F4  F5\n";
-    want += "M6  M7  M8\n";
+    want = "\x1B[H\x1B[2J\x1B[2;1H   Forest"
+           "   [\x1B[0;36mCliff\x1B[0m]"
+           "   Forge\n   Town    Home"
+           "    Valley\n   Field    Hermit"
+           "    Lake\nCurrent area: Cliff\n\n";
 
-    dis.drawMap(have, map, map->getLocation(1));
+    dis.drawMap(have, &map, map.getLocation(1));
 
     EXPECT_EQ(have.str(), want);
-
-    delete map;
 }
 
 TEST(TestScreenDisplay, numDefaultChoiceTest) {
@@ -96,13 +98,14 @@ TEST(TestScreenDisplay, numDefaultChoiceTest) {
     std::string want;
     ScreenDisplay dis;
 
-    want =  "What do you want to do?\n";
-    want += "1- move\n";
-    want += "2- viewStats\n";
-    want += "3- viewMap\n";
-    want += "4- interactNPC\n";
-    want += "5- areaResources\n";
-    want += "6- gameInstructions\n";
+    want = "What do you want to do?\n"
+           "1- Move\n"
+           "2- View Inventory\n"
+           "3- View Map\n"
+           "4- Find NPC's\n"
+           "5- Check Area\n"
+           "6- Game Instructions\n"
+           "7- Quit\n";
 
     dis.displayAlwaysChoices(have);
 
@@ -112,64 +115,84 @@ TEST(TestScreenDisplay, numDefaultChoiceTest) {
 TEST(TestScreenDisplay, statsTest) {
     std::stringstream have;
     std::string want;
-    WorldMap* map = new WorldMap();
+    WorldMap map;
     ScreenDisplay dis;
-    Player player(map->getLocation(0));
+    Player player(map.getLocation(0));
 
-    want =  "Health: 100\n";
-    want += "Hunger: 100\n";
-    want += "Attack: 1\n";
+    want = "\x1B[0;31mHealth: 100"
+           "\n\x1B[0;32mHunger: 100"
+           "\n\x1B[0mFist : 1 dmg\n";
 
     dis.displayPlayerStats(have, player);
 
     EXPECT_EQ(have.str(), want);
-
-    delete map;
 }
 
 TEST(TestScreenDisplay, decreaseStatsTest) {
     std::stringstream have;
     std::string want;
-    WorldMap* map = new WorldMap();
+    WorldMap map;
     ScreenDisplay dis;
-    bool temp = true;
-    Player player(map->getLocation(0));
+    Player player(map.getLocation(0));
+
+    std::stringstream tempStream;
+    std::streambuf* origStream = std::cout.rdbuf();
+    std::cout.rdbuf(tempStream.rdbuf());
 
     player.takeDamage(15);
     player.eat(-5);
 
-    want =  "Health: 85\n";
-    want += "Hunger: 95\n";
-    want += "Attack: 1\n";
+    want = "\x1B[0;31mHealth: 85"
+           "\n\x1B[0;32mHunger: 95"
+           "\n\x1B[0mFist : 1 dmg\n";
+
+    std::string str = "Current player\x1B[0;31m health"
+                      " \x1B[0mis 85\nCurrent player"
+                      "\x1B[0;32m hunger \x1B[0mis 95\n";
+
+    std::cout.rdbuf(origStream);
 
     dis.displayPlayerStats(have, player);
 
     EXPECT_EQ(have.str(), want);
-
-    delete map;
+    EXPECT_EQ(tempStream.str(), str);
 }
 
 TEST(TestScreenDisplay, increaseStatsTest) {
     std::stringstream have;
     std::string want;
-    WorldMap* map = new WorldMap();
+    WorldMap map;
     ScreenDisplay dis;
-    Player player(map->getLocation(0));
+    Player player(map.getLocation(0));
+
+    std::stringstream tempStream;
+    std::streambuf* origStream = std::cout.rdbuf();
+    std::cout.rdbuf(tempStream.rdbuf());
 
     player.takeDamage(30);
     player.takeDamage(-10);
     player.eat(-15);
     player.eat(5);
 
-    want =  "Health: 80\n";
-    want += "Hunger: 90\n";
-    want += "Attack: 1\n";
+    want = "\x1B[0;31mHealth: 80"
+           "\n\x1B[0;32mHunger: 90"
+           "\n\x1B[0mFist : 1 dmg\n";
+
+    std::string str = "Current player\x1B[0;31m health"
+                      " \x1B[0mis 70\n"
+                      "Current player\x1B[0;31m health"
+                      " \x1B[0mis 80\n"
+                      "Current player\x1B[0;32m hunger"
+                      " \x1B[0mis 85\n"
+                      "Current player\x1B[0;32m hunger"
+                      " \x1B[0mis 90\n";
+
+    std::cout.rdbuf(origStream);
 
     dis.displayPlayerStats(have, player);
 
     EXPECT_EQ(have.str(), want);
-
-    delete map;
+    EXPECT_EQ(tempStream.str(), str);
 }
 
 TEST(TestScreenDisplay, inventoryTest) {
@@ -179,15 +202,14 @@ TEST(TestScreenDisplay, inventoryTest) {
     Inventory* inv = new Inventory();
 
     inv->add(new Food("Apple", 3), 1);
-    inv->add(new Material("Diamond"), 2);
+    inv->add(new Material("Diamond"), 1);
+    inv->add(new Material("Diamond"), 1);
 
-    want =  "Inventory:\n";
-    want += "------------------\n";
-    want += "1. Apple";
-    want += "\n";
-    want += "2. Diamond 2x";
-    want += "\n";
-    want += "------------------\n";
+    want = "\x1B[0;34mInventory:"
+           "\n\x1B[0m------------------\n"
+           "1. Apple\n"
+           "2. Diamond 2x\n"
+           "------------------\n";
 
     dis.displayInventory(have, inv);
 
@@ -203,19 +225,29 @@ TEST(TestScreenDisplay, addItemInventoryTest) {
     Inventory* inv = new Inventory();
 
     inv->add(new Food("Apple", 3), 1);
-    inv->add(new Material("Diamond"), 2);
-    inv->add(new Food("Apple", 3), 2);
+    inv->add(new Material("Diamond"), 1);
+    inv->add(new Material("Diamond"), 1);
+    inv->add(new Food("Apple", 3), 1);
+    inv->add(new Food("Apple", 3), 1);
+
+    want = "\x1B[0;34mInventory:"
+           "\n\x1B[0m------------------\n"
+           "1. Apple 3x\n"
+           "2. Diamond 2x\n"
+           "------------------\n";
+
+    dis.displayInventory(have, inv);
+
+    have.str("");
+
     inv->add(new Food("Tiddies", 10), 1);
 
-    want =  "Inventory:\n";
-    want += "------------------\n";
-    want += "1. Apple 3x";
-    want += "\n";
-    want += "2. Diamond 2x";
-    want += "\n";
-    want += "3. Tiddies";
-    want += "\n";
-    want += "------------------\n";
+    want = "\x1B[0;34mInventory:"
+           "\n\x1B[0m------------------\n"
+           "1. Apple 3x\n"
+           "2. Diamond 2x\n"
+           "3. Tiddies\n"
+           "------------------\n";
 
     dis.displayInventory(have, inv);
 
@@ -231,20 +263,31 @@ TEST(TestScreenDisplay, removeItemInventoryTest) {
     Inventory* inv = new Inventory();
 
     inv->add(new Food("Apple", 3), 1);
-    inv->add(new Material("Diamond"), 2);
-    inv->add(new Food("Apple", 3), 2);
+    inv->add(new Material("Diamond"), 1);
+    inv->add(new Material("Diamond"), 1);
+    inv->add(new Food("Apple", 3), 1);
+    inv->add(new Food("Apple", 3), 1);
     inv->add(new Food("Tiddies", 10), 1);
+
+    want = "\x1B[0;34mInventory:"
+           "\n\x1B[0m------------------\n"
+           "1. Apple 3x\n"
+           "2. Diamond 2x\n"
+           "3. Tiddies\n"
+           "------------------\n";
+
+    dis.displayInventory(have, inv);
+
+    have.str("");
 
     inv->remove(new Food("Apple", 3), 1);
     inv->remove(new Material("Diamond"), 2);
 
-    want =  "Inventory:\n";
-    want += "------------------\n";
-    want += "1. Apple 2x";
-    want += "\n";
-    want += "2. Tiddies";
-    want += "\n";
-    want += "------------------\n";
+    want = "\x1B[0;34mInventory:"
+           "\n\x1B[0m------------------\n"
+           "1. Apple 2x\n"
+           "2. Tiddies\n"
+           "------------------\n";
 
     dis.displayInventory(have, inv);
 
@@ -271,13 +314,14 @@ TEST(TestScreenDisplay, tradesTest) {
     trades.push_back(new CraftingRecipe(emeraldCost, new Material("Emerald")));
     trades.push_back(new CraftingRecipe(chickenCost, new Food("Chicken", 2)));
 
-    want =  "Trades: \n";
-    want += "------------------\n";
-    want += "1. Apple, Coal for Emerald false";
-    want += "\n";
-    want += "2. Banana, Banana for Chicken false";
-    want += "\n";
-    want += "------------------\n";
+    want = "\x1B[H\x1B[2J\x1B[0;34mTrades:"
+           " \n\x1B[0m------------------\n"
+           "1. Apple & Coal for Emerald\n"
+           "2. Banana 2x for Chicken\n"
+           "------------------\n\n"
+           "\x1B[0;34mInventory:"
+           "\n\x1B[0m------------------\n"
+           "------------------\n";
 
     dis.displayTrades(have, trades, inv);
 

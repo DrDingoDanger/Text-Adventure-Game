@@ -13,9 +13,6 @@ Location::~Location() {
     for (NPC* npc : _npcCollection) delete npc;
     _npcCollection.clear();
 
-    for (CraftingRecipe* recipe : _recipes) delete recipe;
-    _recipes.clear();
-
     for (Mob* mob : _mobs) delete mob;
     _mobs.clear();
 

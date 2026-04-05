@@ -4,84 +4,132 @@
 #include "Item.hpp"
 
 TEST(TestCraftingRecipe, canCraftReturnsTrueWhenInputsExist) {
-    Material wood("Wood");
-    Weapon axe("Axe", 10);
-
+    std::vector<std::string> cost;
+    std::vector<CraftingRecipe*> testRecipe;
     Inventory* inv = new Inventory();
-    inv->add(&wood, 2);
 
-    std::vector<std::string> inputs = {"Wood", "Wood"};
-    CraftingRecipe recipe(inputs, &axe);
+    cost.push_back("Wood");
+    cost.push_back("Stone");
 
-    EXPECT_TRUE(recipe.canCraft(inv));
+    testRecipe.push_back(new CraftingRecipe(cost,
+        new Material("Piss")));
 
+    inv->add(new Material("Wood"), 1);
+    inv->add(new Material("Stone"), 1);
+
+    EXPECT_TRUE(testRecipe[0]->canCraft(inv));
+
+    delete testRecipe[0];
     delete inv;
 }
 
 TEST(TestCraftingRecipe, canCraftReturnsFalseWhenInputsMissing) {
-    Material wood("Wood");
-    Weapon axe("Axe", 10);
-
+    std::vector<std::string> cost;
+    std::vector<CraftingRecipe*> testRecipe;
     Inventory* inv = new Inventory();
-    inv->add(&wood, 1);
+    std::stringstream tempStream;
 
-    std::vector<std::string> inputs = {"Wood", "Wood"};
-    CraftingRecipe recipe(inputs, &axe);
+    cost.push_back("Bark");
+    cost.push_back("Cobble");
 
-    EXPECT_FALSE(recipe.canCraft(inv));
+    testRecipe.push_back(new CraftingRecipe(cost,
+        new Material("Piss")));
 
+    inv->add(new Material("Wood"), 1);
+    inv->add(new Material("Stone"), 1);
+
+    std::streambuf* origStream = std::cout.rdbuf();
+    std::cout.rdbuf(tempStream.rdbuf());
+
+    EXPECT_FALSE(testRecipe[0]->canCraft(inv));
+
+    std::cout.rdbuf(origStream);
+
+    std::string str = "You need 1 Bark for this\n"
+                      "You need 1 Cobble for this\n";
+
+    EXPECT_EQ(tempStream.str(), str);
+
+    delete testRecipe[0];
     delete inv;
 }
 
 TEST(TestCraftingRecipe, canCraftReturnsTrueWhenPlayerHasMoreThanNeeded) {
-    Material wood("Wood");
-    Weapon axe("Axe", 10);
-
+    std::vector<std::string> cost;
+    std::vector<CraftingRecipe*> testRecipe;
     Inventory* inv = new Inventory();
-    inv->add(&wood, 4);
 
-    std::vector<std::string> inputs = {"Wood", "Wood"};
-    CraftingRecipe recipe(inputs, &axe);
+    cost.push_back("Wood");
+    cost.push_back("Stone");
 
-    EXPECT_TRUE(recipe.canCraft(inv));
+    testRecipe.push_back(new CraftingRecipe(cost,
+        new Material("Piss")));
 
+    inv->add(new Material("Wood"), 1);
+    inv->add(new Material("Wood"), 1);
+    inv->add(new Material("Stone"), 1);
+    inv->add(new Material("Stone"), 1);
+
+    EXPECT_TRUE(testRecipe[0]->canCraft(inv));
+
+    delete testRecipe[0];
     delete inv;
 }
 
 TEST(TestCraftingRecipe, canCraftIgnoresUnrelatedItems) {
-    Material wood("Wood");
-    Material stone("Stone");
-    Weapon axe("Axe", 10);
-
+    std::vector<std::string> cost;
+    std::vector<CraftingRecipe*> testRecipe;
     Inventory* inv = new Inventory();
-    inv->add(&wood, 2);
-    inv->add(&stone, 5);
 
-    std::vector<std::string> inputs = {"Wood", "Wood"};
-    CraftingRecipe recipe(inputs, &axe);
+    cost.push_back("Wood");
+    cost.push_back("Stone");
 
-    EXPECT_TRUE(recipe.canCraft(inv));
+    testRecipe.push_back(new CraftingRecipe(cost,
+        new Material("Piss")));
 
+    inv->add(new Material("Wood"), 1);
+    inv->add(new Material("Stone"), 1);
+    inv->add(new Material("Pizza"), 1);
+    inv->add(new Material("Spagete"), 1);
+
+    EXPECT_TRUE(testRecipe[0]->canCraft(inv));
+
+    delete testRecipe[0];
     delete inv;
 }
 
-TEST(TestCraftingRecipe, getOutputReturnsExpectedItem) {
-    Material wood("Wood");
-    Weapon axe("Axe", 10);
+TEST(TestCraftingRecipe, getOutputReturnExpectedItem) {
+    std::vector<std::string> cost;
+    std::vector<CraftingRecipe*> testRecipe;
+    Inventory* inv = new Inventory();
 
-    std::vector<std::string> inputs = {"Wood", "Wood"};
-    CraftingRecipe recipe(inputs, &axe);
+    cost.push_back("Wood");
+    cost.push_back("Stone");
 
-    EXPECT_EQ(recipe.getOutput()->getName(), "Axe");
-    EXPECT_EQ(recipe.getOutput()->getType(), "weapon");
+    testRecipe.push_back(new CraftingRecipe(cost,
+        new Material("Piss")));
+
+    EXPECT_EQ(testRecipe[0]->getOutput()->getName(), "Piss");
+    EXPECT_EQ(testRecipe[0]->getOutput()->getType(), "material");
+
+    delete testRecipe[0];
+    delete inv;
 }
 
-TEST(TestCraftingRecipe, getOutputReturnsSamePointer) {
-    Material wood("Wood");
-    Weapon axe("Axe", 10);
+TEST(TestCraftingRecipe, getOutputReturnCorrectPointer) {
+    std::vector<std::string> cost;
+    std::vector<CraftingRecipe*> testRecipe;
+    Inventory* inv = new Inventory();
+    Item* temp = new Material("Piss");
 
-    std::vector<std::string> inputs = {"Wood", "Wood"};
-    CraftingRecipe recipe(inputs, &axe);
+    cost.push_back("Wood");
+    cost.push_back("Stone");
 
-    EXPECT_EQ(recipe.getOutput(), &axe);
+    testRecipe.push_back(new CraftingRecipe(cost,
+        temp));
+
+    EXPECT_EQ(testRecipe[0]->getOutput(), temp);
+
+    delete testRecipe[0];
+    delete inv;
 }
