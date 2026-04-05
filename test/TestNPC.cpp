@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "NPC.hpp"
-#include "Inventory.hpp"
 #include "Item.hpp"
+#include "CraftingRecipe.hpp"
 
 TEST(TestNPC, baseNpcStoresNameAndType) {
     NPC npc("Bob", "generic");
@@ -31,20 +31,43 @@ TEST(TestNPC, helpNpcReturnsOneOfHints) {
 
     std::string result = npc.giveHint();
 
-    EXPECT_TRUE(result == "north" || result == "south" ||
-                result == "east");
+    EXPECT_TRUE(result == "north" || result == "south" || result == "east");
 }
 
-TEST(TestNPC, shopNpcCopiesInventoryIntoStock) {
-   /* Inventory stock;
-    Material wood("Wood");
-    Food apple("Apple", 4);
+TEST(TestNPC, shopNpcHasShopType) {
+    std::vector<CraftingRecipe*> trades;
+    ShopNPC shop("Trader", trades);
 
-    stock.add(&wood, 2);
-    stock.add(&apple, 1);
-
-    ShopNPC shop("Trader", stock);
-
+    EXPECT_EQ(shop.getName(), "Trader");
     EXPECT_EQ(shop.getType(), "shop");
-    EXPECT_EQ(shop.getInventory().size(), 3);*/
+}
+
+TEST(TestNPC, shopNpcReturnsEmptyTradesWhenNoneGiven) {
+    std::vector<CraftingRecipe*> trades;
+    ShopNPC shop("Trader", trades);
+
+    EXPECT_EQ(shop.getTrades().size(), 0);
+}
+
+TEST(TestNPC, shopNpcReturnsTradesVector) {
+    std::vector<std::string> cost1;
+    std::vector<std::string> cost2;
+    std::vector<CraftingRecipe*> trades;
+
+    cost1.push_back("Wood");
+    cost2.push_back("Stone");
+
+    CraftingRecipe* recipe1 = new CraftingRecipe(cost1, new Material("Stick"));
+    CraftingRecipe* recipe2 = new CraftingRecipe(cost2, new Material("Axe"));
+
+    trades.push_back(recipe1);
+    trades.push_back(recipe2);
+
+    ShopNPC shop("Trader", trades);
+
+    EXPECT_EQ(shop.getTrades().size(), 2);
+    EXPECT_EQ(shop.getTrades()[0], recipe1);
+    EXPECT_EQ(shop.getTrades()[1], recipe2);
+    EXPECT_EQ(shop.getTrades()[0]->getOutput()->getName(), "Stick");
+    EXPECT_EQ(shop.getTrades()[1]->getOutput()->getName(), "Axe");
 }

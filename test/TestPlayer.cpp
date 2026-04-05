@@ -1,4 +1,9 @@
+#include <iostream>
+#include <sstream>
+
 #include "gtest/gtest.h"
+
+#include "Item.hpp"
 #include "Player.hpp"
 #include "WorldMap.hpp"
 
@@ -7,6 +12,8 @@ TEST(TestPlayer, startsWithDefaultStats) {
 
     EXPECT_EQ(player.getHealth(), 100);
     EXPECT_EQ(player.getHunger(), 100);
+    EXPECT_EQ(player.getAttack(), 1);
+    EXPECT_EQ(player.getWeapon(), "Fist");
 }
 
 TEST(TestPlayer, startsAtRequestedLocation) {
@@ -54,6 +61,24 @@ TEST(TestPlayer, takeDamageDoesNotDropBelowZero) {
     EXPECT_EQ(tempStream.str(), str);
 }
 
+TEST(TestPlayer, takeDamageDoesNotGoAboveHundred) {
+    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+
+    std::stringstream tempStream;
+    std::streambuf* origStream = std::cout.rdbuf();
+    std::cout.rdbuf(tempStream.rdbuf());
+
+    player.takeDamage(-50);
+
+    std::cout.rdbuf(origStream);
+
+    std::string str = "Current player\033[0;31m"
+                      " health \033[0mis 100\n";
+
+    EXPECT_EQ(player.getHealth(), 100);
+    EXPECT_EQ(tempStream.str(), str);
+}
+
 TEST(TestPlayer, eatIncreasesHungerUpToMax100) {
     Player player(new Terrain("test", {}, {}, {}, new Inventory()));
 
@@ -66,9 +91,10 @@ TEST(TestPlayer, eatIncreasesHungerUpToMax100) {
 
     std::cout.rdbuf(origStream);
 
-    std::string str = "Current player\x1B[0;32m hunger"
-                      " \x1B[0mis 70\nCurrent player"
-                      "\x1B[0;32m hunger \x1B[0mis 100\n";
+    std::string str = "Current player\033[0;32m"
+                      " hunger \033[0mis 70\n"
+                      "Current player\033[0;32m"
+                      " hunger \033[0mis 100\n";
 
     EXPECT_EQ(player.getHunger(), 100);
     EXPECT_EQ(tempStream.str(), str);
@@ -112,6 +138,56 @@ TEST(TestPlayer, moveActionLeavesLocationWhenInvalidMoveAttempted) {
 
     EXPECT_FALSE(valid);
     EXPECT_EQ(player.getCurrent(), map.getLocation(0));
+}
+
+TEST(TestPlayer, setAttackUpdatesAttackValue) {
+    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+
+    player.setAttack(12);
+
+    EXPECT_EQ(player.getAttack(), 12);
+}
+
+TEST(TestPlayer, setWeaponUpdatesWeaponName) {
+    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Weapon* sword = new Weapon("Sword", 10);
+
+    player.setWeapon(sword);
+
+    EXPECT_EQ(player.getWeapon(), "Sword");
+
+    delete sword;
+}
+
+TEST(TestPlayer, addItemIncreasesInventorySize) {
+    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    int startSize = player.inventorySize();
+
+    player.addItem(new Material("Apple"));
+
+    EXPECT_EQ(player.inventorySize(), startSize + 1);
+    EXPECT_TRUE(player.getInventory()->hasName("Apple", 1));
+}
+
+TEST(TestPlayer, removeItemRemovesMatchingItem) {
+    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+
+    player.addItem(new Material("Stone"));
+    int sizeBefore = player.inventorySize();
+
+    player.removeItem(new Material("Stone"));
+
+    EXPECT_EQ(player.inventorySize(), sizeBefore - 1);
+    EXPECT_FALSE(player.getInventory()->hasName("Stone", 1));
+}
+
+TEST(TestPlayer, getItemAtReturnsInventoryItem) {
+    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+
+    player.addItem(new Material("Stone"));
+
+    EXPECT_EQ(player.getItemAt(0)->getName(), "Pocket lint");
+    EXPECT_EQ(player.getItemAt(player.inventorySize() - 1)->getName(), "Stone");
 }
 
 TEST(TestPlayer, startsWithAtLeastOneItem) {

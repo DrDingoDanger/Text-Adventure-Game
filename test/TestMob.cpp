@@ -1,6 +1,31 @@
+#include <iostream>
+#include <sstream>
+
 #include "gtest/gtest.h"
-#include "Mob.hpp"
+
 #include "Inventory.hpp"
+#include "Item.hpp"
+#include "Mob.hpp"
+
+TEST(TestMob, storesNameAndAttack) {
+    Mob* mob = new Mob("Zombie", 7, 5, new Inventory());
+
+    EXPECT_EQ(mob->getName(), "Zombie");
+    EXPECT_EQ(mob->getAttack(), 5);
+
+    delete mob;
+}
+
+TEST(TestMob, storesInventory) {
+    Inventory* inv = new Inventory();
+    inv->add(new Material("Bone"), 1);
+
+    Mob* mob = new Mob("Zombie", 7, 5, inv);
+
+    EXPECT_TRUE(mob->getInventory()->hasName("Bone", 1));
+
+    delete mob;
+}
 
 TEST(TestMob, startsAliveWhenHealthPositive) {
     Mob* mob = new Mob("Zombie", 7, 5, new Inventory());

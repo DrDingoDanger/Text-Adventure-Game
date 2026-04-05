@@ -1,10 +1,10 @@
-#include "gtest/gtest.h"
-#include "UserInput.hpp"
-
-#include <sstream>
 #include <iostream>
-#include <limits>
+#include <sstream>
 #include <string>
+
+#include "gtest/gtest.h"
+
+#include "UserInput.hpp"
 
 TEST(TestUserInput, moveDirectionAcceptsValidInput) {
     UserInput input;
@@ -167,6 +167,8 @@ TEST(TestUserInput, pressEnterDisplaysPromptAndClearSequence) {
     std::cin.rdbuf(oldIn);
     std::cout.rdbuf(oldOut);
 
-    EXPECT_EQ(fakeOut.str(), "Press Enter to continue...\n"
-                             "----------------------------------------------------\033[H\033[2J");
+EXPECT_EQ(fakeOut.str(),
+          "Press Enter to continue..."
+          "\n----------------------------------------------------"
+          "\033[H\033[2J");
 }

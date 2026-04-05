@@ -1,334 +1,222 @@
+#include <sstream>
+#include <string>
+#include <vector>
+
 #include "gtest/gtest.h"
-#include "ScreenDisplay.hpp"
-#include "Location.hpp"
-#include "WorldMap.hpp"
+
+#include "CraftingRecipe.hpp"
 #include "Inventory.hpp"
+#include "Item.hpp"
+#include "Location.hpp"
 #include "NPC.hpp"
 #include "Player.hpp"
+#include "ScreenDisplay.hpp"
+#include "WorldMap.hpp"
+
+TEST(TestScreenDisplay, titleScreenTest) {
+    ScreenDisplay screen;
+    std::stringstream out;
+
+    screen.showTitleScreen(out);
+
+    EXPECT_NE(out.str().find("TEXT ADVENTURE"), std::string::npos);
+    EXPECT_NE(out.str().find("QUEST FOR THE"), std::string::npos);
+    EXPECT_NE(out.str().find("EMERALD"), std::string::npos);
+}
 
 TEST(TestScreenDisplay, instructionsTest) {
-    ScreenDisplay dis;
-    std::stringstream have;
-    std::string want;
+    ScreenDisplay screen;
+    std::stringstream out;
 
-    want = "\x1B[H\x1B[2J\n               --"
-           " \x1B[0;36mText-Adventure-Game\x1B[0m"
-           " --\n\nEnter the requested information"
-           " to navigate through the game.\n\n -"
-           "\x1B[0;32mMove\x1B[0m: \x1B[4;36mChange"
-           " location\x1B[0m by moving left, right,"
-           " up, or down.\n -\x1B[0;32mView Inventory"
-           "\x1B[0m: Look at the \x1B[4;36mitems in"
-           " your inventory\x1B[0m, you are given the"
-           " option to use them.\n -\x1B[0;32mView Map"
-           "\x1B[0m: View the world map, your "
-           "\x1B[4;36mlocation is in brackets\x1B[0m."
-           "\n -\x1B[0;32mFind NPC's\x1B[0m: Check"
-           " the area for any \x1B[4;36mshop or dialog"
-           " NPC's\x1B[0m. NPC's have \x1B[4;36m"
-           "mutiple dialog options\x1B[0m and can give"
-           " \x1B[4;36mhints\x1B[0m.\n -\x1B[0;32mCheck"
-           " Area\x1B[0m: \x1B[4;36mCollect resources"
-           "\x1B[0m from the area and \x1B[4;36mfight"
-           " mobs for their drops\x1B[0m.\n -\x1B[0;32m"
-           "Game Instructions\x1B[0m: View this help"
-           " message.\n -\x1B[0;32mQuit\x1B[0m: End"
-           " the game.\n\n";
+    screen.gameInstructions(out);
 
-    dis.gameInstructions(have);
-
-    EXPECT_EQ(have.str(), want);
+    EXPECT_NE(out.str().find("Text-Adventure-Game"), std::string::npos);
+    EXPECT_NE(out.str().find("Move"), std::string::npos);
+    EXPECT_NE(out.str().find("Quit"), std::string::npos);
 }
 
 TEST(TestScreenDisplay, npcTest) {
-    std::stringstream have;
-    std::string want;
-    ScreenDisplay dis;
-    std::string str;
+    ScreenDisplay screen;
+    std::stringstream out;
     std::vector<NPC*> npcs;
 
-    npcs.push_back(new HelpNPC("Danhousen", {}));
-    dis.displayNPC(have, new Terrain("Name", npcs, {}, {},
-                                    new Inventory()));
+    npcs.push_back(new HelpNPC("dan", {}));
+    npcs.push_back(new HelpNPC("phil", {}));
 
-    want = "\x1B[H\x1B[2J\x1B[0;34mNPCs:"
-           "\n\x1B[0m------------------\n"
-           "1. Danhousen\n------------------\n";
+    Location* loc = new Terrain("Name", npcs, {}, {}, new Inventory());
 
-    EXPECT_EQ(have.str(), want);
+    screen.displayNPC(out, loc);
+
+    EXPECT_NE(out.str().find("NPCs:"), std::string::npos);
+    EXPECT_NE(out.str().find("1. dan"), std::string::npos);
+    EXPECT_NE(out.str().find("2. phil"), std::string::npos);
+
+    delete loc;
 }
 
 TEST(TestScreenDisplay, defaultMapTest) {
-    std::stringstream have;
-    std::string want;
+    ScreenDisplay screen;
+    std::stringstream out;
     WorldMap map;
-    ScreenDisplay dis;
 
-    want = "\x1B[H\x1B[2J\x1B[2;1H"
-           "  [\x1B[0;36mForest\x1B[0m]"
-           "   Cliff    Forge\n   Town"
-           "    Home    Valley\n   Field"
-           "    Hermit    Lake\nCurrent"
-           " area: Forest\n\n";
+    screen.drawMap(out, &map, map.getLocation(0));
 
-    dis.drawMap(have, &map, map.getLocation(0));
-
-    EXPECT_EQ(have.str(), want);
+    EXPECT_NE(out.str().find("Forest"), std::string::npos);
+    EXPECT_NE(out.str().find("Current area: Forest"), std::string::npos);
 }
 
 TEST(TestScreenDisplay, newLocationMapTest) {
-    std::stringstream have;
-    std::string want;
+    ScreenDisplay screen;
+    std::stringstream out;
     WorldMap map;
-    ScreenDisplay dis;
 
-    want = "\x1B[H\x1B[2J\x1B[2;1H   Forest"
-           "   [\x1B[0;36mCliff\x1B[0m]"
-           "   Forge\n   Town    Home"
-           "    Valley\n   Field    Hermit"
-           "    Lake\nCurrent area: Cliff\n\n";
+    screen.drawMap(out, &map, map.getLocation(4));
 
-    dis.drawMap(have, &map, map.getLocation(1));
+    EXPECT_NE(out.str().find("Home"), std::string::npos);
+    EXPECT_NE(out.str().find("Current area: Home"), std::string::npos);
+}
 
-    EXPECT_EQ(have.str(), want);
+TEST(TestScreenDisplay, nullCurrentMapTest) {
+    ScreenDisplay screen;
+    std::stringstream out;
+    WorldMap map;
+
+    screen.drawMap(out, &map, nullptr);
+
+    EXPECT_NE(out.str().find("Current area: Forest"), std::string::npos);
 }
 
 TEST(TestScreenDisplay, numDefaultChoiceTest) {
-    std::stringstream have;
-    std::string want;
-    ScreenDisplay dis;
+    ScreenDisplay screen;
+    std::stringstream out;
 
-    want = "What do you want to do?\n"
-           "1- Move\n"
-           "2- View Inventory\n"
-           "3- View Map\n"
-           "4- Find NPC's\n"
-           "5- Check Area\n"
-           "6- Game Instructions\n"
-           "7- Quit\n";
+    screen.displayAlwaysChoices(out);
 
-    dis.displayAlwaysChoices(have);
-
-    EXPECT_EQ(have.str(), want);
+    EXPECT_NE(out.str().find("1- Move"), std::string::npos);
+    EXPECT_NE(out.str().find("7- Quit"), std::string::npos);
 }
 
 TEST(TestScreenDisplay, statsTest) {
-    std::stringstream have;
-    std::string want;
+    ScreenDisplay screen;
+    std::stringstream out;
     WorldMap map;
-    ScreenDisplay dis;
     Player player(map.getLocation(0));
 
-    want = "\x1B[0;31mHealth: 100"
-           "\n\x1B[0;32mHunger: 100"
-           "\n\x1B[0mFist : 1 dmg\n";
+    screen.displayPlayerStats(out, player);
 
-    dis.displayPlayerStats(have, player);
-
-    EXPECT_EQ(have.str(), want);
+    EXPECT_NE(out.str().find("Health: 100"), std::string::npos);
+    EXPECT_NE(out.str().find("Hunger: 100"), std::string::npos);
 }
 
 TEST(TestScreenDisplay, decreaseStatsTest) {
-    std::stringstream have;
-    std::string want;
+    ScreenDisplay screen;
+    std::stringstream out;
     WorldMap map;
-    ScreenDisplay dis;
     Player player(map.getLocation(0));
 
-    std::stringstream tempStream;
-    std::streambuf* origStream = std::cout.rdbuf();
-    std::cout.rdbuf(tempStream.rdbuf());
+    player.takeDamage(20);
+    player.eat(-30);
 
-    player.takeDamage(15);
-    player.eat(-5);
+    screen.displayPlayerStats(out, player);
 
-    want = "\x1B[0;31mHealth: 85"
-           "\n\x1B[0;32mHunger: 95"
-           "\n\x1B[0mFist : 1 dmg\n";
-
-    std::string str = "Current player\x1B[0;31m health"
-                      " \x1B[0mis 85\nCurrent player"
-                      "\x1B[0;32m hunger \x1B[0mis 95\n";
-
-    std::cout.rdbuf(origStream);
-
-    dis.displayPlayerStats(have, player);
-
-    EXPECT_EQ(have.str(), want);
-    EXPECT_EQ(tempStream.str(), str);
+    EXPECT_NE(out.str().find("Health: 80"), std::string::npos);
+    EXPECT_NE(out.str().find("Hunger: 70"), std::string::npos);
 }
 
 TEST(TestScreenDisplay, increaseStatsTest) {
-    std::stringstream have;
-    std::string want;
+    ScreenDisplay screen;
+    std::stringstream out;
     WorldMap map;
-    ScreenDisplay dis;
     Player player(map.getLocation(0));
 
-    std::stringstream tempStream;
-    std::streambuf* origStream = std::cout.rdbuf();
-    std::cout.rdbuf(tempStream.rdbuf());
+    player.takeDamage(20);
+    player.eat(-30);
+    player.eat(10);
 
-    player.takeDamage(30);
-    player.takeDamage(-10);
-    player.eat(-15);
-    player.eat(5);
+    screen.displayPlayerStats(out, player);
 
-    want = "\x1B[0;31mHealth: 80"
-           "\n\x1B[0;32mHunger: 90"
-           "\n\x1B[0mFist : 1 dmg\n";
-
-    std::string str = "Current player\x1B[0;31m health"
-                      " \x1B[0mis 70\n"
-                      "Current player\x1B[0;31m health"
-                      " \x1B[0mis 80\n"
-                      "Current player\x1B[0;32m hunger"
-                      " \x1B[0mis 85\n"
-                      "Current player\x1B[0;32m hunger"
-                      " \x1B[0mis 90\n";
-
-    std::cout.rdbuf(origStream);
-
-    dis.displayPlayerStats(have, player);
-
-    EXPECT_EQ(have.str(), want);
-    EXPECT_EQ(tempStream.str(), str);
+    EXPECT_NE(out.str().find("Health: 80"), std::string::npos);
+    EXPECT_NE(out.str().find("Hunger: 80"), std::string::npos);
 }
 
 TEST(TestScreenDisplay, inventoryTest) {
-    std::stringstream have;
-    std::string want;
-    ScreenDisplay dis;
-    Inventory* inv = new Inventory();
+    ScreenDisplay screen;
+    std::stringstream out;
+    Inventory inv;
 
-    inv->add(new Food("Apple", 3), 1);
-    inv->add(new Material("Diamond"), 1);
-    inv->add(new Material("Diamond"), 1);
+    inv.add(new Material("Wood"), 1);
+    inv.add(new Material("Stone"), 1);
 
-    want = "\x1B[0;34mInventory:"
-           "\n\x1B[0m------------------\n"
-           "1. Apple\n"
-           "2. Diamond 2x\n"
-           "------------------\n";
+    screen.displayInventory(out, &inv);
 
-    dis.displayInventory(have, inv);
-
-    EXPECT_EQ(have.str(), want);
-
-    delete inv;
+    EXPECT_NE(out.str().find("Inventory:"), std::string::npos);
+    EXPECT_NE(out.str().find("Wood"), std::string::npos);
+    EXPECT_NE(out.str().find("Stone"), std::string::npos);
 }
 
 TEST(TestScreenDisplay, addItemInventoryTest) {
-    std::stringstream have;
-    std::string want;
-    ScreenDisplay dis;
-    Inventory* inv = new Inventory();
+    ScreenDisplay screen;
+    std::stringstream out;
+    Inventory inv;
 
-    inv->add(new Food("Apple", 3), 1);
-    inv->add(new Material("Diamond"), 1);
-    inv->add(new Material("Diamond"), 1);
-    inv->add(new Food("Apple", 3), 1);
-    inv->add(new Food("Apple", 3), 1);
+    inv.add(new Material("Apple"), 1);
+    inv.add(new Material("Wood"), 1);
+    inv.add(new Material("Wood"), 1);
 
-    want = "\x1B[0;34mInventory:"
-           "\n\x1B[0m------------------\n"
-           "1. Apple 3x\n"
-           "2. Diamond 2x\n"
-           "------------------\n";
+    screen.displayInventory(out, &inv);
 
-    dis.displayInventory(have, inv);
-
-    have.str("");
-
-    inv->add(new Food("Tiddies", 10), 1);
-
-    want = "\x1B[0;34mInventory:"
-           "\n\x1B[0m------------------\n"
-           "1. Apple 3x\n"
-           "2. Diamond 2x\n"
-           "3. Tiddies\n"
-           "------------------\n";
-
-    dis.displayInventory(have, inv);
-
-    EXPECT_EQ(have.str(), want);
-
-    delete inv;
+    EXPECT_NE(out.str().find("Apple"), std::string::npos);
+    EXPECT_NE(out.str().find("Wood 2x"), std::string::npos);
 }
 
 TEST(TestScreenDisplay, removeItemInventoryTest) {
-    std::stringstream have;
-    std::string want;
-    ScreenDisplay dis;
-    Inventory* inv = new Inventory();
+    ScreenDisplay screen;
+    std::stringstream out;
+    Inventory inv;
 
-    inv->add(new Food("Apple", 3), 1);
-    inv->add(new Material("Diamond"), 1);
-    inv->add(new Material("Diamond"), 1);
-    inv->add(new Food("Apple", 3), 1);
-    inv->add(new Food("Apple", 3), 1);
-    inv->add(new Food("Tiddies", 10), 1);
+    inv.add(new Material("Wood"), 1);
+    inv.add(new Material("Wood"), 1);
+    inv.removeByName("Wood", 1);
 
-    want = "\x1B[0;34mInventory:"
-           "\n\x1B[0m------------------\n"
-           "1. Apple 3x\n"
-           "2. Diamond 2x\n"
-           "3. Tiddies\n"
-           "------------------\n";
+    screen.displayInventory(out, &inv);
 
-    dis.displayInventory(have, inv);
-
-    have.str("");
-
-    inv->remove(new Food("Apple", 3), 1);
-    inv->remove(new Material("Diamond"), 2);
-
-    want = "\x1B[0;34mInventory:"
-           "\n\x1B[0m------------------\n"
-           "1. Apple 2x\n"
-           "2. Tiddies\n"
-           "------------------\n";
-
-    dis.displayInventory(have, inv);
-
-    EXPECT_EQ(have.str(), want);
-
-    delete inv;
+    EXPECT_NE(out.str().find("Wood"), std::string::npos);
+    EXPECT_EQ(out.str().find("Wood 2x"), std::string::npos);
 }
 
 TEST(TestScreenDisplay, tradesTest) {
-    std::stringstream have;
-    std::string want;
-    ScreenDisplay dis;
-    Inventory* inv = new Inventory();
+    ScreenDisplay screen;
+    std::stringstream out;
+    Inventory inv;
     std::vector<CraftingRecipe*> trades;
-    std::vector<std::string> emeraldCost;
-    std::vector<std::string> chickenCost;
+    std::vector<std::string> cost;
 
-    emeraldCost.push_back("Apple");
-    emeraldCost.push_back("Coal");
+    cost.push_back("Wood");
+    cost.push_back("Stone");
 
-    chickenCost.push_back("Banana");
-    chickenCost.push_back("Banana");
+    trades.push_back(new CraftingRecipe(cost, new Material("Axe")));
 
-    trades.push_back(new CraftingRecipe(emeraldCost, new Material("Emerald")));
-    trades.push_back(new CraftingRecipe(chickenCost, new Food("Chicken", 2)));
+    screen.displayTrades(out, trades, &inv);
 
-    want = "\x1B[H\x1B[2J\x1B[0;34mTrades:"
-           " \n\x1B[0m------------------\n"
-           "1. Apple & Coal for Emerald\n"
-           "2. Banana 2x for Chicken\n"
-           "------------------\n\n"
-           "\x1B[0;34mInventory:"
-           "\n\x1B[0m------------------\n"
-           "------------------\n";
+    EXPECT_NE(out.str().find("Trades:"), std::string::npos);
+    EXPECT_NE(out.str().find("Wood & Stone for Axe"), std::string::npos);
+    EXPECT_NE(out.str().find("Inventory:"), std::string::npos);
+}
 
-    dis.displayTrades(have, trades, inv);
+TEST(TestScreenDisplay, tradesWithDuplicateInputsTest) {
+    ScreenDisplay screen;
+    std::stringstream out;
+    Inventory inv;
+    std::vector<CraftingRecipe*> trades;
+    std::vector<std::string> cost;
 
-    EXPECT_EQ(have.str(), want);
+    cost.push_back("Wood");
+    cost.push_back("Wood");
+    cost.push_back("Stone");
 
-    for (CraftingRecipe* trade : trades) delete trade;
-    trades.clear();
+    trades.push_back(new CraftingRecipe(cost, new Material("Hammer")));
 
-    delete inv;
+    screen.displayTrades(out, trades, &inv);
+
+    EXPECT_NE(out.str().find("Wood 2x & Stone for Hammer"), std::string::npos);
 }

@@ -1,10 +1,15 @@
+#include <iostream>
+#include <sstream>
+
 #include "gtest/gtest.h"
-#include "Location.hpp"
-#include "WorldMap.hpp"
-#include "Inventory.hpp"
+
 #include "CraftingRecipe.hpp"
-#include "NPC.hpp"
+#include "Inventory.hpp"
 #include "Item.hpp"
+#include "Location.hpp"
+#include "NPC.hpp"
+#include "Player.hpp"
+#include "WorldMap.hpp"
 
 TEST(TestLocation, storesNameTest) {
     Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
@@ -43,6 +48,19 @@ TEST(TestLocation, storesNPCTest) {
 
     EXPECT_NE(loc->getNPC(0), phil);
     EXPECT_EQ(loc->getNPC(1), phil);
+
+    delete loc;
+}
+
+TEST(TestLocation, numOfNPCTest) {
+    std::vector<NPC*> npcs;
+
+    npcs.push_back(new HelpNPC("dan", {}));
+    npcs.push_back(new HelpNPC("phil", {}));
+
+    Location* loc = new Terrain("Name", npcs, {}, {}, new Inventory());
+
+    EXPECT_EQ(loc->numOfNPC(), 2);
 
     delete loc;
 }
@@ -113,6 +131,21 @@ TEST(TestLocation, cannotExitTest) {
     delete map;
 }
 
-TEST(TestLocation, runEncounterTest) {
-    //STUB : Hold
+TEST(TestLocation, runEncounterPrintsMessageWhenNoMobs) {
+    Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
+    Player* player = new Player(loc);
+    std::stringstream tempStream;
+
+    std::streambuf* origStream = std::cout.rdbuf();
+    std::cout.rdbuf(tempStream.rdbuf());
+
+    loc->runEncounter(player);
+
+    std::cout.rdbuf(origStream);
+
+EXPECT_NE(tempStream.str().find("There are no mobs in the area"),
+          std::string::npos);
+
+    delete player;
+    delete loc;
 }
