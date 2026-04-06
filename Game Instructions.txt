@@ -1,0 +1,31 @@
+﻿Game Objective
+
+
+* The goal of the game is to obtain an emerald
+* To do this you should find items by exploring areas and killing mobs
+* Found items can be traded with certain NPCs to obtain new items
+
+
+Food/Hunger
+
+
+* Moving between locations lowers your hunger
+* Running out of hunger causes you to lose the game
+* Using food items restores hunger, different foods restore different amounts of hunger
+
+
+Health/Damage
+
+
+* Losing all of your health will cause you to lose the game
+* Encounters with mobs damage you and the mob, killing the mob will put its drop items directly into your inventory
+* Using weapon items will modify the amount of damage you do
+
+
+Other
+
+
+* All inputs are through text commands, make sure to carefully read everything
+* Remember to explore all locations and interact with NPCs
+* In addition to NPCs that sell you stuff, others give you useful information
+* There is 1 secret additional way to lose
