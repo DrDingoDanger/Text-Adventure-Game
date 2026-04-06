@@ -158,7 +158,7 @@ void Game::update() {
         std::cout << "Invalid input";
     }
 
-    if (checkWin(&_player) || checkLose()) {
+    if (checkWin(&_player) || checkLose(&_player)) {
         endGame();
     }
 
@@ -177,9 +177,9 @@ bool Game::checkWin(Player* player) const {
     return false;
 }
 
-bool Game::checkLose() const {
-    if (_player.getHealth() <= 0 ||
-          _player.getHunger() <= 0) {
+bool Game::checkLose(Player* player) const {
+    if (player->getHealth() <= 0 ||
+          player->getHunger() <= 0) {
         std::cout << "\033[H\033[2J"
               << "\033[5;8H\033[31m"
               << "Game Over"

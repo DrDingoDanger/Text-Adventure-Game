@@ -26,7 +26,7 @@ class Game {
     void start();
     void update();
     bool checkWin(Player* player) const;
-    bool checkLose() const;
+    bool checkLose(Player* player) const;
     void endGame();
 };
 #endif

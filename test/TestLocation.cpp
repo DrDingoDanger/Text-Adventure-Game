@@ -11,6 +11,12 @@
 #include "Player.hpp"
 #include "WorldMap.hpp"
 
+class DummyLocation : public Location {
+ public:
+    DummyLocation(std::vector<Mob*> mobs, float rate)
+        : Location("Test", {}, {}, mobs, new Inventory(), rate) {}
+};
+
 TEST(TestLocation, storesNameTest) {
     Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
 
@@ -32,6 +38,8 @@ TEST(TestLocation, storesRecipeTest) {
     EXPECT_NE(loc->getRecipe(0)->getOutput()->getName(), "Stick");
     EXPECT_EQ(loc->getRecipe(1)->getOutput()->getName(), "Stick");
 
+    for (CraftingRecipe* trade : trades) delete trade;
+    trades.clear();
     delete loc;
 }
 
@@ -143,8 +151,111 @@ TEST(TestLocation, runEncounterPrintsMessageWhenNoMobs) {
 
     std::cout.rdbuf(origStream);
 
-EXPECT_NE(tempStream.str().find("There are no mobs in the area"),
+    EXPECT_NE(tempStream.str().find("There are no mobs in the area"),
           std::string::npos);
+
+    delete player;
+    delete loc;
+}
+
+TEST(TestLocation, runEncounterContainsEnemies) {
+    Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
+    Player* player = new Player(loc);
+    std::stringstream tempStream;
+
+    std::streambuf* origStream = std::cout.rdbuf();
+    std::cout.rdbuf(tempStream.rdbuf());
+
+    loc->runEncounter(player);
+
+    std::cout.rdbuf(origStream);
+
+    EXPECT_NE(tempStream.str().find("There are no mobs in the area"),
+          std::string::npos);
+
+    delete player;
+    delete loc;
+}
+
+TEST(TestLocation, runEncounterDidEncounter) {
+    std::vector<Mob*> mobs;
+
+    Mob* bob = new Mob("bob", 5, 1, new Inventory());
+
+    mobs.push_back(bob);
+
+    Location* loc = new DummyLocation(mobs, 2);
+    Player* player = new Player(loc);
+    std::stringstream tempStream;
+
+    std::streambuf* origStream = std::cout.rdbuf();
+    std::cout.rdbuf(tempStream.rdbuf());
+
+    loc->runEncounter(player);
+
+    EXPECT_NE(tempStream.str().find("Encounter #1"),
+        std::string::npos);
+    EXPECT_NE(tempStream.str().find(": bob"),
+        std::string::npos);
+    EXPECT_NE(tempStream.str().find("Fist : 1 dmg"),
+        std::string::npos);
+
+    std::cout.rdbuf(origStream);
+
+    delete player;
+    delete loc;
+}
+
+TEST(TestLocation, runEncounterDidntEncounter) {
+    std::vector<Mob*> mobs;
+
+    Mob* bob = new Mob("bob", 5, 1, new Inventory());
+
+    mobs.push_back(bob);
+
+    Location* loc = new DummyLocation(mobs, 0);
+    Player* player = new Player(loc);
+    std::stringstream tempStream;
+
+    std::streambuf* origStream = std::cout.rdbuf();
+    std::cout.rdbuf(tempStream.rdbuf());
+
+    loc->runEncounter(player);
+
+    std::cout.rdbuf(origStream);
+
+    EXPECT_NE(tempStream.str().find("Encounter #1"),
+        std::string::npos);
+    EXPECT_NE(tempStream.str().find(": bob"),
+        std::string::npos);
+    EXPECT_NE(tempStream.str().find("You did not encounter this mob"),
+          std::string::npos);
+
+    delete player;
+    delete loc;
+}
+
+TEST(TestLocation, runEncounterAddsDropLootToInventory) {
+    std::vector<Mob*> mobs;
+    Inventory* invM = new Inventory();
+    invM->add(new Material("Flesh"), 1);
+
+    Mob* bob = new Mob("bob", 1, 1, invM);
+
+    mobs.push_back(bob);
+
+    Location* loc = new DummyLocation(mobs, 1);
+    Player* player = new Player(loc);
+    std::stringstream tempStream;
+
+    std::streambuf* origStream = std::cout.rdbuf();
+    std::cout.rdbuf(tempStream.rdbuf());
+
+    loc->runEncounter(player);
+
+    std::cout.rdbuf(origStream);
+
+    EXPECT_TRUE(player->getInventory()->has(new Material("Flesh"), 1));
 
     delete player;
     delete loc;

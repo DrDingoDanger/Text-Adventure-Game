@@ -88,12 +88,6 @@ void Player::eat(int restore) {
               << _hunger << '\n';
 }
 
-void Player::craft(CraftingRecipe recipe) {
-    if (recipe.canCraft(_inventory)) {
-        recipe.craft(_inventory);
-    }
-}
-
 void Player::addItem(Item* item) {
     _inventory->add(item, 1);
 }

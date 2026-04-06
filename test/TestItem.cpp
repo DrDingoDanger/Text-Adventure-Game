@@ -24,9 +24,10 @@ TEST(TestItem, foodSetHungerUpdatesValue) {
     EXPECT_EQ(item.getHunger(), 25);
 }
 
-TEST(TestItem, weaponStoresNameAndType) {
+TEST(TestItem, weaponStoresProperties) {
     Weapon item("Sword", 10);
 
     EXPECT_EQ(item.getName(), "Sword");
     EXPECT_EQ(item.getType(), "weapon");
+    EXPECT_EQ(item.getPower(), 10);
 }
