@@ -14,7 +14,7 @@ std::string NPC::getName() {
 }
 
 HelpNPC::HelpNPC(std::string name, std::vector<std::string> dia)
-    : NPC(name, "help"), diaOptions(dia) {}
+    : NPC(name, "help"), diaOptions(dia), loseGame(10) {}
 
 HelpNPC::~HelpNPC() {}
 //HELP NPC WILL RETURN "USEFUL" HINT
@@ -27,6 +27,14 @@ std::string HelpNPC::giveHint() {
     std::uniform_int_distribution<size_t> dist(0, diaOptions.size() - 1);
     std::string random = diaOptions[dist(gen)];
     return random;
+}
+
+void HelpNPC::reduceCount() {
+    loseGame--;
+}
+
+int HelpNPC::getCount() {
+    return loseGame;
 }
 //SHOPNPC WILL MAKE TRADES WITH PLAYER
 ShopNPC::ShopNPC(std::string name, std::vector<CraftingRecipe*> trades)

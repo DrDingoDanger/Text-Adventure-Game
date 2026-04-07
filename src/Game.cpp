@@ -108,6 +108,14 @@ void Game::update() {
             if (temp->getType() == "help") {
                 HelpNPC* tempH = dynamic_cast<HelpNPC*>(temp);
                 std::cout << tempH->giveHint() << "\n";
+                tempH->reduceCount();
+                if(tempH->getCount()<=0) {
+                    std::cout << "\033[H\033[2J";
+                    std::cout << tempH->getName(); 
+                    std::cout << " is annoyed and has decided to kill you.\n";
+                    std::cout << "Game Over\nYou Lose!";
+                    endGame();
+                }
             } else if (temp->getType() == "shop") {
                 ShopNPC* tempS = dynamic_cast<ShopNPC*>(temp);
                 Inventory* invT = _player.getInventory();

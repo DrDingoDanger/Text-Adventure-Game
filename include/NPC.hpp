@@ -25,11 +25,13 @@ class NPC {
 class HelpNPC : public NPC {
  private:
     std::vector<std::string> diaOptions;
-
+    int loseGame;
  public:
     HelpNPC(std::string name, std::vector<std::string> dia);
     ~HelpNPC();
     std::string giveHint();
+    void reduceCount();
+    int getCount();
 };
 
 class ShopNPC : public NPC {
