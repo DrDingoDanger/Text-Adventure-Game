@@ -109,9 +109,9 @@ void Game::update() {
                 HelpNPC* tempH = dynamic_cast<HelpNPC*>(temp);
                 std::cout << tempH->giveHint() << "\n";
                 tempH->reduceCount();
-                if(tempH->getCount()<=0) {
+                if (tempH->getCount() <= 0) {
                     std::cout << "\033[H\033[2J";
-                    std::cout << tempH->getName(); 
+                    std::cout << tempH->getName();
                     std::cout << " is annoyed and has decided to kill you.\n";
                     std::cout << "Game Over\nYou Lose!";
                     endGame();
