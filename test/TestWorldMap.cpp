@@ -5,7 +5,7 @@
 
 TEST(TestWorldMap, updateLocationTest) {
     WorldMap* map = new WorldMap();
-    Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
+    Location* loc = map->getLocation(0);
 
     loc = map->updateLocation("down", loc);
     EXPECT_EQ(map->getCurrentIndex(loc), 3);
@@ -24,7 +24,7 @@ TEST(TestWorldMap, updateLocationTest) {
 
 TEST(TestWorldMap, updateInvalidLocationTest) {
     WorldMap* map = new WorldMap();
-    Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
+    Location* loc = map->getLocation(0);
 
     loc = map->updateLocation("up", loc);
     EXPECT_EQ(map->getCurrentIndex(loc), 0);
@@ -48,12 +48,11 @@ TEST(TestWorldMap, updateInvalidLocationTest) {
 
 TEST(TestWorldMap, getCurrentIndexReturnsZeroForUnknownLocation) {
     WorldMap* map = new WorldMap();
-    Location* loc = new Terrain("Unknown", {}, {}, {}, new Inventory());
+    Location* loc = map->getLocation(0);
 
     EXPECT_EQ(map->getCurrentIndex(loc), 0);
 
     delete map;
-    delete loc;
 }
 
 TEST(TestWorldMap, updateLocationReturnsSameLocationForInvalidDirection) {

@@ -46,8 +46,12 @@ TEST(TestInventory, hasReturnsTrueWhenEnoughItemsExist) {
     inv.add(new Material("Wood"), 1);
     inv.add(new Material("Wood"), 1);
 
-    EXPECT_TRUE(inv.has(new Material("Wood"), 1));
-    EXPECT_TRUE(inv.has(new Material("Wood"), 2));
+    Item* item = new Material("Wood");
+
+    EXPECT_TRUE(inv.has(item, 1));
+    EXPECT_TRUE(inv.has(item, 2));
+
+    delete item;
 }
 
 TEST(TestInventory, hasReturnsFalseWhenNotEnoughItemsExist) {
@@ -55,7 +59,11 @@ TEST(TestInventory, hasReturnsFalseWhenNotEnoughItemsExist) {
 
     inv.add(new Material("Wood"), 1);
 
-    EXPECT_FALSE(inv.has(new Material("Wood"), 2));
+    Item* item = new Material("Wood");
+
+    EXPECT_FALSE(inv.has(item, 2));
+
+    delete item;
 }
 
 TEST(TestInventory, hasNameReturnsTrueWhenEnoughItemsExist) {
@@ -79,35 +87,59 @@ TEST(TestInventory, hasNameReturnsFalseWhenItemMissing) {
 TEST(TestInventory, removeDecreasesSize) {
     Inventory inv;
 
-    inv.add(new Material("Wood"), 1);
-    inv.add(new Material("Wood"), 1);
-    inv.add(new Material("Wood"), 1);
+    Item* item1 = new Material("Wood");
+    Item* item2 = new Material("Wood");
+    Item* item3 = new Material("Wood");
 
-    inv.remove(new Material("Wood"), 2);
+    inv.add(item1, 1);
+    inv.add(item2, 1);
+    inv.add(item3, 1);
+
+    Item* item4 = new Material("Wood");
+
+    inv.remove(item4, 2);
 
     EXPECT_EQ(inv.size(), 1);
-    EXPECT_TRUE(inv.has(new Material("Wood"), 1));
-    EXPECT_FALSE(inv.has(new Material("Wood"), 2));
+    EXPECT_TRUE(inv.has(item4, 1));
+    EXPECT_FALSE(inv.has(item4, 2));
+
+    delete item1;
+    delete item2;
+    delete item4;
 }
 
 TEST(TestInventory, removeOnlyRequestedItemType) {
     Inventory inv;
 
-    inv.add(new Material("Wood"), 1);
-    inv.add(new Material("Wood"), 1);
-    inv.add(new Material("Stone"), 1);
+    Item* item1 = new Material("Wood");
+    Item* item2 = new Material("Wood");
+    Item* item3 = new Material("Stone");
 
-    inv.remove(new Material("Wood"), 1);
+    inv.add(item1, 1);
+    inv.add(item2, 1);
+    inv.add(item3, 1);
+
+    Item* item4 = new Material("Wood");
+    Item* item5 = new Material("Stone");
+
+    inv.remove(item1, 1);
 
     EXPECT_EQ(inv.size(), 2);
-    EXPECT_TRUE(inv.has(new Material("Wood"), 1));
-    EXPECT_TRUE(inv.has(new Material("Stone"), 1));
+    EXPECT_TRUE(inv.has(item4, 1));
+    EXPECT_TRUE(inv.has(item5, 1));
+
+
+    delete item1;
+    delete item4;
+    delete item5;
 }
 
 TEST(TestInventory, removeByNameRemovesMatchingItems) {
     Inventory inv;
 
-    inv.add(new Material("Wood"), 1);
+    Item* item = new Material("Wood");
+
+    inv.add(item, 1);
     inv.add(new Material("Wood"), 1);
     inv.add(new Material("Stone"), 1);
 
@@ -117,6 +149,8 @@ TEST(TestInventory, removeByNameRemovesMatchingItems) {
     EXPECT_TRUE(inv.hasName("Wood", 1));
     EXPECT_FALSE(inv.hasName("Wood", 2));
     EXPECT_TRUE(inv.hasName("Stone", 1));
+
+    delete item;
 }
 
 TEST(TestInventory, removeByNameDoesNothingWhenItemMissing) {

@@ -50,7 +50,14 @@ void CraftingRecipe::craft(Inventory* _inventory) {
 
     // Remove the required items by name
     for (const std::string& name : _inputs) {
-        _inventory->removeByName(name, 1);
+        for (int i = 0; i < _inventory->size(); i++) {
+            Item* item = _inventory->get(i);
+            if (item->getName() == name) {
+                _inventory->remove(item, 1);
+                delete item;
+                break;
+            }
+        }
     }
 
     // Add the resulting item to the inventory

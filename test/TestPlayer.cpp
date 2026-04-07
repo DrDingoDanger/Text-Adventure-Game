@@ -8,12 +8,15 @@
 #include "WorldMap.hpp"
 
 TEST(TestPlayer, startsWithDefaultStats) {
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
     EXPECT_EQ(player.getHealth(), 100);
     EXPECT_EQ(player.getHunger(), 100);
     EXPECT_EQ(player.getAttack(), 1);
     EXPECT_EQ(player.getWeapon(), "Fist");
+
+    delete loc;
 }
 
 TEST(TestPlayer, startsAtRequestedLocation) {
@@ -26,7 +29,8 @@ TEST(TestPlayer, startsAtRequestedLocation) {
 }
 
 TEST(TestPlayer, takeDamageReducesHealth) {
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
     std::stringstream tempStream;
     std::streambuf* origStream = std::cout.rdbuf();
@@ -41,10 +45,13 @@ TEST(TestPlayer, takeDamageReducesHealth) {
 
     EXPECT_EQ(player.getHealth(), 70);
     EXPECT_EQ(tempStream.str(), str);
+
+    delete loc;
 }
 
 TEST(TestPlayer, takeDamageDoesNotDropBelowZero) {
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
     std::stringstream tempStream;
     std::streambuf* origStream = std::cout.rdbuf();
@@ -59,10 +66,13 @@ TEST(TestPlayer, takeDamageDoesNotDropBelowZero) {
 
     EXPECT_EQ(player.getHealth(), 0);
     EXPECT_EQ(tempStream.str(), str);
+
+    delete loc;
 }
 
 TEST(TestPlayer, takeDamageDoesNotGoAboveHundred) {
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
     std::stringstream tempStream;
     std::streambuf* origStream = std::cout.rdbuf();
@@ -77,10 +87,13 @@ TEST(TestPlayer, takeDamageDoesNotGoAboveHundred) {
 
     EXPECT_EQ(player.getHealth(), 100);
     EXPECT_EQ(tempStream.str(), str);
+
+    delete loc;
 }
 
 TEST(TestPlayer, eatIncreasesHungerUpToMax100) {
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
     std::stringstream tempStream;
     std::streambuf* origStream = std::cout.rdbuf();
@@ -98,10 +111,13 @@ TEST(TestPlayer, eatIncreasesHungerUpToMax100) {
 
     EXPECT_EQ(player.getHunger(), 100);
     EXPECT_EQ(tempStream.str(), str);
+
+    delete loc;
 }
 
 TEST(TestPlayer, eatDoesNotDropHungerBelowZero) {
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
     std::stringstream tempStream;
     std::streambuf* origStream = std::cout.rdbuf();
@@ -116,6 +132,8 @@ TEST(TestPlayer, eatDoesNotDropHungerBelowZero) {
 
     EXPECT_EQ(player.getHunger(), 0);
     EXPECT_EQ(tempStream.str(), str);
+
+    delete loc;
 }
 
 TEST(TestPlayer, moveActionUpdatesLocationWhenValid) {
@@ -141,15 +159,19 @@ TEST(TestPlayer, moveActionLeavesLocationWhenInvalidMoveAttempted) {
 }
 
 TEST(TestPlayer, setAttackUpdatesAttackValue) {
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
     player.setAttack(12);
 
     EXPECT_EQ(player.getAttack(), 12);
+
+    delete loc;
 }
 
-TEST(TestPlayer, setWeaponUpdatesWeaponName) {
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+TEST(TestPlayer, setWeaponUpdatesWeapon) {
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
     Weapon* sword = new Weapon("Sword", 10);
 
     player.setWeapon(sword);
@@ -157,41 +179,59 @@ TEST(TestPlayer, setWeaponUpdatesWeaponName) {
     EXPECT_EQ(player.getWeapon(), "Sword");
 
     delete sword;
+    delete loc;
 }
 
 TEST(TestPlayer, addItemIncreasesInventorySize) {
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
     int startSize = player.inventorySize();
 
     player.addItem(new Material("Apple"));
 
     EXPECT_EQ(player.inventorySize(), startSize + 1);
     EXPECT_TRUE(player.getInventory()->hasName("Apple", 1));
+
+    delete loc;
 }
 
 TEST(TestPlayer, removeItemRemovesMatchingItem) {
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
-    player.addItem(new Material("Stone"));
+    Item* item = new Material("Stone");
+
+    player.addItem(item);
     int sizeBefore = player.inventorySize();
 
-    player.removeItem(new Material("Stone"));
+    player.removeItem(item);
 
     EXPECT_EQ(player.inventorySize(), sizeBefore - 1);
     EXPECT_FALSE(player.getInventory()->hasName("Stone", 1));
+
+    delete loc;
+    delete item;
 }
 
 TEST(TestPlayer, getItemAtReturnsInventoryItem) {
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
-    player.addItem(new Material("Stone"));
+    Item* item = new Material("Stone");
+
+    player.addItem(item);
 
     EXPECT_EQ(player.getItemAt(0)->getName(), "Pocket lint");
     EXPECT_EQ(player.getItemAt(player.inventorySize() - 1)->getName(), "Stone");
+
+    delete loc;
 }
 
 TEST(TestPlayer, startsWithAtLeastOneItem) {
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
     EXPECT_GE(player.inventorySize(), 1);
+
+    delete loc;
 }

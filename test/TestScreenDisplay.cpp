@@ -174,14 +174,19 @@ TEST(TestScreenDisplay, removeItemInventoryTest) {
     std::stringstream out;
     Inventory inv;
 
-    inv.add(new Material("Wood"), 1);
-    inv.add(new Material("Wood"), 1);
+    Item* item1 = new Material("Wood");
+    Item* item2 = new Material("Wood");
+
+    inv.add(item1, 1);
+    inv.add(item2, 1);
     inv.removeByName("Wood", 1);
 
     screen.displayInventory(out, &inv);
 
     EXPECT_NE(out.str().find("Wood"), std::string::npos);
     EXPECT_EQ(out.str().find("Wood 2x"), std::string::npos);
+
+    delete item1;
 }
 
 TEST(TestScreenDisplay, tradesTest) {
@@ -201,6 +206,9 @@ TEST(TestScreenDisplay, tradesTest) {
     EXPECT_NE(out.str().find("Trades:"), std::string::npos);
     EXPECT_NE(out.str().find("Wood & Stone for Axe"), std::string::npos);
     EXPECT_NE(out.str().find("Inventory:"), std::string::npos);
+
+    for (CraftingRecipe* recipe : trades) delete recipe;
+    trades.clear();
 }
 
 TEST(TestScreenDisplay, tradesWithDuplicateInputsTest) {
@@ -219,4 +227,7 @@ TEST(TestScreenDisplay, tradesWithDuplicateInputsTest) {
     screen.displayTrades(out, trades, &inv);
 
     EXPECT_NE(out.str().find("Wood 2x & Stone for Hammer"), std::string::npos);
+
+    for (CraftingRecipe* recipe : trades) delete recipe;
+    trades.clear();
 }

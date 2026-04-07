@@ -174,7 +174,9 @@ TEST(TestCraftingRecipe, craftRemovesInputsAndAddsOutput) {
     cost.push_back("Wood");
     cost.push_back("Stone");
 
-    CraftingRecipe* recipe = new CraftingRecipe(cost, new Material("Axe"));
+    Item* item = new Material("Axe");
+
+    CraftingRecipe* recipe = new CraftingRecipe(cost, item);
 
     inv->add(new Material("Wood"), 1);
     inv->add(new Material("Stone"), 1);
@@ -193,7 +195,10 @@ TEST(TestCraftingRecipe, craftRemovesInputsAndAddsOutput) {
     EXPECT_EQ(tempStream.str(),
               "\n\033[33mAxe\033[0m has been added to you inventory\n");
 
+    inv->removeByName("Axe", 1);
+
     delete inv;
+    delete recipe;
 }
 
 TEST(TestCraftingRecipe, craftDoesNothingWhenInputsMissing) {

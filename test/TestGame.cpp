@@ -17,21 +17,28 @@ TEST(TestGame, GameIsNotOverAtStart) {
 
 TEST(TestGame, CheckWinIsFalseAtStart) {
     Game game;
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
     EXPECT_FALSE(game.checkWin(&player));
+
+    delete loc;
 }
 
 TEST(TestGame, CheckLoseIsFalseAtStart) {
     Game game;
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
     EXPECT_FALSE(game.checkLose(&player));
+
+    delete loc;
 }
 
 TEST(TestGame, CheckWinIsTrueWhenPlayerHasEmerald) {
     Game game;
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
     std::stringstream tempStream;
 
     player.getInventory()->add(new Material("Emerald"), 1);
@@ -45,18 +52,24 @@ TEST(TestGame, CheckWinIsTrueWhenPlayerHasEmerald) {
 
     EXPECT_TRUE(result);
     EXPECT_NE(tempStream.str().find("You WIN!"), std::string::npos);
+
+    delete loc;
 }
 
 TEST(TestGame, CheckLoseIsFalseWhenPlayerHealthAndHungerArePositive) {
     Game game;
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
 
     EXPECT_FALSE(game.checkLose(&player));
+
+    delete loc;
 }
 
 TEST(TestGame, CheckLoseIsTrueWhenPlayerHealthisZero) {
     Game game;
-    Player player(new Terrain("test", {}, {}, {}, new Inventory()));
+    Location* loc = new Terrain("test", {}, {}, {}, new Inventory());
+    Player player(loc);
     std::stringstream tempStream;
 
     std::streambuf* origStream = std::cout.rdbuf();
@@ -70,6 +83,8 @@ TEST(TestGame, CheckLoseIsTrueWhenPlayerHealthisZero) {
 
     EXPECT_TRUE(result);
     EXPECT_NE(tempStream.str().find("You Lose >:D"), std::string::npos);
+
+    delete loc;
 }
 
 TEST(TestGame, EndGameSetsGameOverTrue) {

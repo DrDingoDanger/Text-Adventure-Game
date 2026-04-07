@@ -73,6 +73,7 @@ void Game::update() {
                     _player.takeDamage(-(restore / 2));
                     _player.eat(restore);
                     _player.removeItem(tempF);
+                    delete tempF;
                 } else if (temp->getType() == "weapon") {
                     Weapon* tempW = dynamic_cast<Weapon*>(temp);
                     int power = tempW->getPower();
@@ -81,6 +82,7 @@ void Game::update() {
                         _player.setAttack(power);
                         _player.setWeapon(tempW);
                         _player.removeItem(tempW);
+                        delete tempW;
                     } else {
                         std::cout << _player.getWeapon()
                                   << " is better.\n";

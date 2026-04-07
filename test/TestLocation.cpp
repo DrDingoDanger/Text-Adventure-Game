@@ -108,7 +108,7 @@ TEST(TestLocation, storesInventoryTest) {
 
 TEST(TestLocation, canExitTest) {
     WorldMap* map = new WorldMap();
-    Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
+    Location* loc = map->getLocation(0);
 
     loc = map->updateLocation("down", loc);
     loc = map->updateLocation("right", loc);
@@ -123,7 +123,7 @@ TEST(TestLocation, canExitTest) {
 
 TEST(TestLocation, cannotExitTest) {
     WorldMap* map = new WorldMap();
-    Location* loc = new Terrain("Name", {}, {}, {}, new Inventory());
+    Location* loc = map->getLocation(0);
 
     EXPECT_FALSE(loc->canExit("up", map));
     EXPECT_FALSE(loc->canExit("left", map));
@@ -255,7 +255,7 @@ TEST(TestLocation, runEncounterAddsDropLootToInventory) {
 
     std::cout.rdbuf(origStream);
 
-    EXPECT_TRUE(player->getInventory()->has(new Material("Flesh"), 1));
+    EXPECT_TRUE(player->getInventory()->hasName("Flesh", 1));
 
     delete player;
     delete loc;
