@@ -99,6 +99,8 @@
 **Responsiblility:** Gives unique dialoge that hints how to solve the current puzzle.
 **Key Methods:**
 - 'giveHint(): std::string' - Allows the player to request a hint from the HelperNPC.
+- 'reduceCount()' - Reduces the count of the lose condition, once zero player loses game.
+- 'getCount()' - Used to retrieve count to check lose condition.
 
 ### Item (Abstract)
 **Responsiblility:** Tracks item names and types.
