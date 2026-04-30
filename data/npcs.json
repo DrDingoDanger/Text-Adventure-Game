@@ -1,0 +1,20 @@
+{
+    "help_npcs": [
+        {
+            "id": "void_entity",
+            "name": "void",
+            "dialogue": [
+                "\nYou stare into the void...\nThe void stares back"
+            ]
+        },
+        {
+            "id": "roomate",
+            "name": "Roomate",
+            "dialog": [
+                "\nYou know you still owe me an \u001b[32mEmerald\u001b[0m right?",
+                "\nI hear the \u001b[36mvillage\u001b[0m to the west was having issues.",
+                "\nYour decor sucks."
+            ]
+        }
+    ]
+}
